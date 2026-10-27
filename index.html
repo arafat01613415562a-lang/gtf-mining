@@ -109,7 +109,7 @@ body:after{content:"";position:fixed;inset:-30%;pointer-events:none;z-index:0;ba
 <script>
 'use strict';
 const SMART_LINK='https://auctionr.org/4/48754b9193ed1d812b6c26b1d0659325';
-const BOT_USERNAME='BTF_TON_BOT'; // Replace if your actual Telegram bot username differs.
+const BOT_USERNAME='GTF_MINING_bot'; // Replace if your actual Telegram bot username differs.
 const LOCAL_CHAT_KEY='gtf_help_messages';
 let selectedHelpChat=null;
 let localUsers=[];try{localUsers=JSON.parse(localStorage.getItem('gtf_local_users')||'[]');if(!Array.isArray(localUsers))localUsers=[];}catch{localUsers=[];}
@@ -152,7 +152,7 @@ function claimDailyCheckin(day,reward){userData.balance+=reward;updateDisplay();
 setInterval(()=>{const b=document.getElementById('checkin-day-btn');if(b&&b.disabled){const last=readNum('gtf_checkin_time',0),left=86400000-(Date.now()-last);if(left<=0)renderCheckin();else b.textContent=formatTime(left);}},1000);
 
 /* Monetag SDK: follows the same delayed initial trigger and 50-second retry pattern
-   as the supplied BTF example. The SDK may ignore calls unless an eligible ad is available. */
+   as the supplied GTF example. The SDK may ignore calls unless an eligible ad is available. */
 let monetagCallInProgress=false;
 function triggerMonetagAd(){
  if(typeof window.show_12121319!=='function')return false;
