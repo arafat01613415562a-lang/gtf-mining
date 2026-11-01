@@ -176,7 +176,7 @@ font-weight:800;
 <section id="landing"><div class="landing-wrap"><div class="brand">GTF MINING · DIGITAL ASSETS</div><div class="coin-stage"><div class="hero-coin"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo" onerror="this.style.display='none'"></div></div><h1>WELCOME BACK,<br><em>YOUR GTF IS READY</em></h1><p>Step into your golden mining universe.<br>Mine, complete tasks and explore your dashboard.</p><button class="gold-btn" id="enter-btn" onclick="beginEntry()">ENTER GTF MINING <i class="fa-solid fa-arrow-right"></i></button><div id="verify-box"><div class="verify-head"><i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> Quick Coin Verification</div><p class="verify-help">Slide the coin into the target to continue.</p><div class="slide-area" id="slide-area"><div class="target" id="target"><i class="fa-solid fa-circle-dot"></i></div><div class="mini-coin" id="mini-coin"><i class="fa-solid fa-coins"></i></div></div><div class="slide-track" id="slide-track"><span>DRAG THE COIN TO VERIFY</span><div id="slider-knob"><i class="fa-solid fa-arrow-right"></i></div></div><p class="verify-msg" id="verify-msg" aria-live="polite">Complete the slide to enter.</p></div><p class="secure-note">Premium experience · Please verify to continue</p></div></section>
 <div class="app" id="app" style="display:none">
 <header class="header"><div class="user-info"><div class="brand-mark"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF"></div><div><div class="user-name" id="user-name">GTF Miner</div><div><span class="badge" id="user-level">Lvl 0</span><span class="status">● READY</span></div></div></div><div style="font-size:10px;color:var(--gold);letter-spacing:1px;font-weight:700">GTF MINING</div></header>
-<section id="tab-mine" class="view-section active"><div class="mine-container"><div class="income-options"><button class="income-option" onclick="openGameLibrary()">🎮 GAMING INCOME</button><button class="income-option" onclick="openSmartLink()">⚡ 2X INCOME</button></div><div class="balance-title">TOTAL ASSETS</div><div class="main-balance"><span id="total-balance">0.0000</span> GTF</div><div class="sub-wallets"><div>HOLDING WALLET: 0 GTF</div><div>POOL WALLET: <span id="pool-balance">0.0000</span> GTF</div></div><div class="mining-rate">+<span id="mining-rate-val">0.0047</span> <small style="font-size:10px">/SEC</small></div><div class="coin-btn" onclick="tapCoin()" aria-label="Tap GTF coin"><div class="coin-inner"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo" onerror="this.parentElement.textContent='GTF'"></div></div><button class="btn-claim" onclick="claimReward()">COLLECT MINED REWARDS</button><p style="font-size:9px;color:#777;margin-top:12px">Mining balance</p></div></section>
+<section id="tab-mine" class="view-section active"><div class="mine-container"><div class="income-options"><button class="income-option" onclick="openSmartLink();openGameLibrary()">🎮 GAMING INCOME</button><button class="income-option" onclick="openSmartLink()">⚡ 2X INCOME</button></div><div class="balance-title">TOTAL ASSETS</div><div class="main-balance"><span id="total-balance">0.0000</span> GTF</div><div class="sub-wallets"><div>HOLDING WALLET: 0 GTF</div><div>POOL WALLET: <span id="pool-balance">0.0000</span> GTF</div></div><div class="mining-rate">+<span id="mining-rate-val">0.0047</span> <small style="font-size:10px">/SEC</small></div><div class="coin-btn" onclick="tapCoin()" aria-label="Tap GTF coin"><div class="coin-inner"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo" onerror="this.parentElement.textContent='GTF'"></div></div><button class="btn-claim" onclick="claimReward()">COLLECT MINED REWARDS</button><p style="font-size:9px;color:#777;margin-top:12px">Mining balance</p></div></section>
 
 <section id="tab-games" class="view-section">
 <div class="game-library">
@@ -250,7 +250,7 @@ font-weight:800;
 'use strict';
 const firebaseConfig={apiKey:'AIzaSyBhkXRY_91i2kf2CM3OiZ9-UXyGT7Bd-Wk',authDomain:'bt-mining-64329.firebaseapp.com',databaseURL:'https://bt-mining-64329-default-rtdb.firebaseio.com',projectId:'bt-mining-64329',storageBucket:'bt-mining-64329.firebasestorage.app',messagingSenderId:'845892864077',appId:'1:845892864077:web:ea4e776c2fb35e25dab404',measurementId:'G-R014X94DBJ'};
 let db=null,firebaseReady=false;try{if(window.firebase){firebase.initializeApp(firebaseConfig);db=firebase.database();firebaseReady=true;}}catch(e){console.warn('Firebase initialization:',e)}
-const SMART_LINK_DEFAULT='https://auctionr.org/4/48754b9193ed1d812b6c26b1d0659325';const BOT_USERNAME='BTF_TON_BOT';const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}const tgUser=tg?.initDataUnsafe?.user;const uid=String(tgUser?.id||'local_'+getOrCreateLocalId());
+const SMART_LINK_DEFAULT='https://uplcm.com/4/12169278';const BOT_USERNAME='BTF_TON_BOT';const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}const tgUser=tg?.initDataUnsafe?.user;const uid=String(tgUser?.id||'local_'+getOrCreateLocalId());
 function getOrCreateLocalId(){let x=localStorage.getItem('gtf_local_uid');if(!x){x='u'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('gtf_local_uid',x)}return x}
 function readNum(k,d){const raw=localStorage.getItem(k),n=Number(raw);return Number.isFinite(n)&&raw!==null?n:d}function safeStore(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
 const userData={username:tgUser?.username||tgUser?.first_name||'GTF Miner',id:tgUser?.id||uid,balance:readNum('gtf_bal',0),level:readNum('gtf_lvl',0),miningRate:readNum('gtf_rate',0.0047),refCount:readNum('gtf_refs',0)};
@@ -499,39 +499,108 @@ container.appendChild(row);
 
 });
 }
-function showTab(name,el){document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));document.getElementById('tab-'+name).classList.add('active');el.classList.add('active')}
+function showTab(name,el){
+document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('active'));
+document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+
+document.getElementById('tab-'+name).classList.add('active');
+
+if(el)el.classList.add('active');
+}
 function tapCoin(){userData.balance+=.001;logActivity('Manual tap',.001,'Coin tap reward');updateDisplay()}
-function claimReward(){accrueMining();alert('Your mining rewards have been added to your balance.')}
+function accrueMining(){
+const now=serverNow();
+const app=document.getElementById('app');
+
+if(!app||app.style.display==='none'||document.visibilityState!=='visible'){
+lastMiningAt=now;
+safeStore('gtf_last_mining_at',lastMiningAt);
+return;
+}
+
+const elapsed=Math.max(0,(now-lastMiningAt)/1000);
+
+if(elapsed<=0)return;
+
+const earned=elapsed*userData.miningRate;
+
+userData.balance+=earned;
+lastMiningAt=now;
+
+safeStore('gtf_last_mining_at',lastMiningAt);
+
+updateDisplay();
+}
+
+function claimReward(){
+accrueMining();
+alert('Your mining rewards have been added to your balance.');
+}
 function formatTime(ms){let s=Math.max(0,Math.floor(ms/1000));return String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 function renderCheckin(){const c=document.getElementById('checkin-container');c.innerHTML='';let day=readNum('gtf_checkin_day',1),last=readNum('gtf_checkin_time',0),available=!last||serverNow()-last>=86400000;for(let d=1;d<=30;d++){const r=d===30?50:5,card=document.createElement('div');card.className='checkin-card';if(d<day){card.classList.add('claimed');card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button disabled>CLAIMED</button>`}else if(d===day){card.classList.add('active');card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button ${available?'':'disabled'}>${available?'CLAIM':formatTime(86400000-(serverNow()-last))}</button>`;if(available)card.querySelector('button').onclick=()=>claimDailyCheckin(d,r)}else card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button disabled>LOCKED</button>`;c.appendChild(card)}}
 function claimDailyCheckin(day,reward){const last=readNum('gtf_checkin_time',0);if(last&&serverNow()-last<86400000){alert('Your next daily check-in is not ready yet.');return}userData.balance+=reward;updateDisplay();safeStore('gtf_checkin_time',serverNow());safeStore('gtf_checkin_day',day>=30?1:day+1);logActivity('Daily check-in',reward,'Day '+day);alert(`Day ${day}: +${reward} GTF claimed.`);renderCheckin()}
 /* Monetag ad system retained: delayed first attempt and 50-second retry while visible. */
-function triggerMonetagAd(){if(typeof window.show_12121319!=='function'||document.visibilityState!=='visible')return false;try{const result=window.show_12121319();if(result&&typeof result.catch==='function')result.catch(e=>console.log('Monetag event unavailable:',e));return true}catch(e){console.log('Monetag SDK error:',e);return false}}
-window.addEventListener('load',()=>setTimeout(()=>{if(document.getElementById('app').style.display!=='none')triggerMonetagAd()},1500));setInterval(()=>{if(document.visibilityState==='visible'&&document.getElementById('app').style.display!=='none')triggerMonetagAd()},50000);
+function triggerMonetagAd(){
+
+const admin=document.getElementById('adminModal');
+
+if(admin&&admin.style.display==='flex'){
+return false;
+}
+
+if(typeof window.show_12121319!=='function'||document.visibilityState!=='visible'){
+return false;
+}
+
+try{
+const result=window.show_12121319();
+
+if(result&&typeof result.catch==='function'){
+result.catch(e=>console.log('Monetag event unavailable:',e));
+}
+
+return true;
+
+}catch(e){
+console.log('Monetag SDK error:',e);
+return false;
+}
+}
+window.addEventListener('load',()=>setTimeout(()=>{if(document.getElementById('app').style.display!=='none')triggerMonetagAd()},1500));setInterval(()=>{
+if(document.visibilityState==='visible'&&document.getElementById('app').style.display!=='none'){
+triggerMonetagAd();
+}
+},12000);
 function renderTasks(){const c=document.getElementById('custom-tasks-container');if(!c)return;c.innerHTML='';if(!customTasks.length){c.innerHTML='<div class="card"><div class="card-text"><h4>No tasks available yet</h4><p>The administrator has not published any tasks.</p></div></div>';return}customTasks.forEach(t=>{const key='gtf_custom_task_'+t.id,done=localStorage.getItem(key)==='true',card=document.createElement('div');card.className='card';const info=document.createElement('div');info.className='card-info';const icon=document.createElement('div');icon.className='card-icon';icon.textContent=t.type==='telegram'?'✈':t.type==='youtube'?'▶':'🌐';const txt=document.createElement('div');txt.className='card-text';const h=document.createElement('h4');h.textContent=t.title;const p=document.createElement('p');p.textContent='+'+Number(t.reward).toFixed(2)+' GTF';txt.append(h,p);info.append(icon,txt);const btn=document.createElement('button');btn.className='btn-action';btn.textContent=done?'Claimed':'Start';btn.disabled=done;btn.onclick=()=>startCustomTask(t,btn);card.append(info,btn);c.append(card)})}
 function startCustomTask(t,btn){const w=window.open(t.url,'_blank');if(!w){alert('Your browser blocked the task link. Tap Start again to open it.');return}triggerMonetagAd();btn.disabled=true;let seconds=10;btn.textContent=seconds+'s';const timer=setInterval(()=>{seconds--;if(!btn.isConnected){clearInterval(timer);return}btn.textContent=seconds+'s';if(seconds<=0){clearInterval(timer);btn.disabled=false;btn.textContent='Claim';btn.onclick=()=>claimCustomTask(t)}} ,1000)}
 function claimCustomTask(t){const key='gtf_custom_task_'+t.id;if(localStorage.getItem(key)==='true')return;/* A timer cannot verify an external subscription/action; claim remains user-confirmed. */localStorage.setItem(key,'true');const reward=Number(t.reward)||0;userData.balance+=reward;userData.level++;updateDisplay();logActivity('Task reward',reward,t.title);if(firebaseReady)db.ref('taskClaims/'+uid+'/'+t.id).transaction(v=>v? v:{claimed:true,createdAt:firebase.database.ServerValue.TIMESTAMP}).then(r=>{if(!r.committed){userData.balance-=reward;updateDisplay();alert('This task was already claimed.');}}).catch(console.warn);renderTasks();alert('Successfully Claimed! Your reward has been added to your balance.')}
+let lastSmartLinkOpen=0;
+
 function openSmartLink(){
-const url=adminSettings.smartLink||SMART_LINK_DEFAULT;
+const now=Date.now();
+
+if(now-lastSmartLinkOpen<10000)return;
+
+const url=(adminSettings.smartLink||SMART_LINK_DEFAULT).trim();
+
 try{
 const parsed=new URL(url);
+
 if(parsed.protocol!=='https:'){
-alert('Invalid 2X Income URL.');
+console.log('Invalid SmartLink URL');
 return;
 }
+
+lastSmartLinkOpen=now;
+
 if(tg&&typeof tg.openLink==='function'){
 tg.openLink(parsed.href);
 }else{
-const a=document.createElement('a');
-a.href=parsed.href;
-a.target='_blank';
-a.rel='noopener noreferrer';
-document.body.appendChild(a);
-a.click();
-a.remove();
+window.open(parsed.href,'_blank','noopener,noreferrer');
 }
+
 }catch(e){
-alert('Invalid 2X Income URL.');
+console.log('SmartLink error:',e);
 }
 }
 function upgradeSpeed(cost,add){if(userData.balance<cost){alert('Insufficient GTF balance.');return}userData.balance-=cost;userData.miningRate+=add;adminSettings.rate=userData.miningRate;safeStore('gtf_admin_rate',adminSettings.rate);userData.level++;logActivity('Mining upgrade',-cost,'Speed upgrade');updateDisplay();alert('Mining speed upgraded.')}
@@ -544,9 +613,29 @@ function shouldVerify(){const n=readNum('gtf_entry_count',0)+1;safeStore('gtf_en
 function beginEntry(){if(shouldVerify()){document.getElementById('verify-box').style.display='block';document.getElementById('enter-btn').style.display='none';setupSlider()}else enterApp()}
 function setupSlider(){const knob=document.getElementById('slider-knob'),track=document.getElementById('slide-track'),coin=document.getElementById('mini-coin'),area=document.getElementById('slide-area');let max=0;const start=e=>{if(e.button!==undefined&&e.button!==0)return;sliderDragging=true;sliderStartX=e.clientX;knobStart=parseFloat(knob.style.marginLeft)||0;e.preventDefault?.()};const move=e=>{if(!sliderDragging)return;max=Math.max(0,track.clientWidth-knob.offsetWidth-8);const dx=e.clientX-sliderStartX,x=Math.max(0,Math.min(max,knobStart+dx));knob.style.marginLeft=x+'px';const areaMax=Math.max(0,area.clientWidth-coin.offsetWidth-16);coin.style.left=(8+(x/Math.max(1,max))*areaMax)+'px'};const end=()=>{if(!sliderDragging)return;sliderDragging=false;max=Math.max(1,track.clientWidth-knob.offsetWidth-8);const x=parseFloat(knob.style.marginLeft)||0,target=document.getElementById('target'),cr=coin.getBoundingClientRect(),tr=target.getBoundingClientRect(),center=cr.left+cr.width/2,targetCenter=tr.left+tr.width/2,correct=Math.abs(center-targetCenter)<Math.max(24,tr.width*.48);if(x>=max*.35&&correct){document.getElementById('verify-msg').textContent='Verified! Entering GTF Mining…';safeStore('gtf_last_verified',Date.now());setTimeout(enterApp,450)}else{document.getElementById('verify-msg').textContent='Place the coin inside the target, then try again.';knob.style.marginLeft='0px';coin.style.left='10px'}};knob.onpointerdown=start;track.onpointerdown=e=>{if(e.target!==knob){sliderStartX=e.clientX;knobStart=0;sliderDragging=true;move(e)}};document.onpointermove=move;document.onpointerup=end;document.onpointercancel=end}
 let profileTapCount=0,profileTapTimer=null;function profileTap(){profileTapCount++;clearTimeout(profileTapTimer);profileTapTimer=setTimeout(()=>profileTapCount=0,1600);if(profileTapCount>=4){profileTapCount=0;const pw=prompt('Enter administrator password');if(pw==='ARAFATYT')openAdmin();else if(pw!==null)alert('Incorrect password.')}}
-function openAdmin(){document.getElementById('admin-rate').value=adminSettings.rate;document.getElementById('admin-min-withdraw').value=adminSettings.minWithdraw;document.getElementById('admin-withdraw-fee').value=adminSettings.withdrawFee;document.getElementById('admin-smart-link').value=adminSettings.smartLink;renderAdminGames();renderAdminTasks();renderAdminWithdrawals();renderAdminSupport();renderAdminUsers();document.getElementById('admin-user-count').textContent=firebaseReady?'…':'1';document.getElementById('admin-active-count').textContent=firebaseReady?'…':(document.visibilityState==='visible'?'1':'0');document.getElementById('admin-task-count').textContent=customTasks.length;document.getElementById('adminModal').style.display='flex';if(firebaseReady)refreshAdminData()}
+function openAdmin(){
+document.getElementById('admin-rate').value=adminSettings.rate;
+document.getElementById('admin-min-withdraw').value=adminSettings.minWithdraw;
+document.getElementById('admin-withdraw-fee').value=adminSettings.withdrawFee;
+document.getElementById('admin-smart-link').value=adminSettings.smartLink;
+renderAdminGames();
+renderAdminTasks();
+renderAdminWithdrawals();
+renderAdminSupport();
+renderAdminUsers();
+document.getElementById('admin-user-count').textContent=firebaseReady?'…':'1';
+document.getElementById('admin-active-count').textContent=firebaseReady?'…':(document.visibilityState==='visible'?'1':'0');
+document.getElementById('admin-task-count').textContent=customTasks.length;
+document.getElementById('adminModal').style.display='flex';
+if(firebaseReady)refreshAdminData();
+}
 async function refreshAdminData(){try{const [u,p,w,inbox,threads,legacy]=await Promise.all([db.ref('users').once('value'),db.ref('presence').once('value'),db.ref('withdrawalIndex').once('value'),db.ref('supportInbox').once('value'),db.ref('supportThreads').once('value'),db.ref('supportMessages').once('value')]);remoteUserCache=u.val()||{};const pres=p.val()||{},active=Object.values(pres).filter(x=>x&&x.online).length;document.getElementById('admin-user-count').textContent=Object.keys(remoteUserCache).length;document.getElementById('admin-active-count').textContent=active;window.allWithdrawals=Object.values(w.val()||{}).filter(Boolean);const byId={};Object.values(inbox.val()||{}).filter(x=>x&&x.uid).forEach(m=>{byId[m.id||m.uid+'_'+m.createdAt]=m});const tree=legacy.val()||{};Object.entries(tree).forEach(([who,items])=>Object.entries(items||{}).forEach(([key,m])=>{if(m){const item={...m,uid:m.uid||who,id:m.id||key};byId[item.id]=byId[item.id]||item}}));const msgs=Object.values(byId);window.allSupport=msgs;window.supportThreads=threads.val()||{};renderAdminWithdrawals();renderAdminSupport();renderAdminUsers()}catch(e){console.warn('Admin data refresh failed:',e);const c=document.getElementById('admin-support-list');if(c)c.textContent='Inbox could not load. Check Firebase read permission for supportInbox and supportMessages.'}}
-function closeAdmin(){document.getElementById('adminModal').style.display='none'}
+function closeAdmin(){
+document.getElementById('adminModal').style.display='none';
+if(document.visibilityState==='visible'&&document.getElementById('app').style.display!=='none'){
+setTimeout(()=>triggerMonetagAd(),500);
+}
+}
 async function saveAdminSettings(){const rate=Number(document.getElementById('admin-rate').value),min=Number(document.getElementById('admin-min-withdraw').value),fee=Number(document.getElementById('admin-withdraw-fee').value),link=document.getElementById('admin-smart-link').value.trim();if(!Number.isFinite(rate)||rate<0||!Number.isFinite(min)||min<0||!Number.isFinite(fee)||fee<0){alert('Enter valid non-negative values.');return}if(link){try{if(new URL(link).protocol!=='https:')throw 0}catch{alert('Enter a valid HTTPS Double Earn URL.');return}}adminSettings={rate,minWithdraw:min,withdrawFee:fee,smartLink:link||SMART_LINK_DEFAULT};userData.miningRate=rate;safeStore('gtf_admin_rate',rate);safeStore('gtf_admin_min_withdraw',min);safeStore('gtf_admin_withdraw_fee',fee);safeStore('gtf_smart_link',adminSettings.smartLink);if(firebaseReady){try{await db.ref('settings').update(adminSettings)}catch(e){alert('Settings could not sync. Check Firebase rules.');return}}updateDisplay();updateWithdrawRules();alert('Settings saved.')}
 function updateWithdrawRules(){const el=document.getElementById('withdraw-rules');if(el)el.textContent='Minimum withdrawal: '+adminSettings.minWithdraw+' GTF · Fee: '+adminSettings.withdrawFee+' GTF';const amount=document.getElementById('withdrawAmount');if(amount)amount.min=adminSettings.minWithdraw}
 async function addAdminTask(){const title=document.getElementById('admin-task-title').value.trim(),url=document.getElementById('admin-task-url').value.trim(),reward=Number(document.getElementById('admin-task-reward').value),type=document.getElementById('admin-task-type').value,editId=document.getElementById('admin-edit-task-id').value;if(!title){alert('Enter a task title.');return}try{if(new URL(url).protocol!=='https:')throw 0}catch{alert('Enter a valid HTTPS task URL.');return}if(!Number.isFinite(reward)||reward<0){alert('Enter a valid reward.');return}const task={id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,7),title,url,reward,type,updatedAt:serverNow()};const idx=customTasks.findIndex(x=>x.id===task.id);if(idx>=0)customTasks[idx]=task;else customTasks.push(task);safeStore('gtf_custom_tasks',JSON.stringify(customTasks));if(firebaseReady){try{await db.ref('tasks/'+task.id).set(task)}catch(e){alert('Task saved locally but Firebase sync failed.');}}document.getElementById('admin-task-title').value='';document.getElementById('admin-task-url').value='';document.getElementById('admin-task-reward').value='';document.getElementById('admin-edit-task-id').value='';renderTasks();renderAdminTasks();document.getElementById('admin-task-count').textContent=customTasks.length}
