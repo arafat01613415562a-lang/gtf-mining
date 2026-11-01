@@ -250,7 +250,7 @@ font-weight:800;
 'use strict';
 const firebaseConfig={apiKey:'AIzaSyBhkXRY_91i2kf2CM3OiZ9-UXyGT7Bd-Wk',authDomain:'bt-mining-64329.firebaseapp.com',databaseURL:'https://bt-mining-64329-default-rtdb.firebaseio.com',projectId:'bt-mining-64329',storageBucket:'bt-mining-64329.firebasestorage.app',messagingSenderId:'845892864077',appId:'1:845892864077:web:ea4e776c2fb35e25dab404',measurementId:'G-R014X94DBJ'};
 let db=null,firebaseReady=false;try{if(window.firebase){firebase.initializeApp(firebaseConfig);db=firebase.database();firebaseReady=true;}}catch(e){console.warn('Firebase initialization:',e)}
-const SMART_LINK_DEFAULT='https://uplcm.com/4/12169278';const BOT_USERNAME='BTF_TON_BOT';const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}const tgUser=tg?.initDataUnsafe?.user;const uid=String(tgUser?.id||'local_'+getOrCreateLocalId());
+const SMART_LINK_DEFAULT='https://uplcm.com/4/12169278';const BOT_USERNAME='GTF_MINING_bot';const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}const tgUser=tg?.initDataUnsafe?.user;const uid=String(tgUser?.id||'local_'+getOrCreateLocalId());
 function getOrCreateLocalId(){let x=localStorage.getItem('gtf_local_uid');if(!x){x='u'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('gtf_local_uid',x)}return x}
 function readNum(k,d){const raw=localStorage.getItem(k),n=Number(raw);return Number.isFinite(n)&&raw!==null?n:d}function safeStore(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
 const userData={username:tgUser?.username||tgUser?.first_name||'GTF Miner',id:tgUser?.id||uid,balance:readNum('gtf_bal',0),level:readNum('gtf_lvl',0),miningRate:readNum('gtf_rate',0.0047),refCount:readNum('gtf_refs',0)};
