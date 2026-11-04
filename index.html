@@ -19,7 +19,63 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;ba
 button,input,select,textarea{font:inherit}button{cursor:pointer}input,textarea,select{user-select:text}
 #landing{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:24px 18px;background:radial-gradient(ellipse at 50% 25%,#4a3512 0,#19140b 35%,#07080c 76%);overflow:auto}
 .landing-wrap{width:min(100%,420px);text-align:center;position:relative}.brand{font-size:12px;letter-spacing:5px;color:var(--gold);font-weight:700}
-.coin-stage{height:205px;display:grid;place-items:center;perspective:900px;margin:8px 0 4px}.hero-coin{height:154px;width:154px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 30% 23%,#fff4b7 0,#ffdf65 13%,#dba21b 43%,#87570b 68%,#f9d45a 79%,#6d4608 100%);border:7px solid #ffe79a;box-shadow:inset 0 5px 8px #fff9,inset 0 -12px 18px #513100a8,0 0 24px #ffc53b66,0 22px 40px #000b;animation:coinSpin 5s ease-in-out infinite}.hero-coin:before{content:"";position:absolute;inset:7px;border:2px solid #fff0a0;border-radius:50%;box-shadow:inset 0 0 0 3px #9c690a}.hero-coin img{width:78%;height:78%;object-fit:cover;border-radius:50%;z-index:1;box-shadow:0 0 18px #fff8}@keyframes coinSpin{0%,100%{transform:rotateY(0) rotateX(5deg)}50%{transform:rotateY(180deg) rotateX(-5deg)}}
+.coin-stage{
+    height:205px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin:8px 0 4px;
+    perspective:900px;
+}
+
+.hero-coin{
+    height:145px;
+    width:145px;
+    flex-shrink:0;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    position:relative;
+    background:radial-gradient(circle at 30% 23%,#fff4b7 0,#ffdf65 13%,#dba21b 43%,#87570b 68%,#f9d45a 79%,#6d4608 100%);
+    border:7px solid #ffe79a;
+    box-shadow:inset 0 5px 8px #fff9,inset 0 -12px 18px #513100a8,0 0 24px #ffc53b66,0 22px 40px #000b;
+}
+
+.hero-coin:before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:2px solid #fff0a0;
+    border-radius:50%;
+    box-shadow:inset 0 0 0 3px #9c690a;
+}
+
+.hero-coin img{
+    width:78%;
+    height:78%;
+    object-fit:cover;
+    border-radius:50%;
+    z-index:1;
+    box-shadow:0 0 18px #fff8;
+}
+
+.cooling-fan{
+    width:62px;
+    height:62px;
+    flex-shrink:0;
+    display:grid;
+    place-items:center;
+    color:#ffd76a;
+    font-size:58px;
+    filter:drop-shadow(0 0 12px #ffc53b99);
+    animation:fanRotate 1.2s linear infinite;
+}
+
+@keyframes fanRotate{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+}
 .landing h1{font-size:clamp(27px,7vw,36px);line-height:1.15;margin:7px 0 9px;font-weight:900;letter-spacing:-1px}.landing h1 em{font-style:normal;color:var(--gold);text-shadow:0 0 24px #f5bd3b35}.landing p{font-size:12px;color:#c7c2b4;line-height:1.7}.gold-btn{width:100%;border:0;border-radius:14px;padding:14px 18px;color:#231702;font-weight:800;background:linear-gradient(135deg,#fff0a3,#ffd34f 48%,#b87b0b);box-shadow:0 8px 25px #eab32d26,inset 0 1px #fff9;margin-top:18px}.gold-btn:active{transform:scale(.985)}.secure-note{font-size:10px!important;color:#888!important;margin-top:13px}
 #verify-box{display:none;text-align:left;margin-top:18px;padding:17px;border-radius:20px;border:1px solid #f2c85a4d;background:linear-gradient(145deg,#211c12,#101117);box-shadow:0 20px 50px #0008}.verify-head{text-align:center;font-size:14px;font-weight:700;margin-bottom:4px}.verify-help{text-align:center!important;font-size:10px!important;margin-bottom:15px}.slide-area{height:116px;border:1px solid #ffd76a35;border-radius:14px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0c0d12,#252012);display:flex;align-items:center;justify-content:space-around}.target{width:58px;height:58px;border-radius:50%;border:2px dashed #ffd76a99;display:grid;place-items:center;color:#ffd76a;background:#ffd76a0d}.mini-coin{width:51px;height:51px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#fff2a7,#e9b32c 48%,#80540b);border:4px solid #ffe79a;color:#382503;font-weight:900;box-shadow:0 5px 12px #0008;position:absolute;left:10px;z-index:2;touch-action:none}.mini-coin i{font-size:17px}.slide-track{height:42px;border-radius:30px;background:#07080c;border:1px solid #ffffff19;margin-top:13px;position:relative;display:flex;align-items:center;padding:4px}.slide-track span{position:absolute;width:100%;text-align:center;font-size:10px;color:#999;pointer-events:none}#slider-knob{height:32px;width:42px;border-radius:24px;background:linear-gradient(135deg,#fff0a3,#dba21b);color:#2b1b00;display:grid;place-items:center;position:relative;z-index:2;touch-action:none;box-shadow:0 2px 9px #0008}.verify-msg{text-align:center!important;min-height:18px;font-size:10px!important;margin-top:8px}
 .app{position:relative;z-index:1;max-width:600px;margin:0 auto;min-height:100dvh;padding-bottom:84px}.header{display:flex;align-items:center;justify-content:space-between;padding:15px 17px;background:#10121bd9;border-bottom:1px solid #ffd76a20;position:sticky;top:0;z-index:50;backdrop-filter:blur(15px)}.user-info{display:flex;align-items:center;gap:10px}.brand-mark{height:38px;width:38px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#171923;border:2px solid #ffd76a;box-shadow:0 4px 15px #f3c65325}.brand-mark img{width:100%;height:100%;object-fit:cover}.user-name{font-size:13px;font-weight:700}.badge{display:inline-block;background:#ffffff12;border:1px solid #ffffff0e;padding:2px 9px;border-radius:12px;font-size:10px;color:#e7cf8a;margin-top:3px}.status{font-size:10px;color:var(--green);margin-left:6px}
@@ -168,12 +224,67 @@ font-weight:800;
 .income-option{animation:none}
 }
 
+/* ===== START MINING BUTTON ANIMATION ===== */
+
+.gold-btn{
+    animation:startMiningBounce 1.7s ease-in-out infinite;
+    transform-origin:center;
+}
+
+@keyframes startMiningBounce{
+    0%,100%{
+        transform:translateY(0);
+        box-shadow:0 8px 25px #eab32d26,inset 0 1px #fff9;
+    }
+    50%{
+        transform:translateY(-6px);
+        box-shadow:0 13px 30px #eab32d55,inset 0 1px #fff9;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    .gold-btn,.cooling-fan{
+        animation:none;
+    }
+}
+
+/* ===== START MINING BUTTON ANIMATION ===== */
+
+.gold-btn{
+    animation:startMiningBounce 1.7s ease-in-out infinite;
+    transform-origin:center;
+}
+
+@keyframes startMiningBounce{
+    0%,100%{
+        transform:translateY(0);
+        box-shadow:0 8px 25px #eab32d26,inset 0 1px #fff9;
+    }
+    50%{
+        transform:translateY(-6px);
+        box-shadow:0 13px 30px #eab32d55,inset 0 1px #fff9;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    .gold-btn,.cooling-fan{
+        animation:none;
+    }
+}
+
 /* ORIGINAL CSS CONTINUES */
 @media(max-height:700px){.coin-stage{height:150px}.hero-coin{width:125px;height:125px}.landing h1{font-size:26px}#landing{padding:16px}.landing-wrap{max-width:380px}}
 </style>
 </head>
 <body>
-<section id="landing"><div class="landing-wrap"><div class="brand">GTF MINING · DIGITAL ASSETS</div><div class="coin-stage"><div class="hero-coin"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo" onerror="this.style.display='none'"></div></div><h1>WELCOME BACK,<br><em>YOUR GTF IS READY</em></h1><p>Step into your golden mining universe.<br>Mine, complete tasks and explore your dashboard.</p><button class="gold-btn" id="enter-btn" onclick="beginEntry()">ENTER GTF MINING <i class="fa-solid fa-arrow-right"></i></button><div id="verify-box"><div class="verify-head"><i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> Quick Coin Verification</div><p class="verify-help">Slide the coin into the target to continue.</p><div class="slide-area" id="slide-area"><div class="target" id="target"><i class="fa-solid fa-circle-dot"></i></div><div class="mini-coin" id="mini-coin"><i class="fa-solid fa-coins"></i></div></div><div class="slide-track" id="slide-track"><span>DRAG THE COIN TO VERIFY</span><div id="slider-knob"><i class="fa-solid fa-arrow-right"></i></div></div><p class="verify-msg" id="verify-msg" aria-live="polite">Complete the slide to enter.</p></div><p class="secure-note">Premium experience · Please verify to continue</p></div></section>
+<section id="landing"><div class="landing-wrap"><div class="brand">GTF MINING · DIGITAL ASSETS</div><div class="coin-stage">
+    <div class="hero-coin">
+        <img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo" onerror="this.style.display='none'">
+    </div>
+    <div class="cooling-fan">
+        <i class="fa-solid fa-fan"></i>
+    </div>
+</div><h1>WELCOME BACK,<br><em>YOUR GTF IS READY</em></h1><p>Step into your golden mining universe.<br>Mine, complete tasks and explore your dashboard.</p><button class="gold-btn" id="enter-btn" onclick="beginEntry()">START MINING <i class="fa-solid fa-arrow-right"></i></button><div id="verify-box"><div class="verify-head"><i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> Quick Coin Verification</div><p class="verify-help">Slide the coin into the target to continue.</p><div class="slide-area" id="slide-area"><div class="target" id="target"><i class="fa-solid fa-circle-dot"></i></div><div class="mini-coin" id="mini-coin"><i class="fa-solid fa-coins"></i></div></div><div class="slide-track" id="slide-track"><span>DRAG THE COIN TO VERIFY</span><div id="slider-knob"><i class="fa-solid fa-arrow-right"></i></div></div><p class="verify-msg" id="verify-msg" aria-live="polite">Complete the slide to enter.</p></div><p class="secure-note">Premium experience · Please verify to continue</p></div></section>
 <div class="app" id="app" style="display:none">
 <header class="header"><div class="user-info"><div class="brand-mark"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF"></div><div><div class="user-name" id="user-name">GTF Miner</div><div><span class="badge" id="user-level">Lvl 0</span><span class="status">● READY</span></div></div></div><div style="font-size:10px;color:var(--gold);letter-spacing:1px;font-weight:700">GTF MINING</div></header>
 <section id="tab-mine" class="view-section active"><div class="mine-container"><div class="income-options"><button class="income-option" onclick="openSmartLink();openGameLibrary()">🎮 GAMING INCOME</button><button class="income-option" onclick="openSmartLink()">⚡ 2X INCOME</button></div><div class="balance-title">TOTAL ASSETS</div><div class="main-balance"><span id="total-balance">0.0000</span> GTF</div><div class="sub-wallets"><div>HOLDING WALLET: 0 GTF</div><div>POOL WALLET: <span id="pool-balance">0.0000</span> GTF</div></div><div class="mining-rate">+<span id="mining-rate-val">0.0047</span> <small style="font-size:10px">/SEC</small></div><div class="coin-btn" onclick="tapCoin()" aria-label="Tap GTF coin"><div class="coin-inner"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo" onerror="this.parentElement.textContent='GTF'"></div></div><button class="btn-claim" onclick="claimReward()">COLLECT MINED REWARDS</button><p style="font-size:9px;color:#777;margin-top:12px">Mining balance</p></div></section>
@@ -252,7 +363,9 @@ const firebaseConfig={apiKey:'AIzaSyBhkXRY_91i2kf2CM3OiZ9-UXyGT7Bd-Wk',authDomai
 let db=null,firebaseReady=false;try{if(window.firebase){firebase.initializeApp(firebaseConfig);db=firebase.database();firebaseReady=true;}}catch(e){console.warn('Firebase initialization:',e)}
 const SMART_LINK_DEFAULT='https://uplcm.com/4/12169278';const BOT_USERNAME='GTF_MINING_bot';const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}const tgUser=tg?.initDataUnsafe?.user;const uid=String(tgUser?.id||'local_'+getOrCreateLocalId());
 function getOrCreateLocalId(){let x=localStorage.getItem('gtf_local_uid');if(!x){x='u'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('gtf_local_uid',x)}return x}
-function readNum(k,d){const raw=localStorage.getItem(k),n=Number(raw);return Number.isFinite(n)&&raw!==null?n:d}function safeStore(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
+function readNum(k,d){const raw=localStorage.getItem(k),n=Number(raw);return Number.isFinite(n)&&raw!==null?n:d}
+function safeStore(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
+function safeGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 const userData={username:tgUser?.username||tgUser?.first_name||'GTF Miner',id:tgUser?.id||uid,balance:readNum('gtf_bal',0),level:readNum('gtf_lvl',0),miningRate:readNum('gtf_rate',0.0047),refCount:readNum('gtf_refs',0)};
 let gamingGames=[];
 try{
@@ -265,15 +378,234 @@ gamingGames=[];
 let customTasks=[];try{customTasks=JSON.parse(localStorage.getItem('gtf_custom_tasks')||'[]');if(!Array.isArray(customTasks))customTasks=[]}catch{customTasks=[]}
 let adminSettings={rate:readNum('gtf_admin_rate',0.0047),minWithdraw:readNum('gtf_admin_min_withdraw',170),withdrawFee:readNum('gtf_admin_withdraw_fee',70),smartLink:localStorage.getItem('gtf_smart_link')||SMART_LINK_DEFAULT};userData.miningRate=adminSettings.rate;
 let lastMiningAt=readNum('gtf_last_mining_at',Date.now()),serverOffset=0,remoteUserCache={},withdrawals=[],activities=[],supportMessages=[];let currentSupportId=null;
-function dbRef(path){return firebaseReady?db.ref(path):null}function saveUser(){safeStore('gtf_bal',userData.balance);safeStore('gtf_lvl',userData.level);safeStore('gtf_rate',userData.miningRate);if(firebaseReady){db.ref('users/'+uid).update({uid,telegramId:tgUser?.id||null,username:userData.username,balance:userData.balance,level:userData.level,miningRate:userData.miningRate,lastMiningAt:firebase.database.ServerValue.TIMESTAMP,lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(e=>console.warn('User sync failed',e))}}
+function dbRef(path){
+    return firebaseReady?db.ref(path):null;
+}
+
+function saveUser(){
+    safeStore('gtf_bal',userData.balance);
+    safeStore('gtf_lvl',userData.level);
+    safeStore('gtf_rate',userData.miningRate);
+
+    if(firebaseReady){
+        db.ref('users/'+uid).update({
+            uid,
+            telegramId:tgUser?.id||null,
+            username:userData.username,
+            balance:userData.balance,
+            level:userData.level,
+            miningRate:userData.miningRate,
+            miningStartedAt:Number(safeGet('gtf_mining_cycle_start_at'))||null,
+            lastMiningAt:Number(safeGet('gtf_last_mining_at'))||lastMiningAt,
+            miningActive:safeGet('gtf_mining_stopped')!=='1',
+            lastSeen:firebase.database.ServerValue.TIMESTAMP
+        }).catch(e=>console.warn('User sync failed',e));
+    }
+}
 function serverNow(){return Date.now()+serverOffset}
 function logActivity(type,amount,details){const item={id:'a'+Date.now()+Math.random().toString(36).slice(2,6),uid,type,amount:Number(amount)||0,details:details||'',createdAt:serverNow()};activities.unshift(item);activities=activities.slice(0,100);safeStore('gtf_activity',JSON.stringify(activities));if(firebaseReady)db.ref('activity/'+uid+'/'+item.id).set(item).catch(console.warn)}
-function updateDisplay(){document.getElementById('total-balance').textContent=userData.balance.toFixed(4);document.getElementById('pool-balance').textContent=userData.balance.toFixed(4);document.getElementById('prof-balance').textContent=userData.balance.toFixed(4);document.getElementById('user-level').textContent='Lvl '+userData.level;document.getElementById('mining-rate-val').textContent=userData.miningRate.toFixed(4);document.getElementById('ref-count').textContent=userData.refCount;saveUser()}
+function updateDisplay(){
+    document.getElementById('total-balance').textContent=userData.balance.toFixed(4);
+    document.getElementById('pool-balance').textContent=userData.balance.toFixed(4);
+    document.getElementById('prof-balance').textContent=userData.balance.toFixed(4);
+    document.getElementById('user-level').textContent='Lvl '+userData.level;
+    document.getElementById('mining-rate-val').textContent=userData.miningRate.toFixed(4);
+    document.getElementById('ref-count').textContent=userData.refCount;
+
+    const button=document.querySelector('.btn-claim');
+    if(button){
+        button.textContent=safeGet('gtf_mining_stopped')==='1'
+            ?'STOP MINING · CLAIM AGAIN'
+            :'CLAIM & RESTART MINING';
+    }
+
+    saveUser();
+}
 document.getElementById('user-name').textContent=userData.username;document.getElementById('prof-tg-id').textContent=userData.id;
-function updateReferralLink(){const el=document.getElementById('ref-link');el.textContent=tgUser?.id?`https://t.me/${BOT_USERNAME}?start=ref_${tgUser.id}`:'Open this app through Telegram to get your referral link'}updateReferralLink();
+function updateReferralLink(){
+    const el=document.getElementById('ref-link');
+    el.textContent=tgUser?.id
+        ? `https://t.me/${BOT_USERNAME}?startapp=ref_${tgUser.id}`
+        : 'Open this app through Telegram to get your referral link';
+}
+updateReferralLink();
+
+/* ===== 7-DAY REFERRAL ACTIVE SYSTEM ===== */
+const REF_ACTIVE_REQUIRED = 600; // 10 minutes per day
+let referralLastTick = 0;
+
+function getReferralDayKey(){
+    const d = new Date(serverNow());
+    return d.getFullYear()+'-'+
+        String(d.getMonth()+1).padStart(2,'0')+'-'+
+        String(d.getDate()).padStart(2,'0');
+}
+
+function getReferralInviter(){
+    let inviter = localStorage.getItem('gtf_referrer_uid');
+
+    const startParam = String(tg?.initDataUnsafe?.start_param || '');
+    const match = startParam.match(/^ref_(\d+)$/);
+
+    if(!inviter && match && match[1] !== String(uid)){
+        inviter = match[1];
+        safeStore('gtf_referrer_uid', inviter);
+    }
+
+    return inviter && inviter !== String(uid) ? inviter : null;
+}
+
+async function saveReferralActiveDay(dayKey){
+    const inviter = getReferralInviter();
+
+    if(!firebaseReady || !inviter || !tgUser?.id) return;
+
+    try{
+        const path = 'referralActivity/'+inviter+'/'+uid+'/'+dayKey;
+
+        await db.ref(path).transaction(current=>{
+            return current || {
+                active:true,
+                username:userData.username,
+                telegramId:tgUser.id,
+                completedAt:firebase.database.ServerValue.TIMESTAMP
+            };
+        });
+
+        safeStore('gtf_ref_day_saved_'+dayKey,'1');
+        loadReferralStats();
+    }catch(e){
+        console.warn('Referral day save failed:',e);
+    }
+}
+
+function trackReferralActiveTime(){
+    const now = serverNow();
+    const app = document.getElementById('app');
+
+    if(!app || app.style.display==='none' || document.visibilityState!=='visible'){
+        referralLastTick = 0;
+        return;
+    }
+
+    if(!getReferralInviter()){
+        referralLastTick = now;
+        return;
+    }
+
+    if(!referralLastTick){
+        referralLastTick = now;
+        return;
+    }
+
+    const elapsed = Math.min(5,Math.max(0,(now-referralLastTick)/1000));
+    referralLastTick = now;
+
+    if(elapsed<=0) return;
+
+    const dayKey = getReferralDayKey();
+    const storageKey = 'gtf_ref_active_'+dayKey;
+    const seconds = Math.min(
+        REF_ACTIVE_REQUIRED,
+        Number(localStorage.getItem(storageKey)||0)+elapsed
+    );
+
+    safeStore(storageKey,seconds);
+
+    if(
+        seconds>=REF_ACTIVE_REQUIRED &&
+        localStorage.getItem('gtf_ref_day_saved_'+dayKey)!=='1'
+    ){
+        saveReferralActiveDay(dayKey);
+    }
+}
+
+async function loadReferralStats(){
+    const countEl = document.getElementById('ref-count');
+    const listEl = document.getElementById('referral-list');
+
+    if(!firebaseReady || !tgUser?.id){
+        if(countEl) countEl.textContent='0';
+        if(listEl) listEl.textContent='Referral data requires Firebase and Telegram.';
+        return;
+    }
+
+    try{
+        const snap = await db.ref('referralActivity/'+uid).once('value');
+        const referrals = snap.val() || {};
+        let successful = 0;
+
+        listEl.innerHTML='';
+
+        Object.entries(referrals).forEach(([refUid,data])=>{
+            const days = Object.keys(data || {}).filter(day=>
+                data[day] && data[day].active===true
+            );
+
+            const completed = days.length>=7;
+            if(completed) successful++;
+
+            const row = document.createElement('div');
+            row.className='card';
+
+            const info = document.createElement('div');
+            info.className='card-text';
+
+            const name = document.createElement('h4');
+            name.textContent=data[days[0]]?.username || ('User '+refUid);
+
+            const detail = document.createElement('p');
+            detail.textContent=days.length+'/7 active days · '+(completed?'Completed':'In progress');
+
+            info.append(name,detail);
+            row.append(info);
+            listEl.append(row);
+        });
+
+        userData.refCount=successful;
+        safeStore('gtf_refs',successful);
+
+        if(countEl) countEl.textContent=successful;
+
+        if(!Object.keys(referrals).length){
+            listEl.textContent='No referrals yet.';
+        }
+    }catch(e){
+        console.warn('Referral stats load failed:',e);
+    }
+}
 try{activities=JSON.parse(localStorage.getItem('gtf_activity')||'[]')}catch{activities=[]}try{withdrawals=JSON.parse(localStorage.getItem('gtf_withdrawals')||'[]')}catch{withdrawals=[]}
-async function loadRemote(){if(!firebaseReady)return;try{const [u,t,s]=await Promise.all([db.ref('users/'+uid).once('value'),db.ref('tasks').once('value'),db.ref('settings').once('value')]);const remote=u.val();if(remote){userData.balance=Number(remote.balance)||0;userData.level=Number(remote.level)||0;userData.miningRate=Number(remote.miningRate)||adminSettings.rate;lastMiningAt=Number(remote.lastMiningAt)||serverNow();safeStore('gtf_last_mining_at',lastMiningAt);updateDisplay()}const tasks=t.val();if(tasks){customTasks=Object.values(tasks).filter(Boolean);safeStore('gtf_custom_tasks',JSON.stringify(customTasks));renderTasks()}const st=s.val();if(st){adminSettings={...adminSettings,...st};userData.miningRate=Number(adminSettings.rate)||userData.miningRate;updateWithdrawRules();updateDisplay()}const w=await db.ref('withdrawals/'+uid).once('value');if(w.exists())withdrawals=Object.values(w.val()||{}).filter(Boolean);safeStore('gtf_withdrawals',JSON.stringify(withdrawals));const a=await db.ref('activity/'+uid).limitToLast(100).once('value');if(a.exists())activities=Object.values(a.val()||{}).filter(Boolean).sort((x,y)=>(y.createdAt||0)-(x.createdAt||0));safeStore('gtf_activity',JSON.stringify(activities));renderTasks()}catch(e){console.warn('Firebase sync error',e)}}
+async function loadRemote(){if(!firebaseReady)return;try{const [u,t,s]=await Promise.all([db.ref('users/'+uid).once('value'),db.ref('tasks').once('value'),db.ref('settings').once('value')]);const remote=u.val();if(remote){userData.balance=Number(remote.balance)||0;userData.level=Number(remote.level)||0;userData.miningRate=Number(remote.miningRate)||adminSettings.rate;lastMiningAt=Number(remote.lastMiningAt)||Number(safeGet('gtf_last_mining_at'))||serverNow();
+const remoteCycle=Number(remote.miningStartedAt)||Number(safeGet('gtf_mining_cycle_start_at'))||0;
+if(remoteCycle){
+    safeStore('gtf_mining_cycle_start_at',remoteCycle);
+    safeStore('gtf_last_mining_at',lastMiningAt);
+}
+if(remote.miningActive===false){
+    safeStore('gtf_mining_stopped','1');
+}else if(remoteCycle && serverNow()>=remoteCycle+86400000){
+    safeStore('gtf_mining_stopped','1');
+}else if(remoteCycle){
+    safeStore('gtf_mining_stopped','0');
+}
+updateDisplay()}const tasks=t.val();if(tasks){customTasks=Object.values(tasks).filter(Boolean);safeStore('gtf_custom_tasks',JSON.stringify(customTasks));renderTasks()}const st=s.val();if(st){adminSettings={...adminSettings,...st};userData.miningRate=Number(adminSettings.rate)||userData.miningRate;updateWithdrawRules();updateDisplay()}const w=await db.ref('withdrawals/'+uid).once('value');if(w.exists())withdrawals=Object.values(w.val()||{}).filter(Boolean);safeStore('gtf_withdrawals',JSON.stringify(withdrawals));const a=await db.ref('activity/'+uid).limitToLast(100).once('value');if(a.exists())activities=Object.values(a.val()||{}).filter(Boolean).sort((x,y)=>(y.createdAt||0)-(x.createdAt||0));safeStore('gtf_activity',JSON.stringify(activities));renderTasks()}catch(e){console.warn('Firebase sync error',e)}}
 if(firebaseReady){db.ref('.info/serverTimeOffset').on('value',s=>{serverOffset=Number(s.val())||0;});db.ref('.info/connected').on('value',s=>{if(s.val()){db.ref('presence/'+uid).onDisconnect().update({online:false,lastSeen:firebase.database.ServerValue.TIMESTAMP});db.ref('presence/'+uid).update({online:true,username:userData.username,lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(console.warn)}});db.ref('tasks').on('value',s=>{const v=s.val();customTasks=v?Object.values(v).filter(Boolean):[];safeStore('gtf_custom_tasks',JSON.stringify(customTasks));renderTasks()});db.ref('settings').on('value',s=>{const v=s.val();if(v){adminSettings={...adminSettings,...v};userData.miningRate=Number(v.rate)||userData.miningRate;updateWithdrawRules();updateDisplay()}});}
+/* ===== LIVE USER BALANCE SYNC ===== */
+if(firebaseReady){
+    db.ref('users/'+uid+'/balance').on('value',snap=>{
+        if(!snap.exists())return;
+
+        const remoteBalance=Number(snap.val());
+        if(!Number.isFinite(remoteBalance))return;
+
+        if(Math.abs(userData.balance-remoteBalance)>0.0000001){
+            userData.balance=remoteBalance;
+            safeStore('gtf_bal',remoteBalance);
+            updateDisplay();
+        }
+    });
+}
+
 /* ===== GAMING LIBRARY SYSTEM ===== */
 
 function openExternalGameUrl(url){
@@ -423,6 +755,7 @@ renderAdminGames();
 renderGameLibrary();
 alert('Game saved successfully.');
 }
+}
 
 function renderAdminGames(){
 const container=document.getElementById('admin-game-list');
@@ -509,32 +842,82 @@ if(el)el.classList.add('active');
 }
 function tapCoin(){userData.balance+=.001;logActivity('Manual tap',.001,'Coin tap reward');updateDisplay()}
 function accrueMining(){
-const now=serverNow();
-const app=document.getElementById('app');
+    const now=serverNow();
+    let cycleStart=Number(safeGet('gtf_mining_cycle_start_at'))||0;
 
-if(!app||app.style.display==='none'||document.visibilityState!=='visible'){
-lastMiningAt=now;
-safeStore('gtf_last_mining_at',lastMiningAt);
-return;
+    if(!cycleStart){
+        cycleStart=now;
+        lastMiningAt=now;
+        safeStore('gtf_mining_cycle_start_at',cycleStart);
+        safeStore('gtf_last_mining_at',lastMiningAt);
+        safeStore('gtf_mining_stopped','0');
+        if(firebaseReady){
+            db.ref('users/'+uid).update({
+                miningStartedAt:cycleStart,
+                lastMiningAt:lastMiningAt,
+                miningActive:true
+            }).catch(console.warn);
+        }
+        return;
+    }
+
+    if(safeGet('gtf_mining_stopped')==='1')return;
+
+    const stopAt=cycleStart+86400000;
+    const effectiveNow=Math.min(now,stopAt);
+    const previous=Number(safeGet('gtf_last_mining_at'))||lastMiningAt||cycleStart;
+    const elapsed=Math.max(0,(effectiveNow-previous)/1000);
+
+    if(elapsed>0){
+        userData.balance+=elapsed*userData.miningRate;
+        lastMiningAt=effectiveNow;
+        safeStore('gtf_last_mining_at',lastMiningAt);
+        safeStore('gtf_bal',userData.balance);
+
+        if(firebaseReady){
+            db.ref('users/'+uid).update({
+                balance:userData.balance,
+                lastMiningAt:lastMiningAt
+            }).catch(console.warn);
+        }
+    }
+
+    if(now>=stopAt){
+        safeStore('gtf_mining_stopped','1');
+        if(firebaseReady){
+            db.ref('users/'+uid).update({miningActive:false}).catch(console.warn);
+        }
+    }
+
+    updateDisplay();
 }
 
-const elapsed=Math.max(0,(now-lastMiningAt)/1000);
+async function claimReward(){
+    accrueMining();
 
-if(elapsed<=0)return;
+    const now=serverNow();
+    safeStore('gtf_mining_cycle_start_at',now);
+    safeStore('gtf_last_mining_at',now);
+    safeStore('gtf_mining_stopped','0');
 
-const earned=elapsed*userData.miningRate;
+    lastMiningAt=now;
 
-userData.balance+=earned;
-lastMiningAt=now;
+    if(firebaseReady){
+        try{
+            await db.ref('users/'+uid).update({
+                balance:userData.balance,
+                miningStartedAt:now,
+                lastMiningAt:now,
+                miningActive:true
+            });
+        }catch(e){
+            alert('Mining restart failed. Please try again.');
+            return;
+        }
+    }
 
-safeStore('gtf_last_mining_at',lastMiningAt);
-
-updateDisplay();
-}
-
-function claimReward(){
-accrueMining();
-alert('Your mining rewards have been added to your balance.');
+    updateDisplay();
+    alert('Rewards collected! Your new 24-hour mining cycle has started.');
 }
 function formatTime(ms){let s=Math.max(0,Math.floor(ms/1000));return String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 function renderCheckin(){const c=document.getElementById('checkin-container');c.innerHTML='';let day=readNum('gtf_checkin_day',1),last=readNum('gtf_checkin_time',0),available=!last||serverNow()-last>=86400000;for(let d=1;d<=30;d++){const r=d===30?50:5,card=document.createElement('div');card.className='checkin-card';if(d<day){card.classList.add('claimed');card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button disabled>CLAIMED</button>`}else if(d===day){card.classList.add('active');card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button ${available?'':'disabled'}>${available?'CLAIM':formatTime(86400000-(serverNow()-last))}</button>`;if(available)card.querySelector('button').onclick=()=>claimDailyCheckin(d,r)}else card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button disabled>LOCKED</button>`;c.appendChild(card)}}
@@ -570,7 +953,7 @@ window.addEventListener('load',()=>setTimeout(()=>{if(document.getElementById('a
 if(document.visibilityState==='visible'&&document.getElementById('app').style.display!=='none'){
 triggerMonetagAd();
 }
-},12000);
+},15000);
 function renderTasks(){const c=document.getElementById('custom-tasks-container');if(!c)return;c.innerHTML='';if(!customTasks.length){c.innerHTML='<div class="card"><div class="card-text"><h4>No tasks available yet</h4><p>The administrator has not published any tasks.</p></div></div>';return}customTasks.forEach(t=>{const key='gtf_custom_task_'+t.id,done=localStorage.getItem(key)==='true',card=document.createElement('div');card.className='card';const info=document.createElement('div');info.className='card-info';const icon=document.createElement('div');icon.className='card-icon';icon.textContent=t.type==='telegram'?'✈':t.type==='youtube'?'▶':'🌐';const txt=document.createElement('div');txt.className='card-text';const h=document.createElement('h4');h.textContent=t.title;const p=document.createElement('p');p.textContent='+'+Number(t.reward).toFixed(2)+' GTF';txt.append(h,p);info.append(icon,txt);const btn=document.createElement('button');btn.className='btn-action';btn.textContent=done?'Claimed':'Start';btn.disabled=done;btn.onclick=()=>startCustomTask(t,btn);card.append(info,btn);c.append(card)})}
 function startCustomTask(t,btn){const w=window.open(t.url,'_blank');if(!w){alert('Your browser blocked the task link. Tap Start again to open it.');return}triggerMonetagAd();btn.disabled=true;let seconds=10;btn.textContent=seconds+'s';const timer=setInterval(()=>{seconds--;if(!btn.isConnected){clearInterval(timer);return}btn.textContent=seconds+'s';if(seconds<=0){clearInterval(timer);btn.disabled=false;btn.textContent='Claim';btn.onclick=()=>claimCustomTask(t)}} ,1000)}
 function claimCustomTask(t){const key='gtf_custom_task_'+t.id;if(localStorage.getItem(key)==='true')return;/* A timer cannot verify an external subscription/action; claim remains user-confirmed. */localStorage.setItem(key,'true');const reward=Number(t.reward)||0;userData.balance+=reward;userData.level++;updateDisplay();logActivity('Task reward',reward,t.title);if(firebaseReady)db.ref('taskClaims/'+uid+'/'+t.id).transaction(v=>v? v:{claimed:true,createdAt:firebase.database.ServerValue.TIMESTAMP}).then(r=>{if(!r.committed){userData.balance-=reward;updateDisplay();alert('This task was already claimed.');}}).catch(console.warn);renderTasks();alert('Successfully Claimed! Your reward has been added to your balance.')}
@@ -750,12 +1133,34 @@ function backToInbox(){document.getElementById('adminThreadPanel').style.display
 async function openAdminThread(uidTo){try{const snap=await db.ref('supportMessages/'+uidTo).once('value');const list=Object.entries(snap.val()||{}).map(([key,m])=>({...m,id:m.id||key})).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));currentSupportId=uidTo;const conv=(window.supportConversations||[]).find(x=>x.uid===uidTo);document.getElementById('admin-thread-name').textContent=conv?.username||uidTo;document.getElementById('admin-thread-id').textContent='Telegram/User ID: '+uidTo;document.getElementById('admin-thread-avatar').textContent=(conv?.username||'U').slice(0,1).toUpperCase();const updates={};list.forEach(m=>{if(m.sender==='user'&&m.id){updates['supportMessages/'+uidTo+'/'+m.id+'/adminSeen']=true;updates['supportMessages/'+uidTo+'/'+m.id+'/status']='SEEN';updates['supportInbox/'+m.id+'/adminSeen']=true;updates['supportInbox/'+m.id+'/status']='SEEN'}});updates['supportThreads/'+uidTo+'/unreadCount']=0;if(Object.keys(updates).length)await db.ref().update(updates);renderAdminThread(list);document.getElementById('admin-support-list').style.display='none';document.getElementById('adminThreadPanel').style.display='block';}catch(e){console.error(e);alert('Could not open this conversation. Check Firebase read/write rules for support paths.')}}
 function renderAdminThread(list){const c=document.getElementById('admin-thread-body');c.innerHTML='';(list||[]).forEach(m=>{const b=document.createElement('div');b.className='chat-bubble '+(m.sender==='user'?'':'mine');if(m.sender==='admin'){const n=document.createElement('div');n.innerHTML=adminIdentityHTML();b.append(n)}const t=document.createElement('div');t.textContent=m.text||'';b.append(t);const meta=document.createElement('div');meta.className='chat-meta';meta.textContent=new Date(m.createdAt||Date.now()).toLocaleString();b.append(meta);c.append(b)});c.scrollTop=c.scrollHeight}
 async function sendAdminThreadReply(){const input=document.getElementById('admin-thread-input'),text=input.value.trim();if(!text||!currentSupportId)return;try{await replySupport(currentSupportId,null,text);input.value='';await openAdminThread(currentSupportId);await refreshAdminData()}catch(e){console.error(e);alert('Reply failed. Check Firebase write rules for supportMessages and supportThreads.')}}
-function enterApp(){document.getElementById('landing').style.display='none';document.getElementById('app').style.display='block';document.getElementById('bottom-nav').style.display='flex';if(tg)tg.expand();accrueMining();setTimeout(()=>{if(document.visibilityState==='visible')triggerMonetagAd()},1500)}
+function enterApp(){
+    document.getElementById('landing').style.display='none';
+    document.getElementById('app').style.display='block';
+    document.getElementById('bottom-nav').style.display='flex';
+
+    if(tg) tg.expand();
+
+    accrueMining();
+    referralLastTick=serverNow();
+
+    loadReferralStats();
+
+    setTimeout(()=>{
+        if(document.visibilityState==='visible') triggerMonetagAd();
+    },1500);
+}
 window.addEventListener('focus',()=>{accrueMining();if(firebaseReady)loadRemote()});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){accrueMining();if(firebaseReady)db.ref('presence/'+uid).update({online:true,lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{})}else if(firebaseReady)db.ref('presence/'+uid).update({online:false,lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{})});
 setInterval(()=>{if(document.getElementById('app').style.display!=='none'){accrueMining();if(firebaseReady)db.ref('presence/'+uid).update({online:document.visibilityState==='visible',lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{})}},1000);
 setInterval(()=>{const a=document.getElementById('adminModal');if(firebaseReady&&a&&a.style.display==='flex')refreshAdminData()},8000);
 setInterval(()=>{const b=document.querySelector('#checkin-container .checkin-card.active button:disabled');if(b){const last=readNum('gtf_checkin_time',0),left=86400000-(serverNow()-last);if(left<=0)renderCheckin();else b.textContent=formatTime(left)}},1000);
-renderCheckin();renderTasks();updateWithdrawRules();updateDisplay();loadRemote();
+setInterval(trackReferralActiveTime,1000);
+
+renderCheckin();
+renderTasks();
+updateWithdrawRules();
+updateDisplay();
+loadRemote();
+loadReferralStats();
 </script>
 </body>
 </html>
