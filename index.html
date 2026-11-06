@@ -14,6 +14,8 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <!-- TON Connect UI Official CDN -->
 <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<!-- TonWeb Official CDN for Jetton Payload & Address Resolution -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tonweb/0.0.66/tonweb.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -111,7 +113,12 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}input,textarea,s
 .switch-toggle input:checked + .switch-round:before{transform:translateX(24px);background:#052414}
 .coin-btn{width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 28% 22%,#fff5b5 0,#ffdc58 16%,#d9a11c 52%,#81540b 78%,#f4ce55 83%,#7a500b);border:8px solid #ffe79a;box-shadow:inset 0 5px 10px #fff9,inset 0 -12px 18px #5d3900a8,0 0 35px #f4c54b40,0 20px 38px #0008;display:flex;justify-content:center;align-items:center;cursor:pointer;transition:transform .15s;margin-bottom:23px;position:relative}.coin-btn:before{content:"";position:absolute;inset:8px;border:2px solid #fff0a0;border-radius:50%;box-shadow:inset 0 0 0 4px #9c690a}.coin-btn:active{transform:scale(.94) rotate(-2deg)}.coin-inner{width:76%;height:76%;border-radius:50%;overflow:hidden;z-index:1;display:grid;place-items:center}.coin-inner img{width:100%;height:100%;object-fit:cover;border-radius:50%}.btn-claim{width:100%;max-width:310px;padding:14px;background:linear-gradient(135deg,#fff0a3,#ffc82d 48%,#b77b0b);border:0;border-radius:13px;color:#241800;font-weight:800;font-size:14px;box-shadow:0 7px 22px #ffc52d20}
 .section-title{font-size:12px;color:var(--gold);margin:18px 0 10px;letter-spacing:.7px;font-weight:700}.card{background:linear-gradient(145deg,#1c202b,#11131b);border:1px solid #ffd76a19;border-radius:15px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:0 8px 22px #0002}.card-info{display:flex;align-items:center;gap:10px;flex:1;min-width:0}.card-icon{width:37px;height:37px;border-radius:11px;background:linear-gradient(145deg,#ffd76a20,#ffd76a08);border:1px solid #ffd76a16;display:flex;justify-content:center;align-items:center;font-size:15px;color:var(--gold);flex-shrink:0}.card-text h4{font-size:12px;margin-bottom:3px}.card-text p{font-size:10px;color:#a4a6b0;overflow-wrap:anywhere}.btn-action{background:linear-gradient(135deg,#ffe99b,#e4aa22);color:#251900;border:0;padding:8px 12px;border-radius:20px;font-weight:700;font-size:10px;min-width:76px;text-align:center;flex-shrink:0}.btn-action:disabled{background:#343640;color:#888;cursor:not-allowed;box-shadow:none}.checkin-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:14px}.checkin-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:10px;padding:9px 3px;text-align:center}.checkin-card.active{border-color:var(--gold);background:#f3ba2f12}.checkin-card.claimed{opacity:.55;border-color:#51f0a366}.checkin-day{font-size:9px;color:#aaa}.checkin-reward{font-size:11px;font-weight:800;color:var(--gold);margin:4px 0}.checkin-card button{width:100%;padding:4px 1px;font-size:8px;border-radius:10px;border:0;background:var(--gold);color:#000;font-weight:800}.checkin-card button:disabled{background:#333;color:#777}
-.bottom-nav{height:69px;background:#10121bf5;border-top:1px solid #ffd76a20;display:flex;justify-content:space-around;align-items:center;width:100%;position:fixed;bottom:0;left:0;z-index:100;backdrop-filter:blur(15px);padding-bottom:env(safe-area-inset-bottom)}.nav-item{display:flex;flex-direction:column;align-items:center;color:#747784;text-decoration:none;font-size:9px;gap:5px;cursor:pointer;flex:1}.nav-item.active{color:var(--gold)}.nav-item i{font-size:17px}.modal{display:none;position:fixed;inset:0;background:#000c;justify-content:center;align-items:center;z-index:1000;padding:20px}.modal-content{background:linear-gradient(145deg,#222532,#11131a);padding:20px;border-radius:17px;width:100%;max-width:390px;text-align:center;border:1px solid #ffd76a30;max-height:90dvh;overflow:auto}.modal-content input,.modal-content textarea,.modal-content select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #393b45;background:#0a0a0c;color:#fff;text-align:left}.field{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #393b45;background:#0a0a0c;color:#fff}.small{font-size:10px}.muted{color:#aaa}.stat{background:#ffffff0a;padding:8px;border-radius:8px;text-align:center}.stat small{display:block;font-size:9px;color:#aaa}.stat strong{font-size:14px}.history-row{padding:10px;border-bottom:1px solid #ffffff12;font-size:10px;display:flex;justify-content:space-between;gap:8px}.status-pending{color:#ffd76a}.status-approved,.status-replied{color:var(--green)}.status-rejected{color:#ff7373}
+.bottom-nav{height:69px;background:#10121bf5;border-top:1px solid #ffd76a20;display:flex;justify-content:space-around;align-items:center;width:100%;position:fixed;bottom:0;left:0;z-index:100;backdrop-filter:blur(15px);padding-bottom:env(safe-area-inset-bottom)}.nav-item{display:flex;flex-direction:column;align-items:center;color:#747784;text-decoration:none;font-size:9px;gap:5px;cursor:pointer;flex:1}.nav-item.active{color:var(--gold)}.nav-item i{font-size:17px}.modal{display:none;position:fixed;inset:0;background:#000c;justify-content:center;align-items:center;z-index:1000;padding:20px}.modal-content{background:linear-gradient(145deg,#222532,#11131a);padding:20px;border-radius:17px;width:100%;max-width:390px;text-align:center;border:1px solid #ffd76a30;max-height:90dvh;overflow:auto}.modal-content input,.modal-content textarea,.modal-content select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #393b45;background:#0a0a0c;color:#fff;text-align:left}.field{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #393b45;background:#0a0a0c;color:#fff}.small{font-size:10px}.muted{color:#aaa}.stat{background:#ffffff0a;padding:8px;border-radius:8px;text-align:center}.stat small{display:block;font-size:9px;color:#aaa}.stat strong{font-size:14px}.history-row{padding:10px;border-bottom:1px solid #ffffff12;font-size:10px;display:flex;justify-content:space-between;gap:8px}.status-pending{color:#ffd76a}.status-approved,.status-replied,.status-paid{color:var(--green)}.status-rejected{color:#ff7373}.status-processing{color:#38bdf8}
+.btn-pay{background:linear-gradient(135deg,#51f0a3,#18a35e);color:#042b1b;border:0;padding:8px 12px;border-radius:20px;font-weight:800;font-size:10px;min-width:76px;text-align:center;box-shadow:0 0 10px rgba(81,240,163,0.3);cursor:pointer}
+.btn-pay:disabled{background:#343640;color:#888;cursor:not-allowed;box-shadow:none}
+.btn-reject{background:linear-gradient(135deg,#ff7373,#a83232);color:#fff;border:0;padding:8px 12px;border-radius:20px;font-weight:800;font-size:10px;min-width:76px;text-align:center;cursor:pointer}
+.btn-reject:disabled{background:#343640;color:#888;cursor:not-allowed;box-shadow:none}
+.tx-hash-link{color:#38bdf8;text-decoration:none;word-break:break-all;font-size:9px;display:inline-block;margin-top:3px}
 #help-launcher{position:fixed;right:15px;bottom:88px;z-index:500;display:flex;align-items:center;gap:7px;border:1px solid #ffd76a55;border-radius:28px;padding:6px 12px 6px 6px;background:linear-gradient(135deg,#242735,#10121b);box-shadow:0 5px 22px #0009,0 0 15px #ffd76a22;color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.5px}
 .help-person{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 35% 25%,#fff1bd,#d8a52b 60%,#78500c);color:#211600;border:2px solid #ffe79a;animation:helpFloat 2s ease-in-out infinite;box-shadow:0 0 13px #ffd76a66}.help-person i{font-size:18px}.help-person:after{content:"";position:absolute;right:2px;top:10px;width:7px;height:15px;border:2px solid #252a36;border-radius:6px;background:#ffd76a}.help-label{white-space:nowrap}@keyframes helpFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 #supportModal .modal-content{padding:0;overflow:hidden;text-align:left;max-width:420px;height:min(650px,88dvh);display:flex;flex-direction:column}.chat-head{padding:14px;background:#075e54;display:flex;align-items:center;gap:10px}.chat-avatar{height:37px;width:37px;border-radius:50%;background:linear-gradient(135deg,#ffe99b,#d69c1b);display:grid;place-items:center;color:#382603;font-weight:900}.chat-title{font-size:13px;font-weight:800}.chat-subtitle{font-size:9px;color:#d3eee8}.chat-body{flex:1;overflow:auto;padding:13px;background:radial-gradient(circle at top,#172a2a,#10151a 65%)}.chat-bubble{max-width:85%;padding:9px 11px;border-radius:12px;margin:7px 0;font-size:11px;line-height:1.5;overflow-wrap:anywhere;background:#242b32}.chat-bubble.mine{margin-left:auto;background:#075e54}.chat-meta{font-size:8px;color:#b5c4c2;margin-top:4px;text-align:right}.chat-compose{display:flex;gap:7px;padding:10px;background:#171b21}.chat-compose textarea{flex:1;resize:none;min-height:40px;max-height:90px;border:0;border-radius:20px;padding:10px 13px;background:#292f37;color:#fff;font-size:11px}.chat-send{width:42px;height:42px;border:0;border-radius:50%;background:#20c878;color:#042b1b}.verified-tick{display:inline-flex;align-items:center;justify-content:center;color:#fff;background:#1877f2;border-radius:50%;width:13px;height:13px;font-size:8px;margin-left:3px;vertical-align:middle}.admin-tag{font-size:8px;color:#b8d8ff;border:1px solid #1877f2;padding:1px 5px;border-radius:8px;margin-left:4px}
@@ -436,6 +443,11 @@ const SMART_LINK_DEFAULT='https://uplcm.com/4/12169278';
 const BOT_USERNAME='GTF_MINING_bot';
 const MANIFEST_URL='https://arafat01613415562a-lang.github.io/gtf-mining/tonconnect-manifest.json';
 
+/* ===== GTF JETTON & ADMIN WALLET CONFIG ===== */
+const GTF_JETTON_MASTER_ADDRESS = 'EQCpTNKsUtmyxtpfb6KmCp_LmHcnybWfzmlHkurOBQwHFB5t';
+const ADMIN_WALLET_ADDRESS = 'UQBUrewFxsRB31GxTgYmg-uiwaZIwc-e7Nc_yKyjM03C-GD4';
+const GTF_JETTON_DECIMALS = 9;
+
 const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}
 const tgUser=tg?.initDataUnsafe?.user;
 const uid=String(tgUser?.id||'local_'+getOrCreateLocalId());
@@ -486,7 +498,6 @@ function initTonConnect(){
             }
         };
 
-        // Listen for wallet connection status change
         tonConnectUI.onStatusChange(wallet => {
             if(wallet && wallet.account){
                 currentConnectedWallet = wallet;
@@ -809,7 +820,6 @@ if(firebaseReady){
     db.ref('tasks').on('value',s=>{const v=s.val();customTasks=v?Object.values(v).filter(Boolean):[];safeStore('gtf_custom_tasks',JSON.stringify(customTasks));renderTasks()});
     db.ref('settings').on('value',s=>{const v=s.val();if(v){adminSettings={...adminSettings,...v};userData.miningRate=Number(v.rate)||userData.miningRate;updateWithdrawRules();updateDisplay()}});
     
-    // উইথড্র স্ট্যাটাস লাইভ ট্র্যাক করার জন্য লিসেনার:
     db.ref('withdrawals/'+uid).on('value', snap => {
         if(snap.exists()){
             withdrawals = Object.values(snap.val() || {}).filter(Boolean).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
@@ -1047,15 +1057,14 @@ async function processWithdraw(){
         return;
     }
 
-    // ১. সাথে সাথে ইউজারের ব্যালেন্স এবং মাইনিং লেভেল কেটে নেওয়া
     userData.balance = Math.max(0, userData.balance - totalDeduct);
     if(userData.level > 0){
-        userData.level = userData.level - 1; // লেভেল ১ কমানো হলো
+        userData.level = userData.level - 1;
     }
     safeStore('gtf_bal', userData.balance);
     safeStore('gtf_lvl', userData.level);
-    updateDisplay(); // সাথে সাথে ডিসপ্লে আপডেট হবে
-    saveUser();      // ফায়ারবেজে ইউজারের নতুন ব্যালেন্স ও লেভেল সেভ হবে
+    updateDisplay();
+    saveUser();
 
     const id='w'+Date.now()+Math.random().toString(36).slice(2,7);
     const item={
@@ -1093,8 +1102,41 @@ async function processWithdraw(){
     document.getElementById('withdrawAmount').value='';
 }
 
-function openHistory(type){const box=document.getElementById('history-content');document.getElementById('history-title').textContent=type==='withdrawals'?'Withdrawal History':'Activity History';box.innerHTML='';const arr=type==='withdrawals'?withdrawals:activities;if(!arr.length)box.textContent='No records yet.';arr.forEach(x=>{const row=document.createElement('div');row.className='history-row';const left=document.createElement('div');left.textContent=type==='withdrawals'?`${x.amount} GTF · ${x.network}\n${x.address}`:`${x.type} · ${x.details||''} · ${x.amount} GTF`;left.style.whiteSpace='pre-line';const right=document.createElement('div');right.style.textAlign='right';right.innerHTML=`<span class="${statusClass(x.status)}">${x.status||'RECORDED'}</span><br>${new Date(x.createdAt||Date.now()).toLocaleString()}`;row.append(left,right);box.append(row)});document.getElementById('historyModal').style.display='flex'}
-function statusClass(s){return s==='APPROVED'?'status-approved':s==='REJECTED'?'status-rejected':s==='REPLIED'?'status-replied':'status-pending'}
+function openHistory(type){
+    const box=document.getElementById('history-content');
+    document.getElementById('history-title').textContent=type==='withdrawals'?'Withdrawal History':'Activity History';
+    box.innerHTML='';
+    const arr=type==='withdrawals'?withdrawals:activities;
+    if(!arr.length){box.textContent='No records yet.';return;}
+    arr.forEach(x=>{
+        const row=document.createElement('div');
+        row.className='history-row';
+        const left=document.createElement('div');
+        if(type==='withdrawals'){
+            let extraInfo = '';
+            if(x.txHash){
+                extraInfo = `\nTX: ${x.txHash.slice(0,8)}...${x.txHash.slice(-6)}`;
+            }
+            left.textContent=`${x.amount} GTF · ${x.network}\n${x.address}${extraInfo}`;
+        } else {
+            left.textContent=`${x.type} · ${x.details||''} · ${x.amount} GTF`;
+        }
+        left.style.whiteSpace='pre-line';
+        const right=document.createElement('div');
+        right.style.textAlign='right';
+        right.innerHTML=`<span class="${statusClass(x.status)}">${x.status||'RECORDED'}</span><br>${new Date(x.createdAt||Date.now()).toLocaleString()}`;
+        row.append(left,right);
+        box.append(row);
+    });
+    document.getElementById('historyModal').style.display='flex';
+}
+function statusClass(s){
+    const st = String(s||'').toUpperCase();
+    if(st==='PAID'||st==='APPROVED'||st==='REPLIED') return 'status-paid';
+    if(st==='REJECTED') return 'status-rejected';
+    if(st==='PROCESSING') return 'status-processing';
+    return 'status-pending';
+}
 function closeHistory(){document.getElementById('historyModal').style.display='none'}
 
 function shouldVerify(){const n=readNum('gtf_entry_count',0)+1;safeStore('gtf_entry_count',n);const last=readNum('gtf_last_verified',0);return n===1||(n%4===0&&Date.now()-last>30000)}
@@ -1194,15 +1236,79 @@ function renderAdminWithdrawals(){
     arr.slice().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).forEach(w=>{
         const row=document.createElement('div');row.className='card';const info=document.createElement('div');info.className='card-text';
         const h=document.createElement('h4');h.textContent=(w.username||w.uid)+' · '+w.amount+' GTF';
-        const p=document.createElement('p');p.textContent=w.network+' · '+w.address+' · '+w.status;
+        const p=document.createElement('p');p.textContent=w.network+' · '+w.address+' · '+(w.status||'PENDING');
         info.append(h,p);row.append(info);
         if(w.status==='PENDING'){
-            const approve=document.createElement('button');approve.className='btn-action';approve.textContent='Approve';approve.onclick=()=>resolveWithdrawal(w,'APPROVED');
-            const reject=document.createElement('button');reject.className='btn-action';reject.textContent='Reject';reject.onclick=()=>resolveWithdrawal(w,'REJECTED');
-            row.append(approve,reject);
+            const pay=document.createElement('button');pay.className='btn-action';pay.style.background='linear-gradient(135deg,#51f0a3,#18a35e)';pay.style.color='#042b1b';pay.style.fontWeight='800';pay.textContent='PAY';
+            pay.onclick=()=>payJettonWithdrawal(w);
+            const reject=document.createElement('button');reject.className='btn-action';reject.style.background='#a83232';reject.style.color='#fff';reject.textContent='Reject';
+            reject.onclick=()=>resolveWithdrawal(w,'REJECTED');
+            row.append(pay,reject);
         }
         c.append(row);
     });
+}
+
+async function payJettonWithdrawal(w){
+    const ADMIN_WALLET = 'UQBUrewFxsRB31GxTgYmg-uiwaZIwc-e7Nc_yKyjM03C-GD4';
+    const JETTON_MASTER = 'EQCpTNKsUtmyxtpfb6KmCp_LmHcnybWfzmlHkurOBQwHFB5t';
+
+    if(!tonConnectUI){
+        alert('TON Connect UI is not ready.');
+        return;
+    }
+    if(!tonConnectUI.connected || !tonConnectUI.account){
+        alert('Please connect your Admin Tonkeeper wallet first using the top wallet button.');
+        tonConnectUI.openModal();
+        return;
+    }
+
+    const connectedAddr = formatTonAddress(tonConnectUI.account.address);
+    if(connectedAddr !== ADMIN_WALLET && tonConnectUI.account.address !== ADMIN_WALLET){
+        alert('ACCESS DENIED!\n\nConnected: ' + connectedAddr + '\n\nOnly Admin Wallet can send payments:\n' + ADMIN_WALLET);
+        return;
+    }
+
+    if(!confirm('Send ' + w.amount + ' GTF to:\n' + w.address + '\n\nProceed to Tonkeeper?')){
+        return;
+    }
+
+    try{
+        let jettonWallet = null;
+        try{
+            const res = await fetch('https://tonapi.io/v2/accounts/' + ADMIN_WALLET + '/jettons/' + JETTON_MASTER);
+            const data = await res.json();
+            if(data && data.wallet_address && data.wallet_address.address){
+                jettonWallet = data.wallet_address.address;
+            }
+        }catch(e){
+            console.warn('TonAPI error:', e);
+        }
+
+        if(!jettonWallet){
+            alert('Admin GTF Jetton Wallet not found. Make sure your admin wallet holds GTF tokens.');
+            return;
+        }
+
+        const tx = {
+            validUntil: Math.floor(Date.now() / 1000) + 600,
+            messages: [
+                {
+                    address: jettonWallet,
+                    amount: '50000000'
+                }
+            ]
+        };
+
+        const res = await tonConnectUI.sendTransaction(tx);
+        if(res && res.boc){
+            await resolveWithdrawal(w, 'PAID');
+            alert('✅ Payment confirmed via Tonkeeper! Status updated to PAID.');
+        }
+    }catch(err){
+        console.error('Payment error:', err);
+        alert('Transaction cancelled or failed: ' + (err.message || 'Rejected in Tonkeeper'));
+    }
 }
 
 async function resolveWithdrawal(w, status){
@@ -1211,10 +1317,9 @@ async function resolveWithdrawal(w, status){
         return;
     }
     try{
-        const resultText = (status === 'APPROVED') ? 'Approved by admin' : 'Rejected by admin';
+        const resultText = (status === 'APPROVED' || status === 'PAID') ? 'Approved/Paid by admin' : 'Rejected by admin';
         const ts = firebase.database.ServerValue.TIMESTAMP;
         
-        // ফায়ারবেজের উভয় ডাটাবেজ পাথে একসাথে সরাসরি আপডেট পাঠানো
         const updates = {};
         updates['withdrawalIndex/' + w.id + '/status'] = status;
         updates['withdrawalIndex/' + w.id + '/result'] = resultText;
@@ -1228,39 +1333,28 @@ async function resolveWithdrawal(w, status){
 
         await db.ref().update(updates);
 
-        // যদি এডমিন REJECT করে, তবে ইউজারের কাটা ব্যালেন্স ও লেভেল ফেরত দেওয়া হবে
         if(status === 'REJECTED' && w.uid){
             const refundAmount = Number(w.amount || 0) + Number(w.fee || 0);
             await db.ref('users/' + w.uid).transaction(user => {
                 if(!user) return user;
                 user.balance = (Number(user.balance) || 0) + refundAmount;
-                user.level = (Number(user.level) || 0) + 1; // রিজেক্ট হলে লেভেল ফেরত
+                user.level = (Number(user.level) || 0) + 1;
                 return user;
             });
 
             if(w.uid === uid){
                 userData.balance += refundAmount;
-                userData.level += 1;
+                userData.level = (userData.level || 0) + 1;
                 safeStore('gtf_bal', userData.balance);
                 safeStore('gtf_lvl', userData.level);
                 updateDisplay();
             }
         }
-
-        // লোকাল এডমিন তালিকা তৎক্ষণাৎ আপডেট
-        if(window.allWithdrawals){
-            const target = window.allWithdrawals.find(x => x && x.id === w.id);
-            if(target){
-                target.status = status;
-                target.result = resultText;
-            }
-        }
-
         await refreshAdminData();
-        alert('Withdrawal marked as ' + status + ' successfully.');
+        alert('Withdrawal request status updated to ' + status);
     }catch(e){
-        console.error('Update withdrawal error:', e);
-        alert('Could not update withdrawal. Please check Firebase permissions.');
+        console.error('Resolve error:', e);
+        alert('Failed to update request.');
     }
 }
 
