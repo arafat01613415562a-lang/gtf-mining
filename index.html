@@ -14,621 +14,1116 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <!-- TON Connect UI Official CDN -->
 <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-<!-- TonWeb Official CDN for Jetton Payload & Address Resolution -->
+<!-- TonWeb CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tonweb/0.0.66/tonweb.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#08090d;--panel:#13151d;--panel2:#1b1e28;--gold:#ffd76a;--gold2:#e5a91b;--muted:#9a9daa;--green:#51f0a3;--blue:#1877f2}
+:root{
+  --bg:#08090d;
+  --panel:#13151d;
+  --panel2:#1b1e28;
+  --gold:#ffd76a;
+  --gold2:#e5a91b;
+  --muted:#9a9daa;
+  --green:#51f0a3;
+  --blue:#1877f2;
+  --vip:#b5179e;
+  --vip-glow:#f72585;
+}
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:linear-gradient(180deg,#08090de8,#08090df0),url('https://i.ibb.co.com/b5XqxsQF/1793529812984.jpg') center center/cover fixed no-repeat;color:#fff;min-height:100dvh;overflow-x:hidden}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(115deg,transparent 0 48%,#d7a83b12 49%,transparent 50%),radial-gradient(circle at 15% 35%,#f5c45122 0 1px,transparent 2px),radial-gradient(circle at 80% 70%,#f5c45122 0 1px,transparent 2px);background-size:100% 100%,45px 45px,67px 67px;z-index:0}
 button,input,select,textarea{font:inherit}button{cursor:pointer}input,textarea,select{user-select:text}
+ 
+/* ===== LANDING PAGE ===== */
 #landing{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:24px 18px;background:radial-gradient(ellipse at 50% 25%,#4a3512 0,#19140b 35%,#07080c 76%);overflow:auto}
-.landing-wrap{width:min(100%,420px);text-align:center;position:relative}.brand{font-size:12px;letter-spacing:5px;color:var(--gold);font-weight:700}
-.coin-stage{
-    height:205px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    margin:8px 0 4px;
-    perspective:900px;
-}
-
-.hero-coin{
-    height:145px;
-    width:145px;
-    flex-shrink:0;
-    border-radius:50%;
-    display:grid;
-    place-items:center;
-    position:relative;
-    background:radial-gradient(circle at 30% 23%,#fff4b7 0,#ffdf65 13%,#dba21b 43%,#87570b 68%,#f9d45a 79%,#6d4608 100%);
-    border:7px solid #ffe79a;
-    box-shadow:inset 0 5px 8px #fff9,inset 0 -12px 18px #513100a8,0 0 24px #ffc53b66,0 22px 40px #000b;
-}
-
-.hero-coin:before{
-    content:"";
-    position:absolute;
-    inset:7px;
-    border:2px solid #fff0a0;
-    border-radius:50%;
-    box-shadow:inset 0 0 0 3px #9c690a;
-}
-
-.hero-coin img{
-    width:78%;
-    height:78%;
-    object-fit:cover;
-    border-radius:50%;
-    z-index:1;
-    box-shadow:0 0 18px #fff8;
-}
-
-.cooling-fan{
-    width:62px;
-    height:62px;
-    flex-shrink:0;
-    display:grid;
-    place-items:center;
-    color:#ffd76a;
-    font-size:58px;
-    filter:drop-shadow(0 0 12px #ffc53b99);
-    animation:fanRotate 1.2s linear infinite;
-}
-
-@keyframes fanRotate{
-    from{transform:rotate(0deg)}
-    to{transform:rotate(360deg)}
-}
-.landing h1{font-size:clamp(27px,7vw,36px);line-height:1.15;margin:7px 0 9px;font-weight:900;letter-spacing:-1px}.landing h1 em{font-style:normal;color:var(--gold);text-shadow:0 0 24px #f5bd3b35}.landing p{font-size:12px;color:#c7c2b4;line-height:1.7}.gold-btn{width:100%;border:0;border-radius:14px;padding:14px 18px;color:#231702;font-weight:800;background:linear-gradient(135deg,#fff0a3,#ffd34f 48%,#b87b0b);box-shadow:0 8px 25px #eab32d26,inset 0 1px #fff9;margin-top:18px}.gold-btn:active{transform:scale(.985)}.secure-note{font-size:10px!important;color:#888!important;margin-top:13px}
-#verify-box{display:none;text-align:left;margin-top:18px;padding:17px;border-radius:20px;border:1px solid #f2c85a4d;background:linear-gradient(145deg,#211c12,#101117);box-shadow:0 20px 50px #0008}.verify-head{text-align:center;font-size:14px;font-weight:700;margin-bottom:4px}.verify-help{text-align:center!important;font-size:10px!important;margin-bottom:15px}.slide-area{height:116px;border:1px solid #ffd76a35;border-radius:14px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0c0d12,#252012);display:flex;align-items:center;justify-content:space-around}.target{width:58px;height:58px;border-radius:50%;border:2px dashed #ffd76a99;display:grid;place-items:center;color:#ffd76a;background:#ffd76a0d}.mini-coin{width:51px;height:51px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#fff2a7,#e9b32c 48%,#80540b);border:4px solid #ffe79a;color:#382503;font-weight:900;box-shadow:0 5px 12px #0008;position:absolute;left:10px;z-index:2;touch-action:none}.mini-coin i{font-size:17px}.slide-track{height:42px;border-radius:30px;background:#07080c;border:1px solid #ffffff19;margin-top:13px;position:relative;display:flex;align-items:center;padding:4px}.slide-track span{position:absolute;width:100%;text-align:center;font-size:10px;color:#999;pointer-events:none}#slider-knob{height:32px;width:42px;border-radius:24px;background:linear-gradient(135deg,#fff0a3,#dba21b);color:#2b1b00;display:grid;place-items:center;position:relative;z-index:2;touch-action:none;box-shadow:0 2px 9px #0008}.verify-msg{text-align:center!important;min-height:18px;font-size:10px!important;margin-top:8px}
-.app{position:relative;z-index:1;max-width:600px;margin:0 auto;min-height:100dvh;padding-bottom:84px}
+.landing-wrap{width:min(100%,420px);text-align:center;position:relative}
+.brand{font-size:12px;letter-spacing:5px;color:var(--gold);font-weight:700}
+.coin-stage{height:200px;display:flex;align-items:center;justify-content:center;gap:18px;margin:8px 0 4px;perspective:900px}
+.hero-coin{height:145px;width:145px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 30% 23%,#fff4b7 0,#ffdf65 13%,#dba21b 43%,#87570b 68%,#f9d45a 79%,#6d4608 100%);border:7px solid #ffe79a;box-shadow:inset 0 5px 8px #fff9,inset 0 -12px 18px #513100a8,0 0 24px #ffc53b66,0 22px 40px #000b}
+.hero-coin:before{content:"";position:absolute;inset:7px;border:2px solid #fff0a0;border-radius:50%;box-shadow:inset 0 0 0 3px #9c690a}
+.hero-coin img{width:78%;height:78%;object-fit:cover;border-radius:50%;z-index:1;box-shadow:0 0 18px #fff8}
+.cooling-fan{width:60px;height:60px;flex-shrink:0;display:grid;place-items:center;color:#ffd76a;font-size:56px;filter:drop-shadow(0 0 12px #ffc53b99);animation:fanRotate 1.2s linear infinite}
+@keyframes fanRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.landing h1{font-size:clamp(26px,7vw,34px);line-height:1.15;margin:7px 0 9px;font-weight:900;letter-spacing:-1px}
+.landing h1 em{font-style:normal;color:var(--gold);text-shadow:0 0 24px #f5bd3b35}
+.landing p{font-size:12px;color:#c7c2b4;line-height:1.7}
+.gold-btn{width:100%;border:0;border-radius:14px;padding:14px 18px;color:#231702;font-weight:800;background:linear-gradient(135deg,#fff0a3,#ffd34f 48%,#b87b0b);box-shadow:0 8px 25px #eab32d26,inset 0 1px #fff9;margin-top:18px;animation:startMiningBounce 1.7s ease-in-out infinite}
+.gold-btn:active{transform:scale(.985)}
+@keyframes startMiningBounce{0%,100%{transform:translateY(0);box-shadow:0 8px 25px #eab32d26,inset 0 1px #fff9}50%{transform:translateY(-5px);box-shadow:0 13px 30px #eab32d55,inset 0 1px #fff9}}
+.secure-note{font-size:10px!important;color:#888!important;margin-top:13px}
+ 
+/* ===== APP LAYOUT ===== */
+.app{position:relative;z-index:1;max-width:600px;margin:0 auto;min-height:100dvh;padding-bottom:95px}
 .header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#10121bd9;border-bottom:1px solid #ffd76a20;position:sticky;top:0;z-index:50;backdrop-filter:blur(15px);gap:8px}
 .user-info{display:flex;align-items:center;gap:10px;min-width:0}
-.brand-mark{height:38px;width:38px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#171923;border:2px solid #ffd76a;box-shadow:0 4px 15px #f3c65325;flex-shrink:0}
+.brand-mark{height:40px;width:40px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#171923;border:2px solid #ffd76a;box-shadow:0 4px 15px #f3c65325;flex-shrink:0}
 .brand-mark img{width:100%;height:100%;object-fit:cover}
-.user-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.badge{display:inline-block;background:#ffffff12;border:1px solid #ffffff0e;padding:2px 9px;border-radius:12px;font-size:10px;color:#e7cf8a;margin-top:3px}
-.status{font-size:10px;color:var(--green);margin-left:6px}
+.user-name-box{display:flex;align-items:center;gap:5px;overflow:hidden}
+.user-name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ 
+/* Verified Blue Tick & Badges */
+.verified-blue-tick{display:none;align-items:center;justify-content:center;color:#1877f2;font-size:13px;filter:drop-shadow(0 0 6px rgba(24,119,242,0.7));flex-shrink:0}
+.blue-tick-inline{color:#1877f2;font-size:12px;margin-left:4px;filter:drop-shadow(0 0 5px rgba(24,119,242,0.7))}
+.badge-tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:.3px;margin-top:2px}
+.badge-non-vip{background:#2a2b33;color:#9ca3af;border:1px solid #4b556355}
+.badge-vip-pass{background:linear-gradient(135deg,#ff007f,#7928ca);color:#fff;box-shadow:0 0 10px rgba(247,37,133,0.5);border:1px solid #ff70a6}
+ 
 .header-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
 #ton-connect-btn{min-height:36px;display:flex;align-items:center}
-.view-section{display:none;padding:18px 16px;min-height:calc(100dvh - 155px);padding-bottom:24px}.view-section.active{display:block}.mine-container{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100dvh - 220px)}.balance-title{font-size:10px;letter-spacing:3px;color:#aaa}.main-balance{font-size:34px;font-weight:800;margin:4px 0;color:#fff}.main-balance span{color:var(--gold);text-shadow:0 0 22px #f3ba2f30}.sub-wallets{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;font-size:9px;color:#9a9daa}.mining-rate{color:var(--green);font-size:20px;font-weight:800;margin-bottom:8px}
-.energy-box{width:100%;max-width:310px;margin:6px auto 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,215,106,0.25);border-radius:18px;padding:10px 14px;box-shadow:0 6px 20px rgba(0,0,0,0.5)}
+.view-section{display:none;padding:16px;min-height:calc(100dvh - 165px);padding-bottom:24px}.view-section.active{display:block}
+ 
+/* ===== MINING TAB ===== */
+.mine-container{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100dvh - 210px)}
+.vip-trigger-banner{width:100%;background:linear-gradient(135deg,#3c096c,#1a0b2e);border:1.5px solid #c77dff;border-radius:15px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-shadow:0 4px 15px rgba(157,78,221,0.25);transition:transform .2s}
+.vip-trigger-banner:active{transform:scale(.98)}
+.balance-title{font-size:10px;letter-spacing:3px;color:#aaa}
+.main-balance{font-size:35px;font-weight:900;margin:3px 0;color:#fff}.main-balance span{color:var(--gold);text-shadow:0 0 22px #f3ba2f45}
+.sub-wallets{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;font-size:9px;color:#9a9daa}
+.mining-rate{color:var(--green);font-size:21px;font-weight:900;margin-bottom:8px}
+ 
+.energy-box{width:100%;max-width:320px;margin:6px auto 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,215,106,0.25);border-radius:18px;padding:10px 14px;box-shadow:0 6px 20px rgba(0,0,0,0.5)}
 .energy-top-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;margin-bottom:7px}
-.energy-badge{color:var(--gold);display:flex;align-items:center;gap:6px;letter-spacing:.5px}
-.energy-timer{color:var(--green);font-family:monospace,sans-serif;font-size:13px;font-weight:800;letter-spacing:1px;text-shadow:0 0 10px rgba(81,240,163,0.5)}
-.energy-pipe{height:20px;width:100%;border:2.5px solid #ffffff;border-radius:30px;background:radial-gradient(ellipse at top,#111827,#030508);padding:3px;position:relative;overflow:hidden;box-shadow:0 0 15px rgba(255,255,255,0.6),inset 0 3px 8px rgba(0,0,0,0.95)}
-.energy-pipe:before{content:"";position:absolute;top:2px;left:8px;right:8px;height:5px;background:linear-gradient(180deg,rgba(255,255,255,0.7),transparent);border-radius:10px;z-index:5;pointer-events:none}
-.energy-liquid{height:100%;width:100%;border-radius:20px;background:linear-gradient(90deg,#00f5d4 0%,#00bbf9 35%,#51f0a3 70%,#ffd76a 100%);background-size:250% 100%;box-shadow:0 0 15px #00f5d4,inset 0 2px 5px rgba(255,255,255,0.8),inset 0 -3px 6px rgba(0,0,0,0.5);transition:width 1s ease-in-out;position:relative;animation:premiumWave 3.5s ease-in-out infinite}
-@keyframes premiumWave{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.all-ads-card{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#1f2430,#12141c);border:1.5px solid #ffd76a55;border-radius:14px;padding:12px 14px;margin:12px 0;box-shadow:0 4px 15px #0005}
+.energy-badge{color:var(--gold);display:flex;align-items:center;gap:6px}
+.energy-timer{color:var(--green);font-family:monospace,sans-serif;font-size:13px;font-weight:800;letter-spacing:1px}
+.energy-pipe{height:18px;width:100%;border:2px solid #ffffffcc;border-radius:30px;background:#0d111a;padding:2px;position:relative;overflow:hidden;box-shadow:0 0 12px rgba(255,255,255,0.3)}
+.energy-liquid{height:100%;width:100%;border-radius:20px;background:linear-gradient(90deg,#00f5d4,#00bbf9,#51f0a3,#ffd76a);transition:width 1s ease-in-out;position:relative}
+ 
+.income-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin:0 auto 14px}
+.income-option{min-width:0;border:1.5px solid rgba(255,215,106,.6);border-radius:13px;padding:12px 6px;background:linear-gradient(135deg,#1f1c13,#2a220c);color:#ffd76a;font-size:11px;font-weight:900;text-align:center;box-shadow:0 0 12px rgba(255,215,106,.2);cursor:pointer;transition:transform .2s}
+.income-option:nth-child(2){background:linear-gradient(135deg,#102219,#141a17);border-color:rgba(81,240,163,.65);color:#51f0a3;box-shadow:0 0 12px rgba(81,240,163,.2)}
+.income-option:active{transform:scale(.95)}
+ 
+.coin-btn{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 28% 22%,#fff5b5 0,#ffdc58 16%,#d9a11c 52%,#81540b 78%,#f4ce55 83%,#7a500b);border:8px solid #ffe79a;box-shadow:inset 0 5px 10px #fff9,inset 0 -12px 18px #5d3900a8,0 0 35px #f4c54b40,0 20px 38px #0008;display:flex;justify-content:center;align-items:center;cursor:pointer;transition:transform .15s;margin-bottom:20px;position:relative}
+.coin-btn:before{content:"";position:absolute;inset:8px;border:2px solid #fff0a0;border-radius:50%;box-shadow:inset 0 0 0 4px #9c690a}
+.coin-btn:active{transform:scale(.93) rotate(-3deg)}
+.coin-inner{width:76%;height:76%;border-radius:50%;overflow:hidden;z-index:1;display:grid;place-items:center}.coin-inner img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.btn-claim{width:100%;max-width:320px;padding:14px;background:linear-gradient(135deg,#fff0a3,#ffc82d 48%,#b77b0b);border:0;border-radius:13px;color:#241800;font-weight:800;font-size:14px;box-shadow:0 7px 22px #ffc52d20;transition:transform .15s}
+.btn-claim:active{transform:scale(.98)}
+ 
+/* ===== COMMON CARDS & ANIMATIONS ===== */
+.section-title{font-size:12px;color:var(--gold);margin:16px 0 10px;letter-spacing:.7px;font-weight:800}
+.card{background:linear-gradient(145deg,#1c202b,#11131b);border:1px solid #ffd76a19;border-radius:15px;padding:13px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:0 8px 22px #0002;transition:all 0.25s ease}
+.card:active{transform:scale(0.98)}
+.card-info{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.card-icon{width:38px;height:38px;border-radius:11px;background:linear-gradient(145deg,#ffd76a20,#ffd76a08);border:1px solid #ffd76a16;display:flex;justify-content:center;align-items:center;font-size:16px;color:var(--gold);flex-shrink:0}
+.card-text h4{font-size:12px;margin-bottom:3px;font-weight:700}.card-text p{font-size:10px;color:#a4a6b0;overflow-wrap:anywhere}
+.btn-action{background:linear-gradient(135deg,#ffe99b,#e4aa22);color:#251900;border:0;padding:8px 14px;border-radius:20px;font-weight:800;font-size:11px;min-width:76px;text-align:center;flex-shrink:0;transition:transform .15s}
+.btn-action:active{transform:scale(.94)}
+.btn-action:disabled{background:#343640;color:#888;cursor:not-allowed}
+ 
+/* Daily Check-in Grid */
+.checkin-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:14px}
+.checkin-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:10px;padding:9px 3px;text-align:center;transition:transform 0.2s}
+.checkin-card:active{transform:scale(0.95)}
+.checkin-card.active{border-color:var(--gold);background:#f3ba2f12}
+.checkin-card.claimed{opacity:.55;border-color:#51f0a366}
+.checkin-day{font-size:9px;color:#aaa}
+.checkin-reward{font-size:11px;font-weight:800;color:var(--gold);margin:4px 0}
+.checkin-card button{width:100%;padding:4px 1px;font-size:8px;border-radius:10px;border:0;background:var(--gold);color:#000;font-weight:800}
+.checkin-card button:disabled{background:#333;color:#777}
+ 
+/* ===== PREMIUM (VIP) STYLES ===== */
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 14px rgba(247,37,133,.25),inset 0 0 18px rgba(255,215,106,.05)}50%{box-shadow:0 0 28px rgba(247,37,133,.5),inset 0 0 26px rgba(255,215,106,.1)}}
+ 
+.vip-miner-locked-box{position:relative;background:linear-gradient(160deg,#2a1136,#140b1f 55%,#1a1305);border:1.5px solid transparent;background-clip:padding-box;border-radius:20px;padding:28px 18px;text-align:center;margin-top:14px;animation:glowPulse 3s ease-in-out infinite;overflow:hidden}
+.vip-miner-locked-box:before{content:"";position:absolute;inset:-1.5px;border-radius:21px;background:linear-gradient(120deg,#f72585,#ffd76a,#7209b7,#f72585);background-size:300% 100%;z-index:-1;animation:shimmer 6s linear infinite}
+.vip-miner-locked-box .lock-ring{width:74px;height:74px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#ffe79a,#d8a52b 60%,#78500c);color:#2b1a00;font-size:30px;box-shadow:0 0 26px rgba(255,215,106,.55),inset 0 3px 6px #fff8;border:3px solid #fff0a0}
+.vip-miner-locked-box h3{font-size:16px;font-weight:900;letter-spacing:.8px;background:linear-gradient(90deg,#ffd76a,#fff2b0,#ffd76a);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px}
+.vip-mini-perks{display:flex;flex-direction:column;gap:6px;margin:0 auto 16px;max-width:300px;text-align:left}
+.vip-mini-perks div{font-size:10.5px;color:#e9d9ff;background:#ffffff0a;border:1px solid #ffffff12;padding:7px 10px;border-radius:10px;display:flex;gap:8px;align-items:center}
+.vip-mini-perks i{color:#ffd76a}
+.premium-card{background:linear-gradient(145deg,#2a1636,#15101d);border:1px solid #c77dff66;box-shadow:0 8px 24px rgba(121,40,202,.25)}
+.premium-card .card-icon{background:linear-gradient(145deg,#f7258540,#7928ca30);border-color:#f7258566;color:#ffd76a}
+ 
+.vip-task{background:linear-gradient(145deg,#2d1840,#171026 60%,#241a08);border:1.5px solid #f72585aa;position:relative;overflow:hidden;animation:glowPulse 3.5s ease-in-out infinite}
+.vip-task:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#ffd76a,#f72585,transparent);background-size:200% 100%;animation:shimmer 3s linear infinite}
+.vip-tag{display:inline-block;font-size:8px;font-weight:900;letter-spacing:.6px;padding:2px 7px;border-radius:8px;margin-left:6px;background:linear-gradient(135deg,#ff007f,#7928ca);color:#fff;vertical-align:middle}
+.vip-section-title{background:linear-gradient(90deg,#ffd76a,#f72585);-webkit-background-clip:text;background-clip:text;color:transparent}
+ 
+/* ===== REFERRAL RULES ===== */
+.rules-card{background:linear-gradient(145deg,#1d2230,#11131b);border:1px solid #ffd76a33;border-radius:16px;padding:14px;margin-bottom:12px}
+.rules-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.rules-head h4{font-size:12px;color:var(--gold);font-weight:900;letter-spacing:.5px}
+.rules-lang{display:flex;background:#00000055;border:1px solid #ffd76a44;border-radius:22px;padding:2px}
+.rules-lang button{background:transparent;border:0;color:#aaa;padding:4px 11px;border-radius:18px;font-size:10px;font-weight:800}
+.rules-lang button.active{background:linear-gradient(135deg,#ffe99b,#e4aa22);color:#251900}
+.rules-intro{font-size:11px;color:#e8e3d2;line-height:1.7;margin-bottom:10px}
+.rules-list{display:flex;flex-direction:column;gap:7px;counter-reset:r}
+.rules-list div{font-size:11px;line-height:1.55;color:#d9dbe3;background:#ffffff08;border:1px solid #ffffff10;border-radius:11px;padding:9px 10px 9px 36px;position:relative;counter-increment:r}
+.rules-list div:before{content:counter(r);position:absolute;left:9px;top:8px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:900;background:linear-gradient(135deg,#ffe99b,#e4aa22);color:#251900}
+.rules-reward{margin-top:10px;text-align:center;font-size:12px;font-weight:900;color:var(--green);background:#51f0a312;border:1px dashed #51f0a388;border-radius:12px;padding:9px}
+ 
+/* ===== GAME LIBRARY VIEW ===== */
+.game-library-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.game-card{background:linear-gradient(145deg,#1b1e28,#101116);border:1px solid rgba(255,215,106,.25);border-radius:14px;padding:12px;text-align:center;transition:transform .2s}
+.game-card:active{transform:scale(0.96)}
+.game-card img{width:60px;height:60px;object-fit:cover;border-radius:12px;margin:0 auto 8px}
+.game-card h4{color:#ffd76a;font-size:12px;margin-bottom:4px}
+.game-card p{color:#aaa;font-size:9px;margin-bottom:8px;height:24px;overflow:hidden}
+ 
+/* ===== BOTTOM NAVIGATION WITH ANIMATIONS ===== */
+.bottom-nav{height:72px;background:#0d0f17fa;border-top:1px solid #ffffff18;display:flex;justify-content:space-around;align-items:center;width:100%;position:fixed;bottom:0;left:0;z-index:100;backdrop-filter:blur(20px);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -5px 25px rgba(0,0,0,0.7)}
+.nav-item{display:flex;flex-direction:column;align-items:center;color:#6b7280;text-decoration:none;font-size:10px;gap:5px;cursor:pointer;flex:1;transition:all 0.25s cubic-bezier(0.4, 0, 0.2, 1);position:relative}
+.nav-item i{font-size:18px;transition:all 0.25s cubic-bezier(0.4, 0, 0.2, 1)}
+.nav-item:active{transform:scale(0.88)}
+.nav-item.active{color:var(--gold);transform:translateY(-3px)}
+.nav-item.active i{transform:scale(1.18);text-shadow:0 0 14px rgba(255,215,106,0.8);animation:navPop 0.35s ease-out}
+.nav-item.vip-nav{color:#d88bff}
+.nav-item.vip-nav.active{color:#f72585}
+.nav-item.vip-nav.active i{text-shadow:0 0 16px rgba(247,37,133,0.9)}
+ 
+@keyframes navPop {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1.18); }
+}
+ 
+/* ===== ULTRA SLEEK VIP MODAL ===== */
+.vip-modal-box{background:linear-gradient(150deg,#20092c,#0c0e15);border:2px solid #b5179e;border-radius:24px;padding:22px;box-shadow:0 0 35px rgba(181,23,158,0.5)}
+.vip-lang-switch{display:flex;background:#00000055;border:1px solid #b5179e66;border-radius:25px;padding:3px;margin:12px auto;width:fit-content}
+.vip-lang-btn{background:transparent;border:0;padding:5px 14px;border-radius:20px;color:#aaa;font-size:11px;font-weight:700}
+.vip-lang-btn.active{background:linear-gradient(135deg,#b5179e,#7209b7);color:#fff}
+.perk-list{text-align:left;margin:15px 0;display:flex;flex-direction:column;gap:9px}
+.perk-item{display:flex;align-items:flex-start;gap:10px;font-size:11px;background:#ffffff08;padding:10px;border-radius:12px;border:1px solid #ffffff12}
+.perk-item.unlocked{border-color:#51f0a388;background:#51f0a311}
+.perk-item.unlocked i{color:var(--green)}
+.btn-buy-vip{width:100%;border:0;border-radius:14px;padding:14px;background:linear-gradient(135deg,#ff007f,#7928ca,#00f5d4);color:#fff;font-weight:900;font-size:13px;box-shadow:0 0 20px rgba(255,0,127,0.4);cursor:pointer;margin-top:10px}
+ 
+/* ===== ADMIN PANEL ===== */
+.admin-card{background:linear-gradient(145deg,#171923,#10121a);border:1px solid #ffd76a33;border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:0 5px 15px rgba(0,0,0,0.4)}
+.admin-card-title{font-size:12px;color:var(--gold);font-weight:900;letter-spacing:.6px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.field{width:100%;padding:10px;margin:5px 0 10px;border-radius:8px;border:1px solid #393b45;background:#0a0a0c;color:#fff;font-size:11px}
+.all-ads-card{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#1f2430,#12141c);border:1.5px solid #ffd76a55;border-radius:14px;padding:12px 14px}
 .switch-toggle{position:relative;display:inline-block;width:50px;height:26px;flex-shrink:0}
 .switch-toggle input{opacity:0;width:0;height:0}
 .switch-round{position:absolute;cursor:pointer;inset:0;background:#383b47;border-radius:30px;transition:.3s;border:1px solid #ffffff22}
 .switch-round:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:2px;background:#fff;border-radius:50%;transition:.3s}
 .switch-toggle input:checked + .switch-round{background:#51f0a3}
 .switch-toggle input:checked + .switch-round:before{transform:translateX(24px);background:#052414}
-.coin-btn{width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 28% 22%,#fff5b5 0,#ffdc58 16%,#d9a11c 52%,#81540b 78%,#f4ce55 83%,#7a500b);border:8px solid #ffe79a;box-shadow:inset 0 5px 10px #fff9,inset 0 -12px 18px #5d3900a8,0 0 35px #f4c54b40,0 20px 38px #0008;display:flex;justify-content:center;align-items:center;cursor:pointer;transition:transform .15s;margin-bottom:23px;position:relative}.coin-btn:before{content:"";position:absolute;inset:8px;border:2px solid #fff0a0;border-radius:50%;box-shadow:inset 0 0 0 4px #9c690a}.coin-btn:active{transform:scale(.94) rotate(-2deg)}.coin-inner{width:76%;height:76%;border-radius:50%;overflow:hidden;z-index:1;display:grid;place-items:center}.coin-inner img{width:100%;height:100%;object-fit:cover;border-radius:50%}.btn-claim{width:100%;max-width:310px;padding:14px;background:linear-gradient(135deg,#fff0a3,#ffc82d 48%,#b77b0b);border:0;border-radius:13px;color:#241800;font-weight:800;font-size:14px;box-shadow:0 7px 22px #ffc52d20}
-.section-title{font-size:12px;color:var(--gold);margin:18px 0 10px;letter-spacing:.7px;font-weight:700}.card{background:linear-gradient(145deg,#1c202b,#11131b);border:1px solid #ffd76a19;border-radius:15px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:0 8px 22px #0002}.card-info{display:flex;align-items:center;gap:10px;flex:1;min-width:0}.card-icon{width:37px;height:37px;border-radius:11px;background:linear-gradient(145deg,#ffd76a20,#ffd76a08);border:1px solid #ffd76a16;display:flex;justify-content:center;align-items:center;font-size:15px;color:var(--gold);flex-shrink:0}.card-text h4{font-size:12px;margin-bottom:3px}.card-text p{font-size:10px;color:#a4a6b0;overflow-wrap:anywhere}.btn-action{background:linear-gradient(135deg,#ffe99b,#e4aa22);color:#251900;border:0;padding:8px 12px;border-radius:20px;font-weight:700;font-size:10px;min-width:76px;text-align:center;flex-shrink:0}.btn-action:disabled{background:#343640;color:#888;cursor:not-allowed;box-shadow:none}.checkin-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:14px}.checkin-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:10px;padding:9px 3px;text-align:center}.checkin-card.active{border-color:var(--gold);background:#f3ba2f12}.checkin-card.claimed{opacity:.55;border-color:#51f0a366}.checkin-day{font-size:9px;color:#aaa}.checkin-reward{font-size:11px;font-weight:800;color:var(--gold);margin:4px 0}.checkin-card button{width:100%;padding:4px 1px;font-size:8px;border-radius:10px;border:0;background:var(--gold);color:#000;font-weight:800}.checkin-card button:disabled{background:#333;color:#777}
-.bottom-nav{height:69px;background:#10121bf5;border-top:1px solid #ffd76a20;display:flex;justify-content:space-around;align-items:center;width:100%;position:fixed;bottom:0;left:0;z-index:100;backdrop-filter:blur(15px);padding-bottom:env(safe-area-inset-bottom)}.nav-item{display:flex;flex-direction:column;align-items:center;color:#747784;text-decoration:none;font-size:9px;gap:5px;cursor:pointer;flex:1}.nav-item.active{color:var(--gold)}.nav-item i{font-size:17px}.modal{display:none;position:fixed;inset:0;background:#000c;justify-content:center;align-items:center;z-index:1000;padding:20px}.modal-content{background:linear-gradient(145deg,#222532,#11131a);padding:20px;border-radius:17px;width:100%;max-width:390px;text-align:center;border:1px solid #ffd76a30;max-height:90dvh;overflow:auto}.modal-content input,.modal-content textarea,.modal-content select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #393b45;background:#0a0a0c;color:#fff;text-align:left}.field{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #393b45;background:#0a0a0c;color:#fff}.small{font-size:10px}.muted{color:#aaa}.stat{background:#ffffff0a;padding:8px;border-radius:8px;text-align:center}.stat small{display:block;font-size:9px;color:#aaa}.stat strong{font-size:14px}.history-row{padding:10px;border-bottom:1px solid #ffffff12;font-size:10px;display:flex;justify-content:space-between;gap:8px}.status-pending{color:#ffd76a}.status-approved,.status-replied,.status-paid{color:var(--green)}.status-rejected{color:#ff7373}.status-processing{color:#38bdf8}
-.btn-pay{background:linear-gradient(135deg,#51f0a3,#18a35e);color:#042b1b;border:0;padding:8px 12px;border-radius:20px;font-weight:800;font-size:10px;min-width:76px;text-align:center;box-shadow:0 0 10px rgba(81,240,163,0.3);cursor:pointer}
-.btn-pay:disabled{background:#343640;color:#888;cursor:not-allowed;box-shadow:none}
-.btn-reject{background:linear-gradient(135deg,#ff7373,#a83232);color:#fff;border:0;padding:8px 12px;border-radius:20px;font-weight:800;font-size:10px;min-width:76px;text-align:center;cursor:pointer}
-.btn-reject:disabled{background:#343640;color:#888;cursor:not-allowed;box-shadow:none}
-.tx-hash-link{color:#38bdf8;text-decoration:none;word-break:break-all;font-size:9px;display:inline-block;margin-top:3px}
-#help-launcher{position:fixed;right:15px;bottom:88px;z-index:500;display:flex;align-items:center;gap:7px;border:1px solid #ffd76a55;border-radius:28px;padding:6px 12px 6px 6px;background:linear-gradient(135deg,#242735,#10121b);box-shadow:0 5px 22px #0009,0 0 15px #ffd76a22;color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.5px}
-.help-person{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 35% 25%,#fff1bd,#d8a52b 60%,#78500c);color:#211600;border:2px solid #ffe79a;animation:helpFloat 2s ease-in-out infinite;box-shadow:0 0 13px #ffd76a66}.help-person i{font-size:18px}.help-person:after{content:"";position:absolute;right:2px;top:10px;width:7px;height:15px;border:2px solid #252a36;border-radius:6px;background:#ffd76a}.help-label{white-space:nowrap}@keyframes helpFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-#supportModal .modal-content{padding:0;overflow:hidden;text-align:left;max-width:420px;height:min(650px,88dvh);display:flex;flex-direction:column}.chat-head{padding:14px;background:#075e54;display:flex;align-items:center;gap:10px}.chat-avatar{height:37px;width:37px;border-radius:50%;background:linear-gradient(135deg,#ffe99b,#d69c1b);display:grid;place-items:center;color:#382603;font-weight:900}.chat-title{font-size:13px;font-weight:800}.chat-subtitle{font-size:9px;color:#d3eee8}.chat-body{flex:1;overflow:auto;padding:13px;background:radial-gradient(circle at top,#172a2a,#10151a 65%)}.chat-bubble{max-width:85%;padding:9px 11px;border-radius:12px;margin:7px 0;font-size:11px;line-height:1.5;overflow-wrap:anywhere;background:#242b32}.chat-bubble.mine{margin-left:auto;background:#075e54}.chat-meta{font-size:8px;color:#b5c4c2;margin-top:4px;text-align:right}.chat-compose{display:flex;gap:7px;padding:10px;background:#171b21}.chat-compose textarea{flex:1;resize:none;min-height:40px;max-height:90px;border:0;border-radius:20px;padding:10px 13px;background:#292f37;color:#fff;font-size:11px}.chat-send{width:42px;height:42px;border:0;border-radius:50%;background:#20c878;color:#042b1b}.verified-tick{display:inline-flex;align-items:center;justify-content:center;color:#fff;background:#1877f2;border-radius:50%;width:13px;height:13px;font-size:8px;margin-left:3px;vertical-align:middle}.admin-tag{font-size:8px;color:#b8d8ff;border:1px solid #1877f2;padding:1px 5px;border-radius:8px;margin-left:4px}
-
-.chat-avatar img,.admin-brand-logo{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.admin-support-toolbar{display:flex;gap:8px;align-items:center;margin:12px 0}
-.inbox-open-btn{width:100%;padding:12px;border:1px solid #ffd76a55;border-radius:12px;background:linear-gradient(135deg,#242735,#10121b);color:var(--gold);font-weight:800;text-align:left}
-.inbox-count{float:right;background:#51f0a3;color:#052b1b;border-radius:20px;padding:2px 8px;font-size:10px}
-.inbox-row{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #ffffff14;border-radius:13px;background:#171a23;margin:7px 0;cursor:pointer}
-.inbox-row.unread{border-color:#51f0a3;box-shadow:0 0 12px #51f0a322}
-.inbox-avatar{width:39px;height:39px;flex:0 0 39px;border-radius:50%;display:grid;place-items:center;background:#292d39;color:var(--gold);font-weight:800}
-.inbox-main{flex:1;min-width:0}.inbox-name{font-size:11px;font-weight:800}.inbox-preview{font-size:9px;color:#aeb2c0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}.inbox-meta{font-size:8px;color:#999;text-align:right}.inbox-dot{width:9px;height:9px;border-radius:50%;background:#51f0a3;display:inline-block;margin-left:5px;box-shadow:0 0 8px #51f0a3}
-#adminThreadPanel{display:none;border:1px solid #ffffff18;border-radius:14px;overflow:hidden;margin-top:10px}
-.admin-thread-head{display:flex;align-items:center;gap:9px;padding:10px;background:#202633}.admin-thread-body{height:300px;overflow:auto;padding:10px;background:#10151a}.admin-thread-compose{display:flex;gap:7px;padding:9px;background:#171b21}.admin-thread-compose textarea{flex:1;min-width:0;resize:none;border:0;border-radius:18px;padding:10px;background:#292f37;color:white}.admin-thread-compose button{border:0;border-radius:50%;width:42px;background:#20c878;color:#042b1b}
-.admin-identity{display:flex;align-items:center;gap:7px;color:#9dc7ff;font-size:10px;font-weight:900;margin-bottom:5px}.admin-identity img{width:22px;height:22px;border-radius:50%;object-fit:cover;border:1px solid #ffd76a}
-
-/* ===== GAMING & 2X INCOME BUTTONS ===== */
-.income-options{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-width:100%;
-margin:0 auto 16px;
-}
-
-.income-option{
-min-width:0;
-border:1px solid rgba(255,215,106,.55);
-border-radius:13px;
-padding:11px 5px;
-background:linear-gradient(135deg,#171717,#29220d);
-color:#ffd76a;
-font-size:11px;
-font-weight:900;
-letter-spacing:.4px;
-text-align:center;
-box-shadow:0 0 10px rgba(255,215,106,.16),0 0 12px rgba(81,240,163,.08);
-animation:incomeFloat 2.8s ease-in-out infinite;
-cursor:pointer;
-}
-
-.income-option:nth-child(2){
-background:linear-gradient(135deg,#101d16,#171717);
-border-color:rgba(81,240,163,.65);
-color:#51f0a3;
-animation-delay:.35s;
-}
-
-.income-option:active{transform:scale(.96)}
-
-@keyframes incomeFloat{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-3px)}
-}
-
-/* ===== GAME LIBRARY ===== */
-.game-library{
-width:100%;
-padding:15px;
-box-sizing:border-box;
-}
-
-.game-library-header{
-display:flex;
-align-items:center;
-gap:12px;
-margin-bottom:18px;
-}
-
-.game-library-grid{
-display:grid;
-grid-template-columns:repeat(2,minmax(0,1fr));
-gap:12px;
-}
-
-.game-card{
-min-width:0;
-background:linear-gradient(145deg,#1b1e28,#101116);
-border:1px solid rgba(255,215,106,.25);
-border-radius:14px;
-padding:11px;
-text-align:center;
-cursor:pointer;
-overflow:hidden;
-}
-
-.game-card img{
-width:65px;
-height:65px;
-object-fit:cover;
-border-radius:12px;
-margin:0 auto 9px;
-}
-
-.game-card h4{
-color:#ffd76a;
-font-size:13px;
-margin:5px 0;
-overflow-wrap:anywhere;
-}
-
-.game-card p{
-color:#aaa;
-font-size:10px;
-line-height:1.4;
-margin:5px 0 10px;
-overflow-wrap:anywhere;
-}
-
-.game-play-btn{
-width:100%;
-border:0;
-border-radius:9px;
-padding:9px 4px;
-background:linear-gradient(90deg,#e5a91b,#ffd76a);
-color:#111;
-font-weight:900;
-font-size:11px;
-cursor:pointer;
-}
-
-.game-back-btn{
-border:1px solid #ffd76a;
-background:#171717;
-color:#ffd76a;
-border-radius:9px;
-padding:9px 13px;
-font-weight:800;
-}
-
-@media(max-width:350px){
-.income-options{gap:7px}
-.income-option{font-size:10px;padding:10px 3px}
-.game-library{padding:10px}
-.game-library-grid{gap:8px}
-}
-
-@media(prefers-reduced-motion:reduce){
-.income-option{animation:none}
-}
-
-/* ===== START MINING BUTTON ANIMATION ===== */
-.gold-btn{
-    animation:startMiningBounce 1.7s ease-in-out infinite;
-    transform-origin:center;
-}
-
-@keyframes startMiningBounce{
-    0%,100%{
-        transform:translateY(0);
-        box-shadow:0 8px 25px #eab32d26,inset 0 1px #fff9;
-    }
-    50%{
-        transform:translateY(-6px);
-        box-shadow:0 13px 30px #eab32d55,inset 0 1px #fff9;
-    }
-}
-
-@media(prefers-reduced-motion:reduce){
-    .gold-btn,.cooling-fan{
-        animation:none;
-    }
-}
-
-@media(max-height:700px){.coin-stage{height:150px}.hero-coin{width:125px;height:125px}.landing h1{font-size:26px}#landing{padding:16px}.landing-wrap{max-width:380px}}
+ 
+.btn-copy-addr{background:#252936;color:var(--gold);border:1px solid #ffd76a55;padding:6px 10px;border-radius:8px;font-size:9px;font-weight:700;display:inline-flex;align-items:center;gap:4px;margin-top:4px}
+.btn-approve-req{background:linear-gradient(135deg,#51f0a3,#18a35e);color:#042b1b;border:0;padding:8px 12px;border-radius:15px;font-weight:800;font-size:10px}
+.btn-reject-req{background:linear-gradient(135deg,#ff7373,#a83232);color:#fff;border:0;padding:8px 12px;border-radius:15px;font-weight:800;font-size:10px}
+ 
+.admin-chat-open{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1.5px solid #51f0a366;border-radius:14px;padding:13px 14px;background:linear-gradient(135deg,#0f2a1f,#12141c);color:#51f0a3;font-weight:900;font-size:12px;margin-bottom:14px}
+.chat-badge{min-width:22px;height:22px;border-radius:11px;padding:0 7px;display:inline-grid;place-items:center;background:#51f0a3;color:#042b1b;font-size:11px;font-weight:900}
+.chat-badge.zero{background:#343640;color:#888}
+ 
+/* Admin chat list rows */
+.chat-row{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:13px;margin-bottom:8px;border:1px solid #ffffff14;background:#ffffff08;cursor:pointer}
+.chat-row.unseen{background:linear-gradient(135deg,#0e3a27,#0b2219);border-color:#51f0a3;box-shadow:0 0 14px #51f0a330}
+.chat-row .avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#242b32;color:var(--gold);font-weight:900;font-size:14px;flex-shrink:0}
+.chat-row.unseen .avatar{background:#51f0a3;color:#042b1b}
+.chat-row .meta{flex:1;min-width:0}
+.chat-row .nm{font-size:12px;font-weight:800;display:flex;align-items:center}
+.chat-row .pv{font-size:10px;color:#a4a6b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.chat-row.unseen .pv{color:#b9f7d6}
+.chat-row .tm{font-size:9px;color:#888;flex-shrink:0}
+.chat-row .dot{width:9px;height:9px;border-radius:50%;background:#51f0a3;box-shadow:0 0 8px #51f0a3;flex-shrink:0}
+ 
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:#000c;justify-content:center;align-items:center;z-index:1000;padding:20px}
+.modal-content{background:linear-gradient(145deg,#222532,#11131a);padding:20px;border-radius:18px;width:100%;max-width:440px;text-align:center;border:1px solid #ffd76a30;max-height:90dvh;overflow:auto}
+#supportModal .modal-content,#adminChatModal .modal-content{padding:0;overflow:hidden;text-align:left;height:min(620px,88dvh);display:flex;flex-direction:column}
+#adminChatModal{z-index:1100}
+.chat-head{padding:14px;background:#075e54;display:flex;align-items:center;gap:10px}
+.chat-body{flex:1;overflow:auto;padding:13px;background:radial-gradient(circle at top,#172a2a,#10151a 65%)}
+.chat-bubble{max-width:85%;padding:9px 12px;border-radius:12px;margin:7px 0;font-size:11px;line-height:1.5;background:#242b32;overflow-wrap:anywhere;white-space:pre-wrap}
+.chat-bubble.mine{margin-left:auto;background:#075e54}
+.chat-bubble small{display:block;font-size:8px;color:#9fb;opacity:.6;margin-top:3px;text-align:right}
+.chat-compose{display:flex;gap:7px;padding:10px;background:#171b21}
+.chat-compose textarea{flex:1;resize:none;min-height:40px;max-height:80px;border:0;border-radius:20px;padding:10px 13px;background:#292f37;color:#fff;font-size:11px}
+.chat-send{width:42px;height:42px;border:0;border-radius:50%;background:#20c878;color:#042b1b}
+#help-launcher{position:fixed;right:15px;bottom:88px;z-index:500;display:flex;align-items:center;gap:7px;border:1px solid #ffd76a55;border-radius:28px;padding:6px 12px 6px 6px;background:linear-gradient(135deg,#242735,#10121b);box-shadow:0 5px 22px #0009;color:var(--gold);font-size:11px;font-weight:800}
+#help-launcher .reply-dot{display:none;position:absolute;top:-3px;right:-3px;width:13px;height:13px;border-radius:50%;background:#ff3b5c;border:2px solid #10121b;box-shadow:0 0 8px #ff3b5c}
+.help-person{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 25%,#fff1bd,#d8a52b 60%,#78500c);color:#211600;border:2px solid #ffe79a}
+.stat{background:#ffffff0a;padding:8px;border-radius:8px;text-align:center}.stat small{display:block;font-size:9px;color:#aaa}.stat strong{font-size:14px}
+.history-row{padding:10px;border-bottom:1px solid #ffffff12;font-size:10px;display:flex;justify-content:space-between;gap:8px}
+.status-pending{color:#ffd76a}.status-approved,.status-paid{color:var(--green)}.status-rejected{color:#ff7373}
 </style>
 </head>
 <body>
-<section id="landing"><div class="landing-wrap"><div class="brand">GTF MINING · DIGITAL ASSETS</div><div class="coin-stage">
-    <div class="hero-coin">
+ 
+<!-- LANDING PAGE -->
+<section id="landing">
+  <div class="landing-wrap">
+    <div class="brand">GTF MINING · DIGITAL ASSETS</div>
+    <div class="coin-stage">
+      <div class="hero-coin">
         <img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo" onerror="this.style.display='none'">
+      </div>
+      <div class="cooling-fan"><i class="fa-solid fa-fan"></i></div>
     </div>
-    <div class="cooling-fan">
-        <i class="fa-solid fa-fan"></i>
-    </div>
-</div><h1>WELCOME BACK,<br><em>YOUR GTF IS READY</em></h1><p>Step into your golden mining universe.<br>Mine, complete tasks and explore your dashboard.</p><button class="gold-btn" id="enter-btn" onclick="beginEntry()">START MINING <i class="fa-solid fa-arrow-right"></i></button><div id="verify-box"><div class="verify-head"><i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> Quick Coin Verification</div><p class="verify-help">Slide the coin into the target to continue.</p><div class="slide-area" id="slide-area"><div class="target" id="target"><i class="fa-solid fa-circle-dot"></i></div><div class="mini-coin" id="mini-coin"><i class="fa-solid fa-coins"></i></div></div><div class="slide-track" id="slide-track"><span>DRAG THE COIN TO VERIFY</span><div id="slider-knob"><i class="fa-solid fa-arrow-right"></i></div></div><p class="verify-msg" id="verify-msg" aria-live="polite">Complete the slide to enter.</p></div><p class="secure-note">Premium experience · Please verify to continue</p></div></section>
-
-<div class="app" id="app" style="display:none">
-<header class="header">
-  <div class="user-info">
-    <div class="brand-mark"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF"></div>
-    <div>
-      <div class="user-name" id="user-name">GTF Miner</div>
-      <div><span class="badge" id="user-level">Lvl 0</span><span class="status">● READY</span></div>
-    </div>
+    <h1>WELCOME BACK,<br><em>YOUR GTF IS READY</em></h1>
+    <p>Step into your golden mining universe.<br>Mine, complete tasks and explore your dashboard.</p>
+    <button class="gold-btn" id="enter-btn" onclick="beginEntry()">START MINING <i class="fa-solid fa-arrow-right"></i></button>
+    <p class="secure-note">⚡ Ultra-Fast Engine · Tap Start to Instant Play</p>
   </div>
-  <div class="header-actions">
-    <div id="ton-connect-btn"></div>
-  </div>
-</header>
-
-<section id="tab-mine" class="view-section active"><div class="mine-container"><div class="income-options"><button class="income-option" onclick="openSmartLink();openGameLibrary()">🎮 GAMING INCOME</button><button class="income-option" onclick="openSmartLink()">⚡ 2X INCOME</button></div><div class="balance-title">TOTAL ASSETS</div><div class="main-balance"><span id="total-balance">0.0000</span> GTF</div><div class="sub-wallets"><div>HOLDING WALLET: 0 GTF</div><div>POOL WALLET: <span id="pool-balance">0.0000</span> GTF</div></div><div class="mining-rate">+<span id="mining-rate-val">0.0047</span> <small style="font-size:10px">/SEC</small></div>
-<div class="energy-box">
-    <div class="energy-top-row">
-        <span class="energy-badge"><i class="fa-solid fa-bolt"></i> 24H MINING</span>
-        <span class="energy-timer" id="mining-timer">24:00:00</span>
-    </div>
-    <div class="energy-pipe">
-        <div class="energy-liquid" id="energy-liquid" style="width:100%"></div>
-    </div>
-</div>
-<div class="coin-btn" onclick="tapCoin()" aria-label="Tap GTF coin"><div class="coin-inner"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo" onerror="this.parentElement.textContent='GTF'"></div></div><button class="btn-claim" onclick="claimReward()">COLLECT MINED REWARDS</button><p style="font-size:9px;color:#777;margin-top:12px">Mining balance</p></div></section>
-
-<section id="tab-games" class="view-section">
-<div class="game-library">
-<div class="game-library-header">
-<button class="game-back-btn" onclick="closeGameLibrary()">← BACK</button>
-<h2 style="font-size:19px;color:var(--gold);margin:0">🎮 GAME LIBRARY</h2>
-</div>
-<p style="font-size:10px;color:#aaa;margin:0 0 15px">Explore games and play now.</p>
-<div id="game-library-grid" class="game-library-grid">
-<div style="grid-column:1/-1;text-align:center;color:#aaa;padding:25px">Loading games...</div>
-</div>
-</div>
 </section>
-
-<section id="tab-tasks" class="view-section"><h2 style="font-size:21px">Earn Rewards</h2><p style="font-size:10px;color:#a4a6b0;margin-top:3px">Complete administrator-published tasks to earn GTF.</p><div class="section-title">📅 30 DAYS CHECK-IN</div><div class="checkin-grid" id="checkin-container"></div><div class="section-title">📋 ADMIN-ADDED TASKS</div><p style="font-size:10px;color:#a4a6b0;margin:0 0 10px">Tasks added by the administrator appear here.</p><div id="custom-tasks-container"></div></section>
-<section id="tab-miners" class="view-section"><h2 style="font-size:21px">Miners & Upgrades</h2><p style="font-size:10px;color:#a4a6b0;margin:4px 0 15px">Boost your mining speed.</p><div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-bolt"></i></div><div class="card-text"><h4>Speed Upgrade Level 1</h4><p>+0.0028 GTF/s rate</p></div></div><button class="btn-action" onclick="upgradeSpeed(50,0.01)">50 GTF</button></div></section>
-<section id="tab-friends" class="view-section"><h2 style="font-size:21px">Friends</h2><p style="font-size:10px;color:#a4a6b0;margin:4px 0 15px">Invite friends to explore GTF Mining.</p><div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-link"></i></div><div class="card-text"><h4>Your Invite Link</h4><p id="ref-link" style="font-size:9px;word-break:break-all"></p></div></div><button class="btn-action" onclick="copyRef()">Copy</button></div><div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-users"></i></div><div class="card-text"><h4>Your Referrals</h4><p><span id="ref-count">0</span> successful</p></div></div></div><div id="referral-list"></div></section>
-<section id="tab-profile" class="view-section">
-  <h2 style="font-size:21px;margin-bottom:14px">Profile</h2>
-  <div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-user"></i></div><div class="card-text"><h4>Telegram User ID</h4><p id="prof-tg-id">Not available</p></div></div></div>
-  <div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-wallet"></i></div><div class="card-text"><h4>Pool Wallet Balance</h4><p><span id="prof-balance">0.0000</span> GTF</p></div></div></div>
-  
-  <!-- TON Connect Wallet Status Card in Profile -->
-  <div class="card">
-    <div class="card-info">
-      <div class="card-icon" style="color:#0088cc"><i class="fa-solid fa-wallet"></i></div>
-      <div class="card-text">
-        <h4>TON Wallet (TON Connect)</h4>
-        <p id="prof-ton-address" style="color:var(--gold);word-break:break-all">Not Connected</p>
+ 
+<!-- MAIN APP -->
+<div class="app" id="app" style="display:none">
+  <header class="header">
+    <div class="user-info">
+      <div class="brand-mark"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF"></div>
+      <div>
+        <div class="user-name-box">
+          <span class="user-name" id="user-name">GTF Miner</span>
+          <span id="user-verified-tick" class="verified-blue-tick">
+            <i class="fa-solid fa-circle-check"></i>
+          </span>
+        </div>
+        <div>
+          <span class="badge" id="user-level" style="background:#ffffff12;font-size:9px;padding:2px 7px;border-radius:10px">Lvl 0</span>
+          <span id="user-vip-badge" class="badge-tag badge-non-vip">NON-VIP ACCESS</span>
+        </div>
       </div>
     </div>
-    <button class="btn-action" id="prof-ton-btn" onclick="handleWalletAction()">Connect</button>
-  </div>
-
-  <h3 style="margin:17px 0 10px;font-size:13px;color:var(--gold)">CONTROLS</h3>
-  <div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></div><div class="card-text"><h4>Withdraw</h4><p>Submit a withdrawal request</p></div></div><button class="btn-action" onclick="openWithdrawModal()">Withdraw</button></div>
-  <div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div><div class="card-text"><h4>Withdrawal History</h4><p>View request status and results</p></div></div><button class="btn-action" onclick="openHistory('withdrawals')">View</button></div>
-  <div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-list"></i></div><div class="card-text"><h4>Activity History</h4><p>Mining, tasks and reward activity</p></div></div><button class="btn-action" onclick="openHistory('activity')">View</button></div>
-  <div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="card-text"><h4>Admin Access</h4><p>Tap Profile icon 4 times to enter.</p></div></div></div>
-</section>
+    <div class="header-actions">
+      <div id="ton-connect-btn"></div>
+    </div>
+  </header>
+ 
+  <!-- TAB 1: MINE -->
+  <section id="tab-mine" class="view-section active">
+    <div class="mine-container">
+      <div class="vip-trigger-banner" onclick="openPremiumModal()">
+        <div style="text-align:left">
+          <div style="font-size:12px;font-weight:900;color:#f72585"><i class="fa-solid fa-crown"></i> VIP PREMIUM ACCESS</div>
+          <div style="font-size:9px;color:#d88bff" id="vip-status-text">Unlock No Ads, Level Upgrades & VIP Support</div>
+        </div>
+        <button class="btn-action" style="background:linear-gradient(135deg,#ff007f,#7928ca);color:#fff;min-width:70px" id="vip-banner-btn">GET VIP</button>
+      </div>
+ 
+      <div class="income-options">
+        <button class="income-option" onclick="openGameLibrary()"><i class="fa-solid fa-gamepad"></i> GAMING INCOME</button>
+        <button class="income-option" onclick="open2XIncome()"><i class="fa-solid fa-bolt"></i> 2X INCOME</button>
+      </div>
+ 
+      <div class="balance-title">TOTAL ASSETS</div>
+      <div class="main-balance"><span id="total-balance">0.0000</span> GTF</div>
+      <div class="sub-wallets">
+        <div>HOLDING WALLET: 0 GTF</div>
+        <div>POOL WALLET: <span id="pool-balance">0.0000</span> GTF</div>
+      </div>
+      <div class="mining-rate">+<span id="mining-rate-val">0.0047</span> <small style="font-size:10px">/SEC</small></div>
+ 
+      <div class="energy-box">
+        <div class="energy-top-row">
+          <span class="energy-badge"><i class="fa-solid fa-bolt"></i> 24H MINING</span>
+          <span class="energy-timer" id="mining-timer">24:00:00</span>
+        </div>
+        <div class="energy-pipe">
+          <div class="energy-liquid" id="energy-liquid" style="width:100%"></div>
+        </div>
+      </div>
+ 
+      <div class="coin-btn" onclick="tapCoin()" aria-label="Tap GTF coin">
+        <div class="coin-inner"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF logo"></div>
+      </div>
+      <button class="btn-claim" onclick="claimReward()">COLLECT MINED REWARDS</button>
+      <p style="font-size:9px;color:#777;margin-top:10px">Smooth 24h Real-Time Auto Accumulation</p>
+    </div>
+  </section>
+ 
+  <!-- TAB: GAME LIBRARY -->
+  <section id="tab-games" class="view-section">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:15px">
+      <button class="btn-action" onclick="closeGameLibrary()">← BACK</button>
+      <h2 style="font-size:17px;color:var(--gold);margin:0">🎮 GAME LIBRARY</h2>
+    </div>
+    <p style="font-size:10px;color:#aaa;margin-bottom:14px">Play trending games and earn rewards.</p>
+    <div id="game-library-grid" class="game-library-grid"></div>
+  </section>
+ 
+  <!-- TAB 2: TASKS -->
+  <section id="tab-tasks" class="view-section">
+    <h2 style="font-size:20px">Earn Rewards</h2>
+    <p style="font-size:10px;color:#a4a6b0;margin-top:2px">Complete tasks to earn GTF tokens.</p>
+    <div class="section-title">📅 30 DAYS CHECK-IN</div>
+    <div class="checkin-grid" id="checkin-container"></div>
+ 
+    <!-- VIP only tasks -->
+    <div id="vip-tasks-wrap" style="display:none">
+      <div class="section-title vip-section-title"><i class="fa-solid fa-crown" style="color:#f72585;-webkit-text-fill-color:#f72585"></i> VIP EXCLUSIVE TASKS</div>
+      <div id="vip-tasks-container"></div>
+    </div>
+ 
+    <div class="section-title">📋 TASKS LIST</div>
+    <div id="custom-tasks-container"></div>
+  </section>
+ 
+  <!-- TAB 3: MINERS & UPGRADES -->
+  <section id="tab-miners" class="view-section">
+    <h2 style="font-size:20px">Miners & Upgrades</h2>
+    <p style="font-size:10px;color:#a4a6b0;margin:3px 0 14px">Upgrade mining equipment to boost GTF/sec rate.</p>
+ 
+    <div id="miners-vip-locked" class="vip-miner-locked-box">
+      <div class="lock-ring"><i class="fa-solid fa-lock"></i></div>
+      <h3>VIP ACCESS REQUIRED</h3>
+      <p style="font-size:11px;color:#ddd;line-height:1.6;max-width:320px;margin:0 auto 14px">
+        মাইনিং স্পিড আপগ্রেড করার অপশনটি শুধুমাত্র VIP মেম্বারদের জন্য সংরক্ষিত। ভিআইপি আনলক করে আপনার লেভেল ও ইনকাম বৃদ্ধি করুন।
+      </p>
+      <div class="vip-mini-perks">
+        <div><i class="fa-solid fa-bolt"></i> মাইনিং স্পিড ও লেভেল আপগ্রেড</div>
+        <div><i class="fa-solid fa-ban"></i> কোনো বিজ্ঞাপন নেই</div>
+        <div><i class="fa-solid fa-headset"></i> ভিআইপি প্রায়োরিটি সাপোর্ট</div>
+        <div><i class="fa-solid fa-gem"></i> এক্সক্লুসিভ ভিআইপি টাস্ক</div>
+      </div>
+      <button class="btn-buy-vip" style="max-width:240px;margin:0 auto;display:block" onclick="openPremiumModal()">
+        <i class="fa-solid fa-crown"></i> UNLOCK VIP NOW
+      </button>
+    </div>
+ 
+    <div id="miners-vip-unlocked" style="display:none">
+      <div class="card premium-card">
+        <div class="card-info">
+          <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="card-text">
+            <h4>Speed Upgrade Level 1</h4>
+            <p>+0.0028 GTF/s rate boost</p>
+          </div>
+        </div>
+        <button class="btn-action" onclick="upgradeSpeed(50, 0.0028)">50 GTF</button>
+      </div>
+      <div class="card premium-card">
+        <div class="card-info">
+          <div class="card-icon"><i class="fa-solid fa-rocket"></i></div>
+          <div class="card-text">
+            <h4>Speed Upgrade Level 2</h4>
+            <p>+0.0055 GTF/s rate boost</p>
+          </div>
+        </div>
+        <button class="btn-action" onclick="upgradeSpeed(120, 0.0055)">120 GTF</button>
+      </div>
+      <div class="card premium-card">
+        <div class="card-info">
+          <div class="card-icon"><i class="fa-solid fa-meteor"></i></div>
+          <div class="card-text">
+            <h4>Ultra Quantum Booster</h4>
+            <p>+0.0120 GTF/s rate boost</p>
+          </div>
+        </div>
+        <button class="btn-action" onclick="upgradeSpeed(250, 0.0120)">250 GTF</button>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- TAB 4: FRIENDS -->
+  <section id="tab-friends" class="view-section">
+    <h2 style="font-size:20px">Friends</h2>
+    <p style="font-size:10px;color:#a4a6b0;margin:3px 0 14px">Invite friends and grow together.</p>
+    <div class="card">
+      <div class="card-info">
+        <div class="card-icon"><i class="fa-solid fa-link"></i></div>
+        <div class="card-text">
+          <h4>Your Invite Link</h4>
+          <p id="ref-link" style="font-size:9px;word-break:break-all"></p>
+        </div>
+      </div>
+      <button class="btn-action" onclick="copyRef()">Copy</button>
+    </div>
+    <div class="card">
+      <div class="card-info">
+        <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+        <div class="card-text">
+          <h4>Your Referrals</h4>
+          <p><span id="ref-count">0</span> successful partners</p>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Referral Rules -->
+    <div class="rules-card">
+      <div class="rules-head">
+        <h4><i class="fa-solid fa-scroll"></i> <span id="rules-title">রেফারেল নিয়মাবলি</span></h4>
+        <div class="rules-lang">
+          <button id="rules-btn-bn" class="active" onclick="setRulesLang('bn')">বাংলা</button>
+          <button id="rules-btn-en" onclick="setRulesLang('en')">English</button>
+        </div>
+      </div>
+      <div class="rules-intro" id="rules-intro"></div>
+      <div class="rules-list" id="rules-list"></div>
+      <div class="rules-reward" id="rules-reward"></div>
+    </div>
+ 
+    <div id="referral-list"></div>
+  </section>
+ 
+  <!-- TAB 5: PROFILE -->
+  <section id="tab-profile" class="view-section">
+    <h2 style="font-size:20px;margin-bottom:12px">Profile</h2>
+    <div class="card">
+      <div class="card-info">
+        <div class="card-icon"><i class="fa-solid fa-user"></i></div>
+        <div class="card-text">
+          <h4>Telegram ID</h4>
+          <p id="prof-tg-id">Not available</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-info">
+        <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
+        <div class="card-text">
+          <h4>Pool Balance</h4>
+          <p><span id="prof-balance">0.0000</span> GTF</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-info">
+        <div class="card-icon" style="color:#0088cc"><i class="fa-solid fa-link"></i></div>
+        <div class="card-text">
+          <h4>TON Connect</h4>
+          <p id="prof-ton-address" style="color:var(--gold);word-break:break-all">Not Connected</p>
+        </div>
+      </div>
+      <button class="btn-action" id="prof-ton-btn" onclick="handleWalletAction()">Connect</button>
+    </div>
+ 
+    <div class="card" onclick="openPremiumModal()" style="border-color:#b5179e;cursor:pointer">
+      <div class="card-info">
+        <div class="card-icon" style="color:#f72585"><i class="fa-solid fa-crown"></i></div>
+        <div class="card-text">
+          <h4 style="color:#f72585">VIP Membership</h4>
+          <p id="prof-vip-status">Non-VIP Access · Tap to Unlock</p>
+        </div>
+      </div>
+      <button class="btn-action" style="background:linear-gradient(135deg,#b5179e,#7209b7);color:#fff">VIEW</button>
+    </div>
+ 
+    <h3 style="margin:16px 0 9px;font-size:12px;color:var(--gold)">CONTROLS</h3>
+    <div class="card">
+      <div class="card-info">
+        <div class="card-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+        <div class="card-text"><h4>Withdraw Funds</h4><p>Payout in TON, Tonkeeper or BSC</p></div>
+      </div>
+      <button class="btn-action" onclick="openWithdrawModal()">Withdraw</button>
+    </div>
+    <div class="card">
+      <div class="card-info">
+        <div class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <div class="card-text"><h4>Transactions</h4><p>Check withdrawal status</p></div>
+      </div>
+      <button class="btn-action" onclick="openHistory('withdrawals')">History</button>
+    </div>
+    <!-- Security info (no admin trigger here) -->
+    <div class="card">
+      <div class="card-info">
+        <div class="card-icon" style="color:var(--green)"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="card-text">
+          <h4>Secure App</h4>
+          <p>অ্যাপটি সম্পূর্ণ নিরাপদ। সতর্কভাবে কাজ করুন এবং আপনার ওয়ালেট এড্রেস কারও সাথে শেয়ার করবেন না। এখান থেকে যেকোনো সময় Withdraw করতে পারবেন।</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
-
+ 
+<!-- BOTTOM NAVIGATION -->
 <nav class="bottom-nav" id="bottom-nav" style="display:none">
-  <div class="nav-item active" onclick="showTab('mine',this)"><i class="fa-solid fa-coins"></i>Mine</div>
-  <div class="nav-item" onclick="showTab('tasks',this)"><i class="fa-solid fa-list-check"></i>Tasks</div>
-  <div class="nav-item" onclick="showTab('miners',this)"><i class="fa-solid fa-bolt"></i>Miners</div>
-  <div class="nav-item" onclick="showTab('friends',this)"><i class="fa-solid fa-user-group"></i>Friends</div>
-  <div class="nav-item" onclick="showTab('profile',this);profileTap()"><i class="fa-solid fa-user"></i>Profile</div>
+  <div class="nav-item active" onclick="switchNav('mine', this)"><i class="fa-solid fa-coins"></i><span>Mine</span></div>
+  <div class="nav-item" onclick="switchNav('tasks', this)"><i class="fa-solid fa-list-check"></i><span>Tasks</span></div>
+  <div class="nav-item" onclick="switchNav('miners', this)"><i class="fa-solid fa-bolt"></i><span>Miners</span></div>
+  <div class="nav-item vip-nav" onclick="openPremiumModal()"><i class="fa-solid fa-crown"></i><span>VIP</span></div>
+  <div class="nav-item" onclick="switchNav('friends', this)"><i class="fa-solid fa-user-group"></i><span>Friends</span></div>
+  <div class="nav-item" onclick="switchNav('profile', this);profileTap()"><i class="fa-solid fa-user"></i><span>Profile</span></div>
 </nav>
-
-<button id="help-launcher" onclick="openSupport()"><span class="help-person"><i class="fa-solid fa-headset"></i></span><span class="help-label">HELP LINE</span></button>
-
-<!-- Withdraw Modal -->
+ 
+<button id="help-launcher" onclick="openSupport()"><span class="help-person"><i class="fa-solid fa-headset"></i></span><span>HELP LINE</span><span class="reply-dot" id="help-reply-dot"></span></button>
+ 
+<!-- VIP PREMIUM MODAL -->
+<div id="premiumModal" class="modal">
+  <div class="modal-content vip-modal-box">
+    <div style="font-size:32px;color:#f72585;margin-bottom:4px"><i class="fa-solid fa-crown"></i></div>
+    <h3 style="font-size:18px;color:#fff;font-weight:900" id="vip-modal-title">VIP PREMIUM ACCESS</h3>
+ 
+    <div class="vip-lang-switch">
+      <button class="vip-lang-btn active" id="btn-lang-bn" onclick="setVipLang('bn')">বাংলা</button>
+      <button class="vip-lang-btn" id="btn-lang-en" onclick="setVipLang('en')">English</button>
+    </div>
+ 
+    <p style="font-size:11px;color:#d88bff;margin-bottom:12px;line-height:1.5" id="vip-intro-text"></p>
+ 
+    <div class="perk-list">
+      <div class="perk-item" id="perk-ads">
+        <i class="fa-solid fa-circle-check" style="font-size:15px;color:#d88bff;margin-top:2px"></i>
+        <div style="text-align:left">
+          <strong style="color:#fff" id="perk-ads-title"></strong>
+          <p style="color:#aaa;font-size:10px" id="perk-ads-desc"></p>
+        </div>
+      </div>
+      <div class="perk-item" id="perk-support">
+        <i class="fa-solid fa-circle-check" style="font-size:15px;color:#d88bff;margin-top:2px"></i>
+        <div style="text-align:left">
+          <strong style="color:#fff" id="perk-support-title"></strong>
+          <p style="color:#aaa;font-size:10px" id="perk-support-desc"></p>
+        </div>
+      </div>
+      <div class="perk-item" id="perk-speed">
+        <i class="fa-solid fa-circle-check" style="font-size:15px;color:#d88bff;margin-top:2px"></i>
+        <div style="text-align:left">
+          <strong style="color:#fff" id="perk-speed-title"></strong>
+          <p style="color:#aaa;font-size:10px" id="perk-speed-desc"></p>
+        </div>
+      </div>
+      <div class="perk-item" id="perk-verify">
+        <i class="fa-solid fa-circle-check" style="font-size:15px;color:#d88bff;margin-top:2px"></i>
+        <div style="text-align:left">
+          <strong style="color:#fff" id="perk-verify-title"></strong>
+          <p style="color:#aaa;font-size:10px" id="perk-verify-desc"></p>
+        </div>
+      </div>
+    </div>
+ 
+    <div style="font-size:12px;color:var(--gold);margin:10px 0;font-weight:800">
+      <span id="vip-price-tag"></span>
+    </div>
+ 
+    <button class="btn-buy-vip" id="btn-confirm-vip" onclick="purchasePremiumAccess()">
+      <i class="fa-solid fa-bolt"></i> GET PREMIUM ACCESS NOW
+    </button>
+    <button class="btn-action" style="width:100%;margin-top:9px;background:#333;color:#aaa" onclick="closePremiumModal()">CLOSE</button>
+  </div>
+</div>
+ 
+<!-- USER WITHDRAW MODAL -->
 <div id="withdrawModal" class="modal">
   <div class="modal-content">
     <h3 style="margin-bottom:9px">Withdraw GTF</h3>
     <p id="withdraw-rules" style="font-size:10px;color:#aaa">Minimum withdrawal: 170 GTF · Fee: 70 GTF</p>
-    
-    <!-- Autofill Connected TON Wallet Button -->
     <button type="button" id="btn-use-ton-wallet" class="btn-action" style="width:100%;margin:8px 0;background:#14233a;border:1px solid #1877f2;color:#9bc6ff;display:none" onclick="fillConnectedWallet()">
       <i class="fa-solid fa-circle-check"></i> Use Connected TON Wallet
     </button>
-    
-    <select id="withdrawNetwork">
+    <select id="withdrawNetwork" class="field">
       <option value="TON Wallet">TON Wallet</option>
       <option value="Tonkeeper (TON)">Tonkeeper (TON)</option>
       <option value="Binance BEP20 (BSC)">Binance BEP20 (BSC)</option>
       <option value="Binance TRC20">Binance TRC20</option>
-      <option value="TON">TON</option>
     </select>
-    <input type="text" id="tonWallet" placeholder="Enter wallet address" autocomplete="off">
-    <input type="number" id="withdrawAmount" placeholder="Enter GTF Amount" min="0">
+    <input type="text" id="tonWallet" class="field" placeholder="Enter recipient wallet address" autocomplete="off">
+    <input type="number" id="withdrawAmount" class="field" placeholder="Enter GTF Amount" min="0">
     <button class="btn-action" style="width:100%;margin-top:5px" onclick="processWithdraw()">Submit Request</button>
-    <button class="btn-action" style="width:100%;margin-top:8px;background:#41434c;color:#fff" onclick="closeModal()">Cancel</button>
+    <button class="btn-action" style="width:100%;margin-top:8px;background:#41434c;color:#fff" onclick="closeWithdrawModal()">Cancel</button>
   </div>
 </div>
-
+ 
 <div id="historyModal" class="modal"><div class="modal-content" style="text-align:left"><h3 id="history-title" style="color:var(--gold);margin-bottom:10px">History</h3><div id="history-content"></div><button class="btn-action" style="width:100%;margin-top:12px;background:#41434c;color:white" onclick="closeHistory()">Close</button></div></div>
-<div id="supportModal" class="modal"><div class="modal-content"><div class="chat-head"><div class="chat-avatar"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF" onerror="this.style.display='none'"></div><div><div class="chat-title">GTF Help Line</div><div class="chat-subtitle">Support team · Usually replies as soon as possible</div></div><button onclick="closeSupport()" style="margin-left:auto;border:0;background:transparent;color:white;font-size:20px">×</button></div><div id="support-messages" class="chat-body"></div><div class="chat-compose"><textarea id="support-input" rows="1" placeholder="Type a message..."></textarea><button class="chat-send" onclick="sendSupportMessage()"><i class="fa-solid fa-paper-plane"></i></button></div></div></div>
-
-<!-- Admin Panel Modal -->
-<div id="adminModal" class="modal"><div class="modal-content" style="max-height:90dvh;overflow:auto;text-align:left;max-width:460px"><h3 style="color:var(--gold);margin-bottom:12px">GTF ADMIN PANEL</h3><div class="grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><div class="stat"><small>Total users</small><strong id="admin-user-count">1</strong></div><div class="stat"><small>Active users</small><strong id="admin-active-count">1</strong></div><div class="stat"><small>Tasks</small><strong id="admin-task-count">0</strong></div></div><div class="all-ads-card">
-  <div>
-    <div style="font-size:12px;font-weight:800;color:var(--gold)"><i class="fa-solid fa-rectangle-ad"></i> ALL ADS (সকল প্রকার অ্যাড)</div>
-    <div style="font-size:9px;color:#aaa">চালু থাকলে অ্যাড আসবে, বন্ধ করলে কোনো অ্যাড আসবে না</div>
+ 
+<!-- USER HELP LINE -->
+<div id="supportModal" class="modal"><div class="modal-content"><div class="chat-head"><div class="chat-avatar"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF" style="width:36px;height:36px;border-radius:50%"></div><div style="margin-left:8px"><div class="chat-title" style="font-weight:800;font-size:13px">GTF Help Line</div><div class="chat-subtitle" style="font-size:9px;color:#a2dfd3" id="support-subtitle">Support team online</div></div><button onclick="closeSupport()" style="margin-left:auto;border:0;background:transparent;color:white;font-size:20px">×</button></div><div id="support-messages" class="chat-body"></div><div class="chat-compose"><textarea id="support-input" rows="1" placeholder="Type a message..."></textarea><button class="chat-send" onclick="sendSupportMessage()"><i class="fa-solid fa-paper-plane"></i></button></div></div></div>
+ 
+<!-- ADMIN CHAT MODAL -->
+<div id="adminChatModal" class="modal">
+  <div class="modal-content" style="max-width:480px">
+    <div class="chat-head" style="background:#0b3d2e">
+      <button id="admin-chat-back" onclick="showChatList()" style="display:none;border:0;background:transparent;color:#fff;font-size:18px"><i class="fa-solid fa-arrow-left"></i></button>
+      <div style="flex:1;min-width:0">
+        <div id="admin-chat-title" style="font-weight:800;font-size:13px;display:flex;align-items:center">User Messages</div>
+        <div id="admin-chat-sub" style="font-size:9px;color:#a2dfd3">Green = unseen</div>
+      </div>
+      <button onclick="closeAdminChats()" style="border:0;background:transparent;color:white;font-size:20px">×</button>
+    </div>
+    <div id="admin-chat-list" class="chat-body"></div>
+    <div id="admin-chat-conv" style="display:none;flex:1;min-height:0;flex-direction:column">
+      <div id="admin-chat-msgs" class="chat-body"></div>
+      <div class="chat-compose">
+        <textarea id="admin-chat-input" rows="1" placeholder="Write a reply..."></textarea>
+        <button class="chat-send" onclick="sendAdminReply()"><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </div>
   </div>
-  <label class="switch-toggle">
-    <input type="checkbox" id="admin-all-ads-toggle" onchange="toggleAllAds(this.checked)">
-    <span class="switch-round"></span>
-  </label>
 </div>
-<h4 style="color:var(--gold);margin:12px 0 5px">Mining / Withdrawal settings</h4><label class="small muted">GTF mining rate per second</label><input class="field" id="admin-rate" type="number" min="0" step="0.0001"><label class="small muted">Minimum withdrawal (GTF)</label><input class="field" id="admin-min-withdraw" type="number" min="0" step="1"><label class="small muted">Withdrawal fee (GTF)</label><input class="field" id="admin-withdraw-fee" type="number" min="0" step="1"><label class="small muted">2X Income URL</label>
-<input class="field" id="admin-smart-link" type="url" placeholder="https://...">
-<button class="btn-action" style="width:100%" onclick="saveAdminSettings()">Save settings</button>
-
-<h4 style="color:var(--gold);margin:18px 0 8px">🎮 GAME LIBRARY MANAGER</h4>
-<input type="hidden" id="admin-edit-game-id">
-<label class="small muted">Game Logo URL</label><input class="field" id="admin-game-logo" type="url" placeholder="https://logo-image-url">
-<label class="small muted">Game Title</label><input class="field" id="admin-game-title" placeholder="Enter game title">
-<label class="small muted">Game Description</label><textarea class="field" id="admin-game-description" placeholder="Enter game description" rows="3"></textarea>
-<label class="small muted">Game URL</label><input class="field" id="admin-game-url" type="url" placeholder="https://game-url">
-<button class="btn-action" style="width:100%;margin-top:8px" onclick="saveAdminGame()">ADD / SAVE GAME</button>
-<button class="btn-action" style="width:100%;margin-top:6px;background:#333;color:white" onclick="clearAdminGameForm()">CLEAR FORM</button>
-<div id="admin-game-list" style="margin-top:12px"></div>
-
-<h4 style="color:var(--gold);margin:16px 0 5px">Add / edit a task</h4><input type="hidden" id="admin-edit-task-id"><input class="field" id="admin-task-title" placeholder="Task title"><input class="field" id="admin-task-url" type="url" placeholder="https:// task link"><input class="field" id="admin-task-reward" type="number" min="0" step="0.01" placeholder="Reward in GTF"><select class="field" id="admin-task-type"><option value="visit">Website</option><option value="telegram">Telegram / Community</option><option value="youtube">YouTube</option><option value="other">Other</option></select><button class="btn-action" style="width:100%" onclick="addAdminTask()">Publish / Save task</button><div id="admin-task-list" style="margin-top:10px"></div>
-<h4 style="color:var(--gold);margin:16px 0 6px">Withdrawal requests</h4><div id="admin-withdraw-list"></div>
-<h4 style="color:var(--gold);margin:16px 0 6px">Help Line</h4><button class="inbox-open-btn" onclick="openAdminInbox()"><i class="fa-solid fa-inbox"></i> Inbox Check <span id="admin-inbox-count" class="inbox-count">0</span></button><div id="admin-support-list" style="display:none;margin-top:8px"></div><div id="adminThreadPanel"><div class="admin-thread-head"><button onclick="backToInbox()" style="border:0;background:transparent;color:white;font-size:18px">‹</button><div class="inbox-avatar" id="admin-thread-avatar">G</div><div style="min-width:0"><div class="inbox-name" id="admin-thread-name">User</div><div class="inbox-preview" id="admin-thread-id"></div></div></div><div id="admin-thread-body" class="admin-thread-body"></div><div class="admin-thread-compose"><textarea id="admin-thread-input" rows="1" placeholder="Reply to user..."></textarea><button onclick="sendAdminThreadReply()"><i class="fa-solid fa-paper-plane"></i></button></div></div>
-<h4 style="color:var(--gold);margin:16px 0 6px">User Balance Management</h4>
-<input class="field" id="admin-user-search" type="text" placeholder="Search by Telegram Chat ID or Username..." style="width:100%;margin-bottom:8px" oninput="renderAdminUsers()">
-<button class="btn-action" style="width:100%" onclick="searchAdminUsers()"><i class="fa-solid fa-arrows-rotate"></i> Refresh / Search Users</button>
-<div id="admin-users-list" style="margin-top:10px;max-height:300px;overflow-y:auto;padding-right:2px"></div><button class="btn-action" style="width:100%;margin-top:12px;background:#41434c;color:white" onclick="closeAdmin()">Close panel</button></div></div>
-
+ 
+<!-- ADMIN PANEL -->
+<div id="adminModal" class="modal">
+  <div class="modal-content" style="max-height:92dvh;overflow:auto;text-align:left;max-width:480px;padding:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <h3 style="color:var(--gold);font-size:16px"><i class="fa-solid fa-screwdriver-wrench"></i> GTF ADMIN PANEL</h3>
+      <button onclick="closeAdmin()" style="border:0;background:transparent;color:#fff;font-size:20px">✕</button>
+    </div>
+ 
+    <div class="admin-card">
+      <div class="admin-card-title"><i class="fa-solid fa-chart-pie"></i> LIVE OVERVIEW</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+        <div class="stat"><small>Users</small><strong id="admin-user-count">1</strong></div>
+        <div class="stat"><small>VIP Users</small><strong id="admin-vip-count">0</strong></div>
+        <div class="stat"><small>Tasks</small><strong id="admin-task-count">0</strong></div>
+      </div>
+    </div>
+ 
+    <!-- CHAT button -->
+    <button class="admin-chat-open" onclick="openAdminChats()">
+      <span><i class="fa-solid fa-comments"></i> CHAT · USER MESSAGES</span>
+      <span class="chat-badge zero" id="admin-chat-badge">0</span>
+    </button>
+ 
+    <div class="admin-card">
+      <div class="admin-card-title"><i class="fa-solid fa-rectangle-ad"></i> ADVERTISING CONTROL</div>
+      <div class="all-ads-card" style="margin-bottom:10px">
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--gold)">ALL ADS (সকল প্রকার অ্যাড)</div>
+          <div style="font-size:9px;color:#aaa">অন থাকলে অ্যাড চলবে, অফ করলে সম্পূর্ণ বন্ধ থাকবে</div>
+        </div>
+        <label class="switch-toggle">
+          <input type="checkbox" id="admin-all-ads-toggle" onchange="toggleAllAds(this.checked)">
+          <span class="switch-round"></span>
+        </label>
+      </div>
+      <label style="font-size:10px;color:#aaa">SmartLink (2X Income URL)</label>
+      <input class="field" id="admin-smart-link" type="url" placeholder="https://uplcm.com/...">
+      <button class="btn-action" style="width:100%" onclick="saveAdminSettings()">Save Ads Settings</button>
+    </div>
+ 
+    <div class="admin-card">
+      <div class="admin-card-title"><i class="fa-solid fa-money-bill-transfer"></i> WITHDRAWAL REQUESTS</div>
+      <div id="admin-withdraw-list">Loading requests...</div>
+    </div>
+ 
+    <div class="admin-card">
+      <div class="admin-card-title"><i class="fa-solid fa-users-gear"></i> USER & VIP MANAGEMENT</div>
+      <input class="field" id="admin-user-search" type="text" placeholder="Search by Telegram ID or Username..." oninput="renderAdminUsers()">
+      <div id="admin-users-list" style="max-height:260px;overflow-y:auto"></div>
+    </div>
+ 
+    <div class="admin-card">
+      <div class="admin-card-title"><i class="fa-solid fa-sliders"></i> MINING & WITHDRAWAL SETTINGS</div>
+      <label style="font-size:10px;color:#aaa">Mining rate per second</label>
+      <input class="field" id="admin-rate" type="number" min="0" step="0.0001">
+      <label style="font-size:10px;color:#aaa">Minimum withdrawal (GTF)</label>
+      <input class="field" id="admin-min-withdraw" type="number" min="0" step="1">
+      <label style="font-size:10px;color:#aaa">Withdrawal fee (GTF)</label>
+      <input class="field" id="admin-withdraw-fee" type="number" min="0" step="1">
+      <button class="btn-action" style="width:100%" onclick="saveAdminSettings()">Save All Settings</button>
+    </div>
+ 
+    <div class="admin-card">
+      <div class="admin-card-title"><i class="fa-solid fa-list-check"></i> TASK PUBLISHER</div>
+      <input class="field" id="admin-task-title" placeholder="Task Title">
+      <input class="field" id="admin-task-url" type="url" placeholder="https:// task link">
+      <input class="field" id="admin-task-reward" type="number" min="0" step="0.01" placeholder="Reward in GTF (যত লিখবেন তত পাবে)">
+      <label style="display:flex;align-items:center;gap:8px;font-size:11px;color:#e9d9ff;margin:4px 0 10px;background:#b5179e1c;border:1px solid #b5179e66;border-radius:10px;padding:9px">
+        <input type="checkbox" id="admin-task-vip" style="width:16px;height:16px">
+        <span><i class="fa-solid fa-crown" style="color:#f72585"></i> শুধু VIP মেম্বারদের জন্য (VIP Only Task)</span>
+      </label>
+      <button class="btn-action" style="width:100%" onclick="addAdminTask()">Publish Task</button>
+      <div id="admin-task-list" style="margin-top:10px"></div>
+    </div>
+ 
+    <div class="admin-card">
+      <div class="admin-card-title"><i class="fa-solid fa-gamepad"></i> GAMING LIBRARY MANAGER</div>
+      <input class="field" id="admin-game-title" placeholder="Game Title">
+      <input class="field" id="admin-game-desc" placeholder="Game Description">
+      <input class="field" id="admin-game-logo" type="url" placeholder="Game Logo URL (https://...)">
+      <input class="field" id="admin-game-url" type="url" placeholder="Game HTTPS Link">
+      <button class="btn-action" style="width:100%" onclick="saveAdminGame()">Save / Add Game</button>
+      <div id="admin-game-list" style="margin-top:10px"></div>
+    </div>
+ 
+    <button class="btn-action" style="width:100%;margin-top:10px;background:#41434c;color:white" onclick="closeAdmin()">Close Admin Panel</button>
+  </div>
+</div>
+ 
 <script>
 'use strict';
 const firebaseConfig={apiKey:'AIzaSyBhkXRY_91i2kf2CM3OiZ9-UXyGT7Bd-Wk',authDomain:'bt-mining-64329.firebaseapp.com',databaseURL:'https://bt-mining-64329-default-rtdb.firebaseio.com',projectId:'bt-mining-64329',storageBucket:'bt-mining-64329.firebasestorage.app',messagingSenderId:'845892864077',appId:'1:845892864077:web:ea4e776c2fb35e25dab404',measurementId:'G-R014X94DBJ'};
-let db=null,firebaseReady=false;try{if(window.firebase){firebase.initializeApp(firebaseConfig);db=firebase.database();firebaseReady=true;}}catch(e){console.warn('Firebase initialization:',e)}
-
+let db=null,firebaseReady=false;
+try{
+  if(window.firebase){
+    firebase.initializeApp(firebaseConfig);
+    db=firebase.database();
+    firebaseReady=true;
+  }
+}catch(e){console.warn('Firebase error:',e)}
+ 
 const SMART_LINK_DEFAULT='https://uplcm.com/4/12169278';
 const BOT_USERNAME='GTF_MINING_bot';
 const MANIFEST_URL='https://arafat01613415562a-lang.github.io/gtf-mining/tonconnect-manifest.json';
-
-/* ===== GTF JETTON & ADMIN WALLET CONFIG ===== */
-const GTF_JETTON_MASTER_ADDRESS = 'EQCpTNKsUtmyxtpfb6KmCp_LmHcnybWfzmlHkurOBQwHFB5t';
 const ADMIN_WALLET_ADDRESS = 'UQBUrewFxsRB31GxTgYmg-uiwaZIwc-e7Nc_yKyjM03C-GD4';
-const GTF_JETTON_DECIMALS = 9;
-
+ 
 const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}
 const tgUser=tg?.initDataUnsafe?.user;
 const uid=String(tgUser?.id||'local_'+getOrCreateLocalId());
-
+ 
 function getOrCreateLocalId(){let x=localStorage.getItem('gtf_local_uid');if(!x){x='u'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('gtf_local_uid',x)}return x}
 function readNum(k,d){const raw=localStorage.getItem(k),n=Number(raw);return Number.isFinite(n)&&raw!==null?n:d}
 function safeStore(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
 function safeGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
-
-const userData={username:tgUser?.username||tgUser?.first_name||'GTF Miner',id:tgUser?.id||uid,balance:readNum('gtf_bal',0),level:readNum('gtf_lvl',0),miningRate:readNum('gtf_rate',0.0047),refCount:readNum('gtf_refs',0),walletAddress:safeGet('gtf_ton_wallet')||''};
-
-let gamingGames=[];
-try{gamingGames=JSON.parse(localStorage.getItem('gtf_gaming_games')||'[]');if(!Array.isArray(gamingGames))gamingGames=[];}catch(e){gamingGames=[]}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ 
+const userData={
+  username:tgUser?.username||tgUser?.first_name||'GTF Miner',
+  id:tgUser?.id||uid,
+  balance:readNum('gtf_bal',0),
+  level:readNum('gtf_lvl',0),
+  miningRate:readNum('gtf_rate',0.0047),
+  rateBonus:readNum('gtf_rate_bonus',0),
+  refCount:readNum('gtf_refs',0),
+  walletAddress:safeGet('gtf_ton_wallet')||'',
+  isPremium:safeGet('gtf_is_premium')==='1'
+};
+ 
 let customTasks=[];try{customTasks=JSON.parse(localStorage.getItem('gtf_custom_tasks')||'[]');if(!Array.isArray(customTasks))customTasks=[]}catch{customTasks=[]}
-let adminSettings={rate:readNum('gtf_admin_rate',0.0047),minWithdraw:readNum('gtf_admin_min_withdraw',170),withdrawFee:readNum('gtf_admin_withdraw_fee',70),smartLink:localStorage.getItem('gtf_smart_link')||SMART_LINK_DEFAULT,allAds:safeGet('gtf_admin_all_ads')!=='false'};userData.miningRate=adminSettings.rate;
-
-/* ================= TON CONNECT INTEGRATION ================= */
+let claimedTasks=[];try{claimedTasks=JSON.parse(localStorage.getItem('gtf_claimed_tasks')||'[]');if(!Array.isArray(claimedTasks))claimedTasks=[]}catch{claimedTasks=[]}
+let gamingGames=[
+  {id:'g1',title:'Subway Golden Surfer',description:'Surf the golden tracks and win GTF prizes.',logoUrl:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=120',url:'https://poki.com'},
+  {id:'g2',title:'Crypto Runner 2048',description:'Merge blocks and mine extra rewards.',logoUrl:'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=120',url:'https://poki.com'}
+];
+try{const g=JSON.parse(localStorage.getItem('gtf_gaming_games')||'null');if(Array.isArray(g)&&g.length)gamingGames=g;}catch(e){}
+ 
+let adminSettings={rate:readNum('gtf_admin_rate',0.0047),minWithdraw:readNum('gtf_admin_min_withdraw',170),withdrawFee:readNum('gtf_admin_withdraw_fee',70),smartLink:localStorage.getItem('gtf_smart_link')||SMART_LINK_DEFAULT,allAds:safeGet('gtf_admin_all_ads')!=='false'};
+function recalcRate(){userData.miningRate=adminSettings.rate+userData.rateBonus}
+recalcRate();
+ 
+/* ================= TON CONNECT ================= */
 let tonConnectUI = null;
-let currentConnectedWallet = null;
-
 function formatTonAddress(rawAddress){
     if(!rawAddress) return '';
     try{
         if(window.TON_CONNECT_UI && typeof window.TON_CONNECT_UI.toUserFriendlyAddress === 'function'){
             return window.TON_CONNECT_UI.toUserFriendlyAddress(rawAddress);
         }
-    }catch(e){
-        console.warn('Address formatting fallback:', e);
-    }
+    }catch(e){}
     return rawAddress;
 }
-
+ 
 function initTonConnect(){
     try{
-        if(!window.TON_CONNECT_UI || !window.TON_CONNECT_UI.TonConnectUI){
-            console.warn('TON Connect UI SDK not loaded yet.');
-            return;
-        }
-
+        if(tonConnectUI) return;
+        if(!window.TON_CONNECT_UI || !window.TON_CONNECT_UI.TonConnectUI) return;
         tonConnectUI = new window.TON_CONNECT_UI.TonConnectUI({
             manifestUrl: MANIFEST_URL,
             buttonRootId: 'ton-connect-btn'
         });
-
-        tonConnectUI.uiOptions = {
-            uiPreferences: {
-                theme: window.TON_CONNECT_UI.THEME.DARK
-            }
-        };
-
+        tonConnectUI.uiOptions = { uiPreferences: { theme: window.TON_CONNECT_UI.THEME.DARK } };
         tonConnectUI.onStatusChange(wallet => {
             if(wallet && wallet.account){
-                currentConnectedWallet = wallet;
                 const friendlyAddress = formatTonAddress(wallet.account.address);
                 userData.walletAddress = friendlyAddress;
                 safeStore('gtf_ton_wallet', friendlyAddress);
                 updateWalletUI(friendlyAddress, true);
-
                 if(firebaseReady){
-                    db.ref('users/'+uid).update({
-                        walletAddress: friendlyAddress,
-                        lastWalletConnection: firebase.database.ServerValue.TIMESTAMP
-                    }).catch(console.warn);
+                    db.ref('users/'+uid).update({ walletAddress: friendlyAddress }).catch(console.warn);
                 }
             } else {
-                currentConnectedWallet = null;
                 userData.walletAddress = '';
                 safeStore('gtf_ton_wallet', '');
                 updateWalletUI('', false);
-
-                if(firebaseReady){
-                    db.ref('users/'+uid+'/walletAddress').remove().catch(console.warn);
-                }
             }
         });
-
-    }catch(err){
-        console.error('TON Connect initialization error:', err);
-    }
+    }catch(err){console.error('TON Connect init error:', err);}
 }
-
+ 
 function updateWalletUI(address, isConnected){
     const profAddr = document.getElementById('prof-ton-address');
     const profBtn = document.getElementById('prof-ton-btn');
     const withdrawBtn = document.getElementById('btn-use-ton-wallet');
-
     if(isConnected && address){
         const shortAddr = address.slice(0, 6) + '...' + address.slice(-4);
-        if(profAddr) {
-            profAddr.textContent = shortAddr;
-            profAddr.title = address;
-        }
-        if(profBtn) {
-            profBtn.textContent = 'Disconnect';
-            profBtn.style.background = '#832727';
-            profBtn.style.color = '#fff';
-        }
+        if(profAddr) profAddr.textContent = shortAddr;
+        if(profBtn) { profBtn.textContent = 'Disconnect'; profBtn.style.background = '#832727'; profBtn.style.color = '#fff'; }
         if(withdrawBtn) withdrawBtn.style.display = 'block';
     } else {
         if(profAddr) profAddr.textContent = 'Not Connected';
-        if(profBtn) {
-            profBtn.textContent = 'Connect';
-            profBtn.style.background = 'linear-gradient(135deg,#ffe99b,#e4aa22)';
-            profBtn.style.color = '#251900';
-        }
+        if(profBtn) { profBtn.textContent = 'Connect'; profBtn.style.background = 'linear-gradient(135deg,#ffe99b,#e4aa22)'; profBtn.style.color = '#251900'; }
         if(withdrawBtn) withdrawBtn.style.display = 'none';
     }
 }
-
+ 
 async function handleWalletAction(){
-    if(!tonConnectUI){
-        alert('TON Connect UI is loading. Please try again.');
-        return;
-    }
+    if(!tonConnectUI){ alert('TON Connect UI is loading.'); return; }
     if(tonConnectUI.connected){
-        if(confirm('Do you want to disconnect your TON wallet?')){
-            await tonConnectUI.disconnect();
-        }
+        if(confirm('Do you want to disconnect your TON wallet?')) await tonConnectUI.disconnect();
     } else {
         await tonConnectUI.openModal();
     }
 }
-
+ 
 function fillConnectedWallet(){
-    if(!userData.walletAddress){
-        alert('Please connect your TON wallet first.');
-        return;
-    }
-    const input = document.getElementById('tonWallet');
-    const select = document.getElementById('withdrawNetwork');
-    if(input) input.value = userData.walletAddress;
-    if(select) select.value = 'TON Wallet';
+    if(!userData.walletAddress){ alert('Please connect your TON wallet first.'); return; }
+    document.getElementById('tonWallet').value = userData.walletAddress;
+    document.getElementById('withdrawNetwork').value = 'TON Wallet';
 }
-/* ================= END TON CONNECT ================= */
-
-const SMARTLINK_COOLDOWN = 25000;
-function getLastSmartLink(){const v=Number(localStorage.getItem('gtf_last_smartlink_at')||0);return Number.isFinite(v)?v:0;}
-function setLastSmartLink(t){try{localStorage.setItem('gtf_last_smartlink_at',String(t))}catch(e){}}
-if(!localStorage.getItem('gtf_last_smartlink_at')){setLastSmartLink(Date.now());}
-
+ 
+/* ================= 2X INCOME & AD CONTROL ================= */
+let lastAdTime = 0;
 function toggleAllAds(isOn){
     adminSettings.allAds=isOn;
     safeStore('gtf_admin_all_ads',isOn);
     if(firebaseReady){db.ref('settings/allAds').set(isOn).catch(console.warn);}
 }
-
-function triggerSafeSmartLink(){
-    if(adminSettings.allAds===false) return false;
-    const now=Date.now();
-    const last=getLastSmartLink();
-    if(now-last < SMARTLINK_COOLDOWN) return false;
-    setLastSmartLink(now);
-    const url=(adminSettings.smartLink||SMART_LINK_DEFAULT).trim();
-    if(!url||!url.startsWith('https://')) return false;
+ 
+function open2XIncome(){
+    const url = (adminSettings.smartLink || SMART_LINK_DEFAULT).trim();
+    if(!url) return;
     try{
-        if(tg&&typeof tg.openLink==='function') tg.openLink(url);
-        else window.open(url,'_blank','noopener,noreferrer');
-        return true;
-    }catch(err){
-        console.warn('SmartLink error:',err);
-        return false;
-    }
+        if(tg && typeof tg.openLink === 'function') tg.openLink(url);
+        else window.open(url, '_blank', 'noopener,noreferrer');
+    }catch(e){ window.open(url, '_blank'); }
 }
-
-function handleGlobalClickSmartLink(e){
-    if(adminSettings.allAds===false) return;
-    if(e.target.closest('#ton-connect-btn')||e.target.closest('#tc-widget-root')||e.target.closest('.coin-btn')||e.target.closest('#landing')||e.target.closest('#adminModal')||e.target.closest('#supportModal')||e.target.closest('#withdrawModal')||e.target.closest('input')||e.target.closest('textarea')){
+ 
+function triggerMonetagAd(){
+    if(adminSettings.allAds===false) return false;
+    if(userData.isPremium) return false;
+    if(Date.now() - lastAdTime < 25000) return false;
+    if(typeof window.show_12121319!=='function'||document.visibilityState!=='visible') return false;
+    try{
+        lastAdTime = Date.now();
+        const res = window.show_12121319();
+        if(res && typeof res.catch==='function') res.catch(e=>console.log(e));
+        return true;
+    }catch(e){return false;}
+}
+ 
+/* ================= GAMING LIBRARY ================= */
+function openGameLibrary(){
+    document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('active'));
+    document.getElementById('tab-games').classList.add('active');
+    renderGameLibrary();
+}
+ 
+function closeGameLibrary(){
+    document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('active'));
+    document.getElementById('tab-mine').classList.add('active');
+}
+ 
+function renderGameLibrary(){
+    const container = document.getElementById('game-library-grid');
+    if(!container) return;
+    container.innerHTML = '';
+    if(!gamingGames.length){
+        container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#aaa;padding:25px">No games available currently.</div>';
         return;
     }
-    triggerSafeSmartLink();
+    gamingGames.forEach(g => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+          <img src="${esc(g.logoUrl || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=120')}" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=120'">
+          <h4>${esc(g.title)}</h4>
+          <p>${esc(g.description || 'Play and earn rewards.')}</p>
+          <button class="btn-action" style="width:100%">▶ PLAY NOW</button>
+        `;
+        card.onclick = () => {
+            if(tg && typeof tg.openLink === 'function') tg.openLink(g.url);
+            else window.open(g.url, '_blank');
+        };
+        container.appendChild(card);
+    });
 }
-document.addEventListener('click',handleGlobalClickSmartLink,true);
-
-let lastMiningAt=readNum('gtf_last_mining_at',Date.now()),serverOffset=0,remoteUserCache={},withdrawals=[],activities=[],supportMessages=[];let currentSupportId=null;
-
-function saveUser(){
+ 
+function saveAdminGame(){
+    const title = document.getElementById('admin-game-title').value.trim();
+    const url = document.getElementById('admin-game-url').value.trim();
+    const logoUrl = document.getElementById('admin-game-logo').value.trim();
+    const description = document.getElementById('admin-game-desc').value.trim();
+    if(!title || !url){ alert('Enter game title and link'); return; }
+    const game = { id: 'g_'+Date.now(), title, url, logoUrl, description };
+    gamingGames.push(game);
+    safeStore('gtf_gaming_games', JSON.stringify(gamingGames));
+    if(firebaseReady) db.ref('gamingGames/'+game.id).set(game);
+    renderGameLibrary();
+    renderAdminGames();
+    alert('Game saved.');
+    document.getElementById('admin-game-title').value = '';
+    document.getElementById('admin-game-url').value = '';
+    document.getElementById('admin-game-logo').value = '';
+    document.getElementById('admin-game-desc').value = '';
+}
+ 
+function renderAdminGames(){
+    const c = document.getElementById('admin-game-list');
+    if(!c) return;
+    c.innerHTML = '';
+    gamingGames.forEach(g => {
+        const item = document.createElement('div');
+        item.className = 'card';
+        item.innerHTML = `<span style="font-size:10px">${esc(g.title)}</span><button class="btn-action" style="background:#a83232;color:#fff">Delete</button>`;
+        item.querySelector('button').onclick=()=>deleteGame(g.id);
+        c.appendChild(item);
+    });
+}
+ 
+function deleteGame(id){
+    gamingGames = gamingGames.filter(x => x.id !== id);
+    safeStore('gtf_gaming_games', JSON.stringify(gamingGames));
+    if(firebaseReady) db.ref('gamingGames/'+id).remove();
+    renderGameLibrary();
+    renderAdminGames();
+}
+ 
+/* ================= VIP SYSTEM & PERKS ================= */
+let currentVipLang = 'bn';
+const vipTexts = {
+  bn: {
+    title: "VIP প্রিমিয়াম এক্সেস",
+    intro: "আসসালামু আলাইকুম! প্রিমিয়াম এক্সেস নিলে যেসব সুবিধা পাবেন:",
+    perk1_t: "১. কোনো বিরক্তিকর অ্যাড আসবে না",
+    perk1_d: "বিজ্ঞাপন ছাড়া আরামদায়ক ও স্মুথ মাইনিং অভিজ্ঞতা।",
+    perk2_t: "২. ভিআইপি প্রায়োরিটি হেল্প",
+    perk2_d: "হেল্প ও সাপোর্ট টিমের কাছ থেকে সবার আগে দ্রুত রিপ্লাই।",
+    perk3_t: "৩. মাইনিং লেভেল আপগ্রেড আনলক",
+    perk3_d: "মাইনিং লেভেল ও স্পিড বাড়িয়ে আয় অনেক গুণ করার সুযোগ।",
+    perk4_t: "৪. ব্লু টিক ভেরিফাইড অ্যাকাউন্ট ও ভিআইপি টাস্ক",
+    perk4_d: "পেমেন্টের সাথে সাথেই অ্যাকাউন্ট ভেরিফাই হবে এবং এক্সক্লুসিভ ভিআইপি টাস্ক পাবেন।",
+    price: "ফি: মাত্র 0.1 TON (Tonkeeper/TON Connect)",
+    btn: "💎 প্রিমিয়াম এক্সেস নিন (0.1 TON)",
+    active_btn: "✔ আপনি অলরেডি ভিআইপি মেম্বার"
+  },
+  en: {
+    title: "VIP PREMIUM ACCESS",
+    intro: "Assalamu Alaikum! Here are the exclusive benefits of Premium Access:",
+    perk1_t: "1. Zero Annoying Ads",
+    perk1_d: "All ads are removed for a clean and ultra-smooth mining experience.",
+    perk2_t: "2. Priority VIP Help Line",
+    perk2_d: "Get the fastest replies from our dedicated support team.",
+    perk3_t: "3. Mining Level Upgrades Unlocked",
+    perk3_d: "Upgrade mining speed and level to multiply your GTF earnings.",
+    perk4_t: "4. Blue Tick Verified Account & VIP Tasks",
+    perk4_d: "Your account is verified instantly after payment, plus you get exclusive VIP tasks.",
+    price: "Fee: Only 0.1 TON (Tonkeeper/TON Connect)",
+    btn: "💎 GET PREMIUM ACCESS NOW (0.1 TON)",
+    active_btn: "✔ VIP STATUS ACTIVE"
+  }
+};
+ 
+function setVipLang(lang){
+    currentVipLang = lang;
+    document.getElementById('btn-lang-bn').classList.toggle('active', lang==='bn');
+    document.getElementById('btn-lang-en').classList.toggle('active', lang==='en');
+    const t = vipTexts[lang];
+    document.getElementById('vip-modal-title').textContent = t.title;
+    document.getElementById('vip-intro-text').textContent = t.intro;
+    document.getElementById('perk-ads-title').textContent = t.perk1_t;
+    document.getElementById('perk-ads-desc').textContent = t.perk1_d;
+    document.getElementById('perk-support-title').textContent = t.perk2_t;
+    document.getElementById('perk-support-desc').textContent = t.perk2_d;
+    document.getElementById('perk-speed-title').textContent = t.perk3_t;
+    document.getElementById('perk-speed-desc').textContent = t.perk3_d;
+    document.getElementById('perk-verify-title').textContent = t.perk4_t;
+    document.getElementById('perk-verify-desc').textContent = t.perk4_d;
+    document.getElementById('vip-price-tag').textContent = t.price;
+    const btn = document.getElementById('btn-confirm-vip');
+    if(userData.isPremium){
+        btn.textContent = t.active_btn;
+        btn.disabled = true;
+        btn.style.background = '#2a9d8f';
+    } else {
+        btn.textContent = t.btn;
+        btn.disabled = false;
+        btn.style.background = 'linear-gradient(135deg,#ff007f,#7928ca,#00f5d4)';
+    }
+}
+ 
+function openPremiumModal(){
+    document.getElementById('premiumModal').style.display='flex';
+    setVipLang(currentVipLang);
+    updateVipPerksUI();
+}
+ 
+function closePremiumModal(){
+    document.getElementById('premiumModal').style.display='none';
+}
+ 
+function updateVipPerksUI(){
+    const isVip = userData.isPremium === true;
+    const blueTick = document.getElementById('user-verified-tick');
+    const vipBadge = document.getElementById('user-vip-badge');
+    const minersLocked = document.getElementById('miners-vip-locked');
+    const minersUnlocked = document.getElementById('miners-vip-unlocked');
+    const profVip = document.getElementById('prof-vip-status');
+ 
+    if(isVip){
+        if(blueTick) blueTick.style.display = 'inline-flex';
+        if(vipBadge) {
+            vipBadge.className = 'badge-tag badge-vip-pass';
+            vipBadge.innerHTML = '<i class="fa-solid fa-crown"></i> VIP PASS';
+        }
+        if(minersLocked) minersLocked.style.display = 'none';
+        if(minersUnlocked) minersUnlocked.style.display = 'block';
+        if(profVip) profVip.textContent = 'VIP Verified · Active';
+ 
+        const bannerText = document.getElementById('vip-status-text');
+        const bannerBtn = document.getElementById('vip-banner-btn');
+        if(bannerText) bannerText.textContent = 'Active: Ad-Free, Level Upgrades & VIP Support Unlocked!';
+        if(bannerBtn) { bannerBtn.textContent = 'ACTIVE'; bannerBtn.style.background = '#2a9d8f'; }
+    } else {
+        if(blueTick) blueTick.style.display = 'none';
+        if(vipBadge) {
+            vipBadge.className = 'badge-tag badge-non-vip';
+            vipBadge.textContent = 'NON-VIP ACCESS';
+        }
+        if(minersLocked) minersLocked.style.display = 'block';
+        if(minersUnlocked) minersUnlocked.style.display = 'none';
+        if(profVip) profVip.textContent = 'Non-VIP Access · Tap to Unlock';
+ 
+        const bannerText = document.getElementById('vip-status-text');
+        const bannerBtn = document.getElementById('vip-banner-btn');
+        if(bannerText) bannerText.textContent = 'Unlock No Ads, Level Upgrades & VIP Support';
+        if(bannerBtn) { bannerBtn.textContent = 'GET VIP'; bannerBtn.style.background = 'linear-gradient(135deg,#ff007f,#7928ca)'; }
+    }
+}
+ 
+async function purchasePremiumAccess(){
+    if(!tonConnectUI){ alert('TON Connect is loading. Please wait.'); return; }
+    if(!tonConnectUI.connected){
+        alert('Please connect your Tonkeeper / TON Wallet first.');
+        await tonConnectUI.openModal();
+        return;
+    }
+    if(userData.isPremium){
+        alert('You are already a VIP Premium member!');
+        return;
+    }
+    if(!confirm('Pay 0.1 TON via Tonkeeper to activate VIP Premium Access?')){
+        return;
+    }
+    try{
+        const tx = {
+            validUntil: Math.floor(Date.now() / 1000) + 300,
+            messages: [{ address: ADMIN_WALLET_ADDRESS, amount: "100000000" }]
+        };
+        const res = await tonConnectUI.sendTransaction(tx);
+        if(res && res.boc){
+            // Payment sent -> account is VIP + Verified (blue tick) immediately
+            userData.isPremium = true;
+            safeStore('gtf_is_premium', '1');
+            if(firebaseReady){
+                db.ref('users/'+uid).update({
+                    isPremium: true,
+                    verified: true,
+                    premiumBoc: res.boc,
+                    premiumPurchasedAt: firebase.database.ServerValue.TIMESTAMP
+                }).catch(console.warn);
+            }
+            updateVipPerksUI();
+            renderTasks();
+            setVipLang(currentVipLang);
+            closePremiumModal();
+            alert('🎉 অভিনন্দন! পেমেন্ট সফল হয়েছে, আপনার অ্যাকাউন্ট ভেরিফাইড VIP হয়েছে!\n(Congratulations! Account verified & VIP Premium activated!)');
+        }
+    }catch(err){
+        console.error('Payment error:', err);
+        alert('Payment cancelled or rejected: ' + (err.message || 'Cancelled'));
+    }
+}
+ 
+/* ================= CORE LOGIC & MINING ================= */
+let lastMiningAt=readNum('gtf_last_mining_at',Date.now()),serverOffset=0,remoteUserCache={},withdrawals=[];
+let lastFbSave=0;
+function serverNow(){return Date.now()+serverOffset}
+ 
+function saveUser(force){
     safeStore('gtf_bal',userData.balance);
     safeStore('gtf_lvl',userData.level);
     safeStore('gtf_rate',userData.miningRate);
-
-    if(firebaseReady){
+    safeStore('gtf_rate_bonus',userData.rateBonus);
+    if(firebaseReady && (force || Date.now()-lastFbSave>15000)){
+        lastFbSave=Date.now();
         db.ref('users/'+uid).update({
             uid,
             telegramId:tgUser?.id||null,
@@ -641,12 +1136,10 @@ function saveUser(){
             lastMiningAt:Number(safeGet('gtf_last_mining_at'))||lastMiningAt,
             miningActive:safeGet('gtf_mining_stopped')!=='1',
             lastSeen:firebase.database.ServerValue.TIMESTAMP
-        }).catch(e=>console.warn('User sync failed',e));
+        }).catch(console.warn);
     }
 }
-function serverNow(){return Date.now()+serverOffset}
-function logActivity(type,amount,details){const item={id:'a'+Date.now()+Math.random().toString(36).slice(2,6),uid,type,amount:Number(amount)||0,details:details||'',createdAt:serverNow()};activities.unshift(item);activities=activities.slice(0,100);safeStore('gtf_activity',JSON.stringify(activities));if(firebaseReady)db.ref('activity/'+uid+'/'+item.id).set(item).catch(console.warn)}
-
+ 
 function updateDisplay(){
     document.getElementById('total-balance').textContent=userData.balance.toFixed(4);
     document.getElementById('pool-balance').textContent=userData.balance.toFixed(4);
@@ -654,326 +1147,29 @@ function updateDisplay(){
     document.getElementById('user-level').textContent='Lvl '+userData.level;
     document.getElementById('mining-rate-val').textContent=userData.miningRate.toFixed(4);
     document.getElementById('ref-count').textContent=userData.refCount;
-
-    const button=document.querySelector('.btn-claim');
-    if(button){
-        button.textContent=safeGet('gtf_mining_stopped')==='1'
-            ?'STOP MINING · CLAIM AGAIN'
-            :'CLAIM & RESTART MINING';
-    }
+    document.getElementById('withdraw-rules').textContent='Minimum withdrawal: '+adminSettings.minWithdraw+' GTF · Fee: '+adminSettings.withdrawFee+' GTF';
+    updateVipPerksUI();
     saveUser();
 }
-document.getElementById('user-name').textContent=userData.username;document.getElementById('prof-tg-id').textContent=userData.id;
-function updateReferralLink(){
-    const el=document.getElementById('ref-link');
-    el.textContent=tgUser?.id
-        ? `https://t.me/${BOT_USERNAME}?startapp=ref_${tgUser.id}`
-        : 'Open this app through Telegram to get your referral link';
-}
-updateReferralLink();
-
-/* ===== 7-DAY REFERRAL ACTIVE SYSTEM ===== */
-const REF_ACTIVE_REQUIRED = 600;
-let referralLastTick = 0;
-
-function getReferralDayKey(){
-    const d = new Date(serverNow());
-    return d.getFullYear()+'-'+
-        String(d.getMonth()+1).padStart(2,'0')+'-'+
-        String(d.getDate()).padStart(2,'0');
-}
-
-function getReferralInviter(){
-    let inviter = localStorage.getItem('gtf_referrer_uid');
-    const startParam = String(tg?.initDataUnsafe?.start_param || '');
-    const match = startParam.match(/^ref_(\d+)$/);
-    if(!inviter && match && match[1] !== String(uid)){
-        inviter = match[1];
-        safeStore('gtf_referrer_uid', inviter);
-    }
-    return inviter && inviter !== String(uid) ? inviter : null;
-}
-
-async function saveReferralActiveDay(dayKey){
-    const inviter = getReferralInviter();
-    if(!firebaseReady || !inviter || !tgUser?.id) return;
-    try{
-        const path = 'referralActivity/'+inviter+'/'+uid+'/'+dayKey;
-        await db.ref(path).transaction(current=>{
-            return current || {
-                active:true,
-                username:userData.username,
-                telegramId:tgUser.id,
-                completedAt:firebase.database.ServerValue.TIMESTAMP
-            };
-        });
-        safeStore('gtf_ref_day_saved_'+dayKey,'1');
-        loadReferralStats();
-    }catch(e){console.warn('Referral day save failed:',e);}
-}
-
-function trackReferralActiveTime(){
-    const now = serverNow();
-    const app = document.getElementById('app');
-    if(!app || app.style.display==='none' || document.visibilityState!=='visible'){
-        referralLastTick = 0;
-        return;
-    }
-    if(!getReferralInviter()){referralLastTick = now;return;}
-    if(!referralLastTick){referralLastTick = now;return;}
-    const elapsed = Math.min(5,Math.max(0,(now-referralLastTick)/1000));
-    referralLastTick = now;
-    if(elapsed<=0) return;
-    const dayKey = getReferralDayKey();
-    const storageKey = 'gtf_ref_active_'+dayKey;
-    const seconds = Math.min(REF_ACTIVE_REQUIRED, Number(localStorage.getItem(storageKey)||0)+elapsed);
-    safeStore(storageKey,seconds);
-    if(seconds>=REF_ACTIVE_REQUIRED && localStorage.getItem('gtf_ref_day_saved_'+dayKey)!=='1'){
-        saveReferralActiveDay(dayKey);
-    }
-}
-
-async function loadReferralStats(){
-    const countEl = document.getElementById('ref-count');
-    const listEl = document.getElementById('referral-list');
-    if(!firebaseReady || !tgUser?.id){
-        if(countEl) countEl.textContent='0';
-        if(listEl) listEl.textContent='Referral data requires Firebase and Telegram.';
-        return;
-    }
-    try{
-        const snap = await db.ref('referralActivity/'+uid).once('value');
-        const referrals = snap.val() || {};
-        let successful = 0;
-        listEl.innerHTML='';
-        Object.entries(referrals).forEach(([refUid,data])=>{
-            const days = Object.keys(data || {}).filter(day=>data[day] && data[day].active===true);
-            const completed = days.length>=7;
-            if(completed) successful++;
-            const row = document.createElement('div');
-            row.className='card';
-            const info = document.createElement('div');
-            info.className='card-text';
-            const name = document.createElement('h4');
-            name.textContent=data[days[0]]?.username || ('User '+refUid);
-            const detail = document.createElement('p');
-            detail.textContent=days.length+'/7 active days · '+(completed?'Completed':'In progress');
-            info.append(name,detail);
-            row.append(info);
-            listEl.append(row);
-        });
-        userData.refCount=successful;
-        safeStore('gtf_refs',successful);
-        if(countEl) countEl.textContent=successful;
-        if(!Object.keys(referrals).length){listEl.textContent='No referrals yet.';}
-    }catch(e){console.warn('Referral stats load failed:',e);}
-}
-
-try{activities=JSON.parse(localStorage.getItem('gtf_activity')||'[]')}catch{activities=[]}
-try{withdrawals=JSON.parse(localStorage.getItem('gtf_withdrawals')||'[]')}catch{withdrawals=[]}
-
-async function loadRemote(){
-    if(!firebaseReady)return;
-    try{
-        const [u,t,s]=await Promise.all([db.ref('users/'+uid).once('value'),db.ref('tasks').once('value'),db.ref('settings').once('value')]);
-        const remote=u.val();
-        if(remote){
-            userData.balance=Number(remote.balance)||0;
-            userData.level=Number(remote.level)||0;
-            userData.miningRate=Number(remote.miningRate)||adminSettings.rate;
-            if(remote.walletAddress){
-                userData.walletAddress=remote.walletAddress;
-                safeStore('gtf_ton_wallet', remote.walletAddress);
-                updateWalletUI(remote.walletAddress, true);
-            }
-            lastMiningAt=Number(remote.lastMiningAt)||Number(safeGet('gtf_last_mining_at'))||serverNow();
-            const remoteCycle=Number(remote.miningStartedAt)||Number(safeGet('gtf_mining_cycle_start_at'))||0;
-            if(remoteCycle){
-                safeStore('gtf_mining_cycle_start_at',remoteCycle);
-                safeStore('gtf_last_mining_at',lastMiningAt);
-            }
-            if(remote.miningActive===false){safeStore('gtf_mining_stopped','1');}
-            else if(remoteCycle && serverNow()>=remoteCycle+86400000){safeStore('gtf_mining_stopped','1');}
-            else if(remoteCycle){safeStore('gtf_mining_stopped','0');}
-            updateDisplay();
-        }
-        const tasks=t.val();
-        if(tasks){customTasks=Object.values(tasks).filter(Boolean);safeStore('gtf_custom_tasks',JSON.stringify(customTasks));renderTasks()}
-        const st=s.val();
-        if(st){adminSettings={...adminSettings,...st};userData.miningRate=Number(adminSettings.rate)||userData.miningRate;updateWithdrawRules();updateDisplay()}
-        const w=await db.ref('withdrawals/'+uid).once('value');
-        if(w.exists())withdrawals=Object.values(w.val()||{}).filter(Boolean);safeStore('gtf_withdrawals',JSON.stringify(withdrawals));
-        const a=await db.ref('activity/'+uid).limitToLast(100).once('value');
-        if(a.exists())activities=Object.values(a.val()||{}).filter(Boolean).sort((x,y)=>(y.createdAt||0)-(x.createdAt||0));safeStore('gtf_activity',JSON.stringify(activities));
-        renderTasks();
-    }catch(e){console.warn('Firebase sync error',e)}
-}
-
-if(firebaseReady){
-    db.ref('.info/serverTimeOffset').on('value',s=>{serverOffset=Number(s.val())||0;});
-    db.ref('.info/connected').on('value',s=>{
-        if(s.val()){
-            db.ref('presence/'+uid).onDisconnect().update({online:false,lastSeen:firebase.database.ServerValue.TIMESTAMP});
-            db.ref('presence/'+uid).update({online:true,username:userData.username,lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(console.warn);
-        }
-    });
-    db.ref('tasks').on('value',s=>{const v=s.val();customTasks=v?Object.values(v).filter(Boolean):[];safeStore('gtf_custom_tasks',JSON.stringify(customTasks));renderTasks()});
-    db.ref('settings').on('value',s=>{const v=s.val();if(v){adminSettings={...adminSettings,...v};userData.miningRate=Number(v.rate)||userData.miningRate;updateWithdrawRules();updateDisplay()}});
-    
-    db.ref('withdrawals/'+uid).on('value', snap => {
-        if(snap.exists()){
-            withdrawals = Object.values(snap.val() || {}).filter(Boolean).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-            safeStore('gtf_withdrawals', JSON.stringify(withdrawals));
-        }
-    });
-    db.ref('users/'+uid+'/balance').on('value',snap=>{
-        if(!snap.exists())return;
-        const remoteBalance=Number(snap.val());
-        if(!Number.isFinite(remoteBalance))return;
-        if(Math.abs(userData.balance-remoteBalance)>0.0000001){
-            userData.balance=remoteBalance;
-            safeStore('gtf_bal',remoteBalance);
-            updateDisplay();
-        }
-    });
-}
-
-/* ===== GAMING LIBRARY SYSTEM ===== */
-function openExternalGameUrl(url){
-    try{
-        const parsed=new URL(url);
-        if(parsed.protocol!=='https:'){alert('Only valid HTTPS game links are allowed.');return;}
-        if(tg&&typeof tg.openLink==='function') tg.openLink(parsed.href);
-        else {
-            const a=document.createElement('a');a.href=parsed.href;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove();
-        }
-    }catch(e){alert('Invalid game URL.');}
-}
-
-function openGameLibrary(){
+ 
+function switchNav(name,el){
     document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
-    document.getElementById('tab-games').classList.add('active');
-    document.getElementById('bottom-nav').style.display='none';
-    renderGameLibrary();
+    const tabEl = document.getElementById('tab-'+name);
+    if(tabEl) tabEl.classList.add('active');
+    if(el) el.classList.add('active');
 }
-
-function closeGameLibrary(){
-    document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('active'));
-    document.getElementById('tab-mine').classList.add('active');
-    document.getElementById('bottom-nav').style.display='flex';
-    document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
-    const mineNav=document.querySelector('.bottom-nav .nav-item');
-    if(mineNav)mineNav.classList.add('active');
-}
-
-function renderGameLibrary(){
-    const container=document.getElementById('game-library-grid');if(!container)return;container.innerHTML='';
-    if(!gamingGames.length){container.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#aaa;padding:30px">No games available right now.</div>';return;}
-    gamingGames.forEach(game=>{
-        if(!game)return;
-        const card=document.createElement('div');card.className='game-card';card.setAttribute('role','button');card.tabIndex=0;
-        const logo=document.createElement('img');logo.src=game.logoUrl||'';logo.alt=game.title||'Game';logo.onerror=function(){this.style.display='none';};
-        const title=document.createElement('h4');title.textContent=game.title||'Untitled Game';
-        const description=document.createElement('p');description.textContent=game.description||'Play this game now.';
-        const button=document.createElement('button');button.className='game-play-btn';button.textContent='▶ PLAY NOW';
-        card.append(logo,title,description,button);
-        card.onclick=()=>openExternalGameUrl(game.url);
-        card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openExternalGameUrl(game.url);}};
-        container.appendChild(card);
-    });
-}
-
-function clearAdminGameForm(){
-    document.getElementById('admin-edit-game-id').value='';document.getElementById('admin-game-logo').value='';document.getElementById('admin-game-title').value='';document.getElementById('admin-game-description').value='';document.getElementById('admin-game-url').value='';
-}
-
-async function saveAdminGame(){
-    const editId=document.getElementById('admin-edit-game-id').value.trim();
-    const logoUrl=document.getElementById('admin-game-logo').value.trim();
-    const title=document.getElementById('admin-game-title').value.trim();
-    const description=document.getElementById('admin-game-description').value.trim();
-    const url=document.getElementById('admin-game-url').value.trim();
-    if(!title){alert('Please enter the game title.');return;}
-    try{
-        if(!url||new URL(url).protocol!=='https:')throw 0;
-        if(logoUrl&&new URL(logoUrl).protocol!=='https:')throw 0;
-    }catch(e){alert('Please enter valid HTTPS Game and Logo URLs.');return;}
-    const id=editId||('game_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7));
-    const game={id,logoUrl,title,description,url,updatedAt:serverNow()};
-    const index=gamingGames.findIndex(x=>x&&x.id===id);
-    if(index>=0)gamingGames[index]=game;else gamingGames.push(game);
-    safeStore('gtf_gaming_games',JSON.stringify(gamingGames));
-    if(firebaseReady){
-        try{await db.ref('gamingGames/'+id).set(game);}
-        catch(e){alert('Game saved locally, but Firebase sync failed. Check Firebase Rules.');}
-    }
-    clearAdminGameForm();renderAdminGames();renderGameLibrary();alert('Game saved successfully.');
-}
-
-function renderAdminGames(){
-    const container=document.getElementById('admin-game-list');if(!container)return;container.innerHTML='';
-    if(!gamingGames.length){container.textContent='No games added yet.';return;}
-    gamingGames.forEach(game=>{
-        if(!game)return;
-        const row=document.createElement('div');row.className='card';row.style.display='flex';row.style.alignItems='center';row.style.gap='7px';
-        const info=document.createElement('div');info.style.flex='1';info.style.minWidth='0';
-        const name=document.createElement('div');name.textContent=game.title||'Untitled Game';name.style.fontSize='11px';name.style.fontWeight='800';name.style.color='var(--gold)';
-        const link=document.createElement('div');link.textContent=game.url||'';link.style.fontSize='9px';link.style.color='#aaa';link.style.overflowWrap='anywhere';
-        info.append(name,link);
-        const edit=document.createElement('button');edit.className='btn-action';edit.textContent='Edit';
-        edit.onclick=()=>{
-            document.getElementById('admin-edit-game-id').value=game.id;document.getElementById('admin-game-logo').value=game.logoUrl||'';document.getElementById('admin-game-title').value=game.title||'';document.getElementById('admin-game-description').value=game.description||'';document.getElementById('admin-game-url').value=game.url||'';
-        };
-        const del=document.createElement('button');del.className='btn-action';del.textContent='Delete';
-        del.onclick=async()=>{
-            if(!confirm('Delete this game?'))return;
-            gamingGames=gamingGames.filter(x=>x&&x.id!==game.id);safeStore('gtf_gaming_games',JSON.stringify(gamingGames));
-            if(firebaseReady){try{await db.ref('gamingGames/'+game.id).remove();}catch(e){console.warn('Game delete sync failed:',e);}}
-            renderGameLibrary();renderAdminGames();
-        };
-        row.append(info,edit,del);container.appendChild(row);
-    });
-}
-
-function showTab(name,el){
-    document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
-    document.getElementById('tab-'+name).classList.add('active');
-    if(el)el.classList.add('active');
-}
-
-function tapCoin(){userData.balance+=.001;logActivity('Manual tap',.001,'Coin tap reward');updateDisplay()}
-
-function updateMiningTimerUI(){
-    const timerEl=document.getElementById('mining-timer');
-    const liquidEl=document.getElementById('energy-liquid');
-    if(!timerEl||!liquidEl)return;
-    const now=serverNow();
-    let cycleStart=Number(safeGet('gtf_mining_cycle_start_at'))||0;
-    if(!cycleStart){cycleStart=now;safeStore('gtf_mining_cycle_start_at',now);}
-    const totalCycle=86400000;
-    const stopAt=cycleStart+totalCycle;
-    const isStopped=safeGet('gtf_mining_stopped')==='1'||now>=stopAt;
-    const remaining=Math.max(0,stopAt-now);
-    if(isStopped || remaining<=0){
-        timerEl.textContent='00:00:00 (CLAIM TO RESTART)';timerEl.style.color='#ff7373';liquidEl.style.width='0%';liquidEl.style.boxShadow='none';
-    }else{
-        timerEl.textContent=formatTime(remaining);timerEl.style.color='var(--green)';
-        const percent=Math.min(100,Math.max(0,(remaining/totalCycle)*100));
-        liquidEl.style.width=percent.toFixed(2)+'%';liquidEl.style.boxShadow='0 0 12px #51f0a3, 0 0 18px rgba(255,215,106,0.6)';
-    }
-}
-
+ 
+function tapCoin(){userData.balance+=.001;updateDisplay()}
+ 
 function accrueMining(){
     const now=serverNow();
     let cycleStart=Number(safeGet('gtf_mining_cycle_start_at'))||0;
     if(!cycleStart){
         cycleStart=now;lastMiningAt=now;safeStore('gtf_mining_cycle_start_at',cycleStart);safeStore('gtf_last_mining_at',lastMiningAt);safeStore('gtf_mining_stopped','0');
-        if(firebaseReady){db.ref('users/'+uid).update({miningStartedAt:cycleStart,lastMiningAt:lastMiningAt,miningActive:true}).catch(console.warn);}
         return;
     }
-    if(safeGet('gtf_mining_stopped')==='1')return;
+    if(safeGet('gtf_mining_stopped')==='1') return;
     const stopAt=cycleStart+86400000;
     const effectiveNow=Math.min(now,stopAt);
     const previous=Number(safeGet('gtf_last_mining_at'))||lastMiningAt||cycleStart;
@@ -983,551 +1179,668 @@ function accrueMining(){
         lastMiningAt=effectiveNow;
         safeStore('gtf_last_mining_at',lastMiningAt);
         safeStore('gtf_bal',userData.balance);
-        if(firebaseReady){db.ref('users/'+uid).update({balance:userData.balance,lastMiningAt:lastMiningAt}).catch(console.warn);}
     }
     if(now>=stopAt){
         safeStore('gtf_mining_stopped','1');
-        if(firebaseReady){db.ref('users/'+uid).update({miningActive:false}).catch(console.warn);}
     }
     updateMiningTimerUI();
     updateDisplay();
 }
-
-async function claimReward(){
+ 
+function updateMiningTimerUI(){
+    const timerEl=document.getElementById('mining-timer');
+    const liquidEl=document.getElementById('energy-liquid');
+    if(!timerEl||!liquidEl) return;
+    const now=serverNow();
+    const cycleStart=Number(safeGet('gtf_mining_cycle_start_at'))||now;
+    const stopAt=cycleStart+86400000;
+    const remaining=Math.max(0,stopAt-now);
+    if(remaining<=0 || safeGet('gtf_mining_stopped')==='1'){
+        timerEl.textContent='00:00:00 (CLAIM)';
+        liquidEl.style.width='0%';
+    } else {
+        const s = Math.floor(remaining / 1000);
+        timerEl.textContent = String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+        liquidEl.style.width=Math.min(100,(remaining/86400000)*100).toFixed(2)+'%';
+    }
+}
+ 
+function claimReward(){
     accrueMining();
     const now=serverNow();
     safeStore('gtf_mining_cycle_start_at',now);
     safeStore('gtf_last_mining_at',now);
     safeStore('gtf_mining_stopped','0');
     lastMiningAt=now;
-    if(firebaseReady){
-        try{
-            await db.ref('users/'+uid).update({balance:userData.balance,miningStartedAt:now,lastMiningAt:now,miningActive:true});
-        }catch(e){alert('Mining restart failed. Please try again.');return;}
-    }
-    updateDisplay();
-    alert('Rewards collected! Your new 24-hour mining cycle has started.');
+    updateDisplay();saveUser(true);
+    alert('Rewards collected! New 24-hour mining cycle has started.');
 }
-
+ 
 function formatTime(ms){let s=Math.max(0,Math.floor(ms/1000));return String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
-function renderCheckin(){const c=document.getElementById('checkin-container');c.innerHTML='';let day=readNum('gtf_checkin_day',1),last=readNum('gtf_checkin_time',0),available=!last||serverNow()-last>=86400000;for(let d=1;d<=30;d++){const r=d===30?50:5,card=document.createElement('div');card.className='checkin-card';if(d<day){card.classList.add('claimed');card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button disabled>CLAIMED</button>`}else if(d===day){card.classList.add('active');card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button ${available?'':'disabled'}>${available?'CLAIM':formatTime(86400000-(serverNow()-last))}</button>`;if(available)card.querySelector('button').onclick=()=>claimDailyCheckin(d,r)}else card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button disabled>LOCKED</button>`;c.appendChild(card)}}
-function claimDailyCheckin(day,reward){const last=readNum('gtf_checkin_time',0);if(last&&serverNow()-last<86400000){alert('Your next daily check-in is not ready yet.');return}userData.balance+=reward;updateDisplay();safeStore('gtf_checkin_time',serverNow());safeStore('gtf_checkin_day',day>=30?1:day+1);logActivity('Daily check-in',reward,'Day '+day);alert(`Day ${day}: +${reward} GTF claimed.`);renderCheckin()}
-
-function triggerMonetagAd(){
-    if(adminSettings.allAds===false) return false;
-    const admin=document.getElementById('adminModal');
-    if(admin&&admin.style.display==='flex') return false;
-    if(typeof window.show_12121319!=='function'||document.visibilityState!=='visible') return false;
-    try{
-        const result=window.show_12121319();
-        if(result&&typeof result.catch==='function') result.catch(e=>console.log('Monetag unavailable:',e));
-        return true;
-    }catch(e){console.log('Monetag error:',e);return false;}
+ 
+/* ===== DAILY CHECK-IN ===== */
+function renderCheckin(){
+  const c=document.getElementById('checkin-container');
+  if(!c) return;
+  c.innerHTML='';
+  let day=readNum('gtf_checkin_day',1),last=readNum('gtf_checkin_time',0),available=!last||serverNow()-last>=86400000;
+  for(let d=1;d<=30;d++){
+    const r=d===30?50:5,card=document.createElement('div');
+    card.className='checkin-card';
+    if(d<day){
+      card.classList.add('claimed');
+      card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button disabled>CLAIMED</button>`;
+    }else if(d===day){
+      card.classList.add('active');
+      card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button ${available?'':'disabled'}>${available?'CLAIM':formatTime(86400000-(serverNow()-last))}</button>`;
+      if(available)card.querySelector('button').onclick=()=>claimDailyCheckin(d,r);
+    }else{
+      card.innerHTML=`<div class="checkin-day">DAY ${d}</div><div class="checkin-reward">+${r}</div><button disabled>LOCKED</button>`;
+    }
+    c.appendChild(card);
+  }
 }
-window.addEventListener('load',()=>setTimeout(()=>{if(document.getElementById('app').style.display!=='none')triggerMonetagAd()},1500));
-setInterval(()=>{if(document.visibilityState==='visible'&&document.getElementById('app').style.display!=='none'){triggerMonetagAd()}},15000);
-
-function renderTasks(){const c=document.getElementById('custom-tasks-container');if(!c)return;c.innerHTML='';if(!customTasks.length){c.innerHTML='<div class="card"><div class="card-text"><h4>No tasks available yet</h4><p>The administrator has not published any tasks.</p></div></div>';return}customTasks.forEach(t=>{const key='gtf_custom_task_'+t.id,done=localStorage.getItem(key)==='true',card=document.createElement('div');card.className='card';const info=document.createElement('div');info.className='card-info';const icon=document.createElement('div');icon.className='card-icon';icon.textContent=t.type==='telegram'?'✈':t.type==='youtube'?'▶':'🌐';const txt=document.createElement('div');txt.className='card-text';const h=document.createElement('h4');h.textContent=t.title;const p=document.createElement('p');p.textContent='+'+Number(t.reward).toFixed(2)+' GTF';txt.append(h,p);info.append(icon,txt);const btn=document.createElement('button');btn.className='btn-action';btn.textContent=done?'Claimed':'Start';btn.disabled=done;btn.onclick=()=>startCustomTask(t,btn);card.append(info,btn);c.append(card)})}
-function startCustomTask(t,btn){const w=window.open(t.url,'_blank');if(!w){alert('Your browser blocked the task link. Tap Start again to open it.');return}triggerMonetagAd();btn.disabled=true;let seconds=10;btn.textContent=seconds+'s';const timer=setInterval(()=>{seconds--;if(!btn.isConnected){clearInterval(timer);return}btn.textContent=seconds+'s';if(seconds<=0){clearInterval(timer);btn.disabled=false;btn.textContent='Claim';btn.onclick=()=>claimCustomTask(t)}} ,1000)}
-function claimCustomTask(t){const key='gtf_custom_task_'+t.id;if(localStorage.getItem(key)==='true')return;localStorage.setItem(key,'true');const reward=Number(t.reward)||0;userData.balance+=reward;userData.level++;updateDisplay();logActivity('Task reward',reward,t.title);if(firebaseReady)db.ref('taskClaims/'+uid+'/'+t.id).transaction(v=>v? v:{claimed:true,createdAt:firebase.database.ServerValue.TIMESTAMP}).then(r=>{if(!r.committed){userData.balance-=reward;updateDisplay();alert('This task was already claimed.');}}).catch(console.warn);renderTasks();alert('Successfully Claimed! Your reward has been added to your balance.')}
-function openSmartLink(){triggerSafeSmartLink();}
-function upgradeSpeed(cost,add){if(userData.balance<cost){alert('Insufficient GTF balance.');return}userData.balance-=cost;userData.miningRate+=add;adminSettings.rate=userData.miningRate;safeStore('gtf_admin_rate',adminSettings.rate);userData.level++;logActivity('Mining upgrade',-cost,'Speed upgrade');updateDisplay();alert('Mining speed upgraded.')}
-async function copyRef(){const link=document.getElementById('ref-link').textContent;if(!link.startsWith('https://t.me/')){alert('Open this app through Telegram first to get your referral link.');return}try{await navigator.clipboard.writeText(link);alert('Referral link copied.')}catch(e){prompt('Copy your referral link:',link)}}
+ 
+function claimDailyCheckin(day,reward){
+  const last=readNum('gtf_checkin_time',0);
+  if(last&&serverNow()-last<86400000){alert('Next daily check-in is not ready yet.');return}
+  userData.balance+=reward;
+  safeStore('gtf_checkin_time',serverNow());
+  safeStore('gtf_checkin_day',day>=30?1:day+1);
+  updateDisplay();saveUser(true);
+  alert(`Day ${day}: +${reward} GTF claimed!`);
+  renderCheckin();
+}
+ 
+/* ===== UPGRADE SPEED ===== */
+function upgradeSpeed(cost,add){
+    if(!userData.isPremium){
+        alert('⚠️ মাইনিং লেভেল আপগ্রেড করার জন্য প্রিমিয়াম এক্সেস প্রয়োজন!\n\n(VIP Premium Access is required to upgrade mining levels!)');
+        openPremiumModal();
+        return;
+    }
+    if(userData.balance<cost){
+        alert('Insufficient GTF balance ('+cost+' GTF required).');
+        return;
+    }
+    userData.balance-=cost;
+    userData.rateBonus+=add;
+    recalcRate();
+    userData.level++;
+    updateDisplay();saveUser(true);
+    alert('Mining speed successfully upgraded!');
+}
+ 
+/* ================= WITHDRAWALS ================= */
 function openWithdrawModal(){
     document.getElementById('withdrawModal').style.display='flex';
-    const withdrawBtn=document.getElementById('btn-use-ton-wallet');
-    if(withdrawBtn) withdrawBtn.style.display = userData.walletAddress ? 'block' : 'none';
+    document.getElementById('btn-use-ton-wallet').style.display=userData.walletAddress?'block':'none';
 }
-function closeModal(){document.getElementById('withdrawModal').style.display='none'}
-function validWallet(network,address){if(network.includes('BEP20'))return /^0x[a-fA-F0-9]{40}$/.test(address);if(network.includes('TRC20'))return /^T[1-9A-HJ-NP-Za-km-z]{33}$/.test(address);if(network.includes('TON')||network.includes('Tonkeeper'))return /^(EQ|UQ|0:)[A-Za-z0-9_\-]{20,}$/.test(address)||/^[A-Za-z0-9_-]{40,}$/.test(address);return address.length>=20}
-
+function closeWithdrawModal(){document.getElementById('withdrawModal').style.display='none'}
+ 
 async function processWithdraw(){
-    const wallet=document.getElementById('tonWallet').value.trim(),
-          network=document.getElementById('withdrawNetwork').value,
-          amount=Number(document.getElementById('withdrawAmount').value);
-
+    const wallet=document.getElementById('tonWallet').value.trim();
+    const network=document.getElementById('withdrawNetwork').value;
+    const amount=Number(document.getElementById('withdrawAmount').value);
+ 
     if(!wallet){alert('Please enter a wallet address.');return}
-    if(!validWallet(network,wallet)){alert('Wallet address format does not match the selected network.');return}
-    if(!Number.isFinite(amount)||amount<adminSettings.minWithdraw){alert('Minimum withdrawal amount is '+adminSettings.minWithdraw+' GTF.');return}
-    
+    if(!Number.isFinite(amount)||amount<adminSettings.minWithdraw){alert('Minimum withdrawal is '+adminSettings.minWithdraw+' GTF.');return}
+ 
     accrueMining();
     const totalDeduct = amount + adminSettings.withdrawFee;
     if(userData.balance < totalDeduct){
-        alert('Insufficient balance including withdrawal fee ('+totalDeduct+' GTF required).');
+        alert('Insufficient GTF balance (Total required: '+totalDeduct+' GTF with fee).');
         return;
     }
-
-    userData.balance = Math.max(0, userData.balance - totalDeduct);
-    if(userData.level > 0){
-        userData.level = userData.level - 1;
-    }
-    safeStore('gtf_bal', userData.balance);
-    safeStore('gtf_lvl', userData.level);
-    updateDisplay();
-    saveUser();
-
+ 
+    userData.balance -= totalDeduct;
+    updateDisplay();saveUser(true);
+ 
     const id='w'+Date.now()+Math.random().toString(36).slice(2,7);
     const item={
-        id,
-        uid,
-        telegramId:tgUser?.id||null,
-        username:userData.username,
-        amount,
-        fee:adminSettings.withdrawFee,
-        network,
-        address:wallet,
-        status:'PENDING',
-        createdAt:serverNow(),
-        result:'Awaiting admin review'
+        id, uid, telegramId:tgUser?.id||null, username:userData.username,
+        amount, fee:adminSettings.withdrawFee, network, address:wallet,
+        status:'PENDING', createdAt:serverNow()
     };
-
+ 
     if(firebaseReady){
         try{
-            const updates = {};
-            updates['withdrawals/' + uid + '/' + id] = item;
-            updates['withdrawalIndex/' + id] = item;
+            const updates={};
+            updates['withdrawals/'+uid+'/'+id]=item;
+            updates['withdrawalIndex/'+id]=item;
             await db.ref().update(updates);
-        }catch(e){
-            console.error(e);
-            alert('Request submitted locally, but sync failed.');
-        }
+        }catch(e){console.warn('Sync failed');}
     }
-
-    withdrawals.unshift(item);
-    safeStore('gtf_withdrawals',JSON.stringify(withdrawals));
-    logActivity('Withdrawal request', -amount, network+' · '+wallet);
-    closeModal();
-    alert('Withdrawal request submitted! '+totalDeduct+' GTF deducted from your balance.');
+    if(!withdrawals.find(x=>x.id===id)) withdrawals.unshift(item);
+    closeWithdrawModal();
+    alert('Withdrawal request submitted! Total '+totalDeduct+' GTF deducted.');
     document.getElementById('tonWallet').value='';
     document.getElementById('withdrawAmount').value='';
 }
-
-function openHistory(type){
-    const box=document.getElementById('history-content');
-    document.getElementById('history-title').textContent=type==='withdrawals'?'Withdrawal History':'Activity History';
-    box.innerHTML='';
-    const arr=type==='withdrawals'?withdrawals:activities;
-    if(!arr.length){box.textContent='No records yet.';return;}
-    arr.forEach(x=>{
-        const row=document.createElement('div');
-        row.className='history-row';
-        const left=document.createElement('div');
-        if(type==='withdrawals'){
-            let extraInfo = '';
-            if(x.txHash){
-                extraInfo = `\nTX: ${x.txHash.slice(0,8)}...${x.txHash.slice(-6)}`;
-            }
-            left.textContent=`${x.amount} GTF · ${x.network}\n${x.address}${extraInfo}`;
-        } else {
-            left.textContent=`${x.type} · ${x.details||''} · ${x.amount} GTF`;
+ 
+/* ================= ADMIN WITHDRAW REVIEW ================= */
+function renderAdminWithdrawals(){
+    const c=document.getElementById('admin-withdraw-list');if(!c)return;c.innerHTML='';
+    const arr=window.allWithdrawals||withdrawals;
+    if(!arr.length){c.textContent='No withdrawal requests.';return}
+ 
+    arr.slice().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).forEach(w=>{
+        const card=document.createElement('div');card.className='card';card.style.flexDirection='column';card.style.alignItems='flex-start';card.style.gap='8px';
+        const topRow=document.createElement('div');topRow.style.width='100%';topRow.style.display='flex';topRow.style.justifyContent='space-between';
+        topRow.innerHTML=`<strong>${esc(w.username||w.uid)}</strong><span style="color:var(--gold);font-weight:800">${esc(w.amount)} GTF</span>`;
+        const addrBox=document.createElement('div');addrBox.style.fontSize='10px';addrBox.style.color='#aaa';addrBox.style.wordBreak='break-all';
+        addrBox.innerHTML=`${esc(w.network)}<br><span>${esc(w.address)}</span>`;
+ 
+        const copyBtn=document.createElement('button');
+        copyBtn.className='btn-copy-addr';
+        copyBtn.innerHTML='<i class="fa-solid fa-copy"></i> Copy Address';
+        copyBtn.onclick=()=>{ navigator.clipboard.writeText(w.address).then(()=>alert('Address Copied: '+w.address)); };
+ 
+        const bottomRow=document.createElement('div');
+        bottomRow.style.width='100%';bottomRow.style.display='flex';bottomRow.style.justifyContent='space-between';bottomRow.style.alignItems='center';
+        const statusSpan=document.createElement('span');statusSpan.style.fontSize='10px';statusSpan.className='status-'+(w.status||'pending').toLowerCase();
+        statusSpan.textContent=w.status||'PENDING';
+        bottomRow.appendChild(statusSpan);
+ 
+        if(w.status==='PENDING'){
+            const actions=document.createElement('div');actions.style.display='flex';actions.style.gap='6px';
+            const approveBtn=document.createElement('button');approveBtn.className='btn-approve-req';approveBtn.textContent='APPROVE';
+            approveBtn.onclick=()=>resolveWithdrawal(w, 'APPROVED');
+            const rejectBtn=document.createElement('button');rejectBtn.className='btn-reject-req';rejectBtn.textContent='REJECT';
+            rejectBtn.onclick=()=>resolveWithdrawal(w, 'REJECTED');
+            actions.append(approveBtn, rejectBtn);
+            bottomRow.appendChild(actions);
         }
-        left.style.whiteSpace='pre-line';
-        const right=document.createElement('div');
-        right.style.textAlign='right';
-        right.innerHTML=`<span class="${statusClass(x.status)}">${x.status||'RECORDED'}</span><br>${new Date(x.createdAt||Date.now()).toLocaleString()}`;
-        row.append(left,right);
-        box.append(row);
+        card.append(topRow, addrBox, copyBtn, bottomRow);
+        c.appendChild(card);
     });
-    document.getElementById('historyModal').style.display='flex';
 }
-function statusClass(s){
-    const st = String(s||'').toUpperCase();
-    if(st==='PAID'||st==='APPROVED'||st==='REPLIED') return 'status-paid';
-    if(st==='REJECTED') return 'status-rejected';
-    if(st==='PROCESSING') return 'status-processing';
-    return 'status-pending';
+ 
+async function resolveWithdrawal(w, status){
+    if(!firebaseReady){alert('Firebase required.');return}
+    if(!confirm(`Are you sure you want to ${status} this request for ${w.amount} GTF?`)) return;
+    try{
+        const updates={};
+        const ts=firebase.database.ServerValue.TIMESTAMP;
+        updates['withdrawalIndex/'+w.id+'/status']=status;
+        updates['withdrawalIndex/'+w.id+'/reviewedAt']=ts;
+        if(w.uid){
+            updates['withdrawals/'+w.uid+'/'+w.id+'/status']=status;
+            updates['withdrawals/'+w.uid+'/'+w.id+'/reviewedAt']=ts;
+        }
+        await db.ref().update(updates);
+ 
+        if(status==='REJECTED' && w.uid){
+            const refund = Number(w.amount||0) + Number(w.fee||0);
+            await db.ref('users/'+w.uid+'/balance').transaction(b=>(Number(b)||0)+refund);
+            if(w.uid===uid){ userData.balance+=refund; updateDisplay(); }
+        }
+        await refreshAdminData();
+        alert('Withdrawal request marked as: '+status);
+    }catch(err){console.error(err);alert('Failed to update status.');}
 }
-function closeHistory(){document.getElementById('historyModal').style.display='none'}
-
-function shouldVerify(){const n=readNum('gtf_entry_count',0)+1;safeStore('gtf_entry_count',n);const last=readNum('gtf_last_verified',0);return n===1||(n%4===0&&Date.now()-last>30000)}
-let sliderDragging=false,sliderStartX=0,knobStart=0;
-function beginEntry(){if(shouldVerify()){document.getElementById('verify-box').style.display='block';document.getElementById('enter-btn').style.display='none';setupSlider()}else enterApp()}
-function setupSlider(){const knob=document.getElementById('slider-knob'),track=document.getElementById('slide-track'),coin=document.getElementById('mini-coin'),area=document.getElementById('slide-area');let max=0;const start=e=>{if(e.button!==undefined&&e.button!==0)return;sliderDragging=true;sliderStartX=e.clientX;knobStart=parseFloat(knob.style.marginLeft)||0;e.preventDefault?.()};const move=e=>{if(!sliderDragging)return;max=Math.max(0,track.clientWidth-knob.offsetWidth-8);const dx=e.clientX-sliderStartX,x=Math.max(0,Math.min(max,knobStart+dx));knob.style.marginLeft=x+'px';const areaMax=Math.max(0,area.clientWidth-coin.offsetWidth-16);coin.style.left=(8+(x/Math.max(1,max))*areaMax)+'px'};const end=()=>{if(!sliderDragging)return;sliderDragging=false;max=Math.max(1,track.clientWidth-knob.offsetWidth-8);const x=parseFloat(knob.style.marginLeft)||0,target=document.getElementById('target'),cr=coin.getBoundingClientRect(),tr=target.getBoundingClientRect(),center=cr.left+cr.width/2,targetCenter=tr.left+tr.width/2,correct=Math.abs(center-targetCenter)<Math.max(24,tr.width*.48);if(x>=max*.35&&correct){document.getElementById('verify-msg').textContent='Verified! Entering GTF Mining…';safeStore('gtf_last_verified',Date.now());setTimeout(enterApp,450)}else{document.getElementById('verify-msg').textContent='Place the coin inside the target, then try again.';knob.style.marginLeft='0px';coin.style.left='10px'}};knob.onpointerdown=start;track.onpointerdown=e=>{if(e.target!==knob){sliderStartX=e.clientX;knobStart=0;sliderDragging=true;move(e)}};document.onpointermove=move;document.onpointerup=end;document.onpointercancel=end}
-
+ 
+/* ================= HELP LINE: USER SIDE ================= */
+let supportMsgRef=null;
+function renderSupportMessages(arr){
+    const box=document.getElementById('support-messages');
+    if(!box) return;
+    const vipNote=userData.isPremium?'<br><b style="color:#ffd76a">👑 VIP Priority:</b> আপনার মেসেজ সবার আগে দেখা হবে।':'';
+    let html=`<div class="chat-bubble">আসসালামু আলাইকুম! আপনার সমস্যা বা প্রশ্ন নিচে লিখে পাঠান। আমাদের টিম শীঘ্রই রিপ্লাই দেবে।${vipNote}</div>`;
+    arr.forEach(m=>{
+        const t=new Date(m.time||Date.now()).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+        html+=`<div class="chat-bubble ${m.from==='user'?'mine':''}">${esc(m.text)}<small>${m.from==='admin'?'Support · ':''}${t}</small></div>`;
+    });
+    box.innerHTML=html;
+    box.scrollTop=box.scrollHeight;
+}
+ 
+function openSupport(){
+    document.getElementById('supportModal').style.display='flex';
+    document.getElementById('support-subtitle').textContent=userData.isPremium?'VIP Priority Support':'Support team online';
+    renderSupportMessages([]);
+    if(firebaseReady){
+        if(supportMsgRef) supportMsgRef.off();
+        supportMsgRef=db.ref('chatMessages/'+uid).limitToLast(100);
+        supportMsgRef.on('value',snap=>{
+            const arr=Object.values(snap.val()||{}).sort((a,b)=>(a.time||0)-(b.time||0));
+            renderSupportMessages(arr);
+        });
+        db.ref('chatIndex/'+uid+'/userSeen').set(true).catch(()=>{});
+        document.getElementById('help-reply-dot').style.display='none';
+    }
+}
+function closeSupport(){
+    document.getElementById('supportModal').style.display='none';
+    if(supportMsgRef){supportMsgRef.off();supportMsgRef=null}
+}
+ 
+async function sendSupportMessage(){
+    const input=document.getElementById('support-input');
+    const text=input.value.trim();
+    if(!text) return;
+    if(!firebaseReady){alert('Connection problem. Please try again later.');return}
+    const time=serverNow();
+    const id=db.ref('chatMessages/'+uid).push().key;
+    const updates={};
+    updates['chatMessages/'+uid+'/'+id]={from:'user',text,time};
+    updates['chatIndex/'+uid+'/uid']=uid;
+    updates['chatIndex/'+uid+'/username']=userData.username;
+    updates['chatIndex/'+uid+'/telegramId']=tgUser?.id||null;
+    updates['chatIndex/'+uid+'/isPremium']=userData.isPremium===true;
+    updates['chatIndex/'+uid+'/lastMessage']=text.slice(0,100);
+    updates['chatIndex/'+uid+'/lastTime']=time;
+    updates['chatIndex/'+uid+'/lastFrom']='user';
+    updates['chatIndex/'+uid+'/adminSeen']=false;
+    updates['chatIndex/'+uid+'/userSeen']=true;
+    try{
+        await db.ref().update(updates);
+        input.value='';
+    }catch(e){console.warn(e);alert('Message failed to send. Please try again.');}
+}
+ 
+function startUserChatWatch(){
+    if(!firebaseReady) return;
+    db.ref('chatIndex/'+uid).on('value',snap=>{
+        const v=snap.val()||{};
+        const dot=document.getElementById('help-reply-dot');
+        const open=document.getElementById('supportModal').style.display==='flex';
+        if(dot) dot.style.display=(v.lastFrom==='admin'&&v.userSeen===false&&!open)?'block':'none';
+    });
+}
+ 
+/* ================= HELP LINE: ADMIN SIDE ================= */
+let adminChatIndex={},adminChatListening=false,currentChatUid=null,adminMsgRef=null;
+ 
+function startAdminChatListener(){
+    if(!firebaseReady||adminChatListening) return;
+    adminChatListening=true;
+    db.ref('chatIndex').on('value',snap=>{
+        adminChatIndex=snap.val()||{};
+        updateChatBadge();
+        const modalOpen=document.getElementById('adminChatModal').style.display==='flex';
+        if(modalOpen && !currentChatUid) renderAdminChatList();
+    });
+}
+ 
+function updateChatBadge(){
+    const n=Object.values(adminChatIndex).filter(x=>x&&!x.adminSeen).length;
+    const b=document.getElementById('admin-chat-badge');
+    if(!b) return;
+    b.textContent=n;
+    b.classList.toggle('zero',n===0);
+}
+ 
+function isChatVip(c){
+    const live=remoteUserCache&&remoteUserCache[c.uid];
+    return live&&typeof live.isPremium==='boolean'?live.isPremium:c.isPremium===true;
+}
+ 
+function openAdminChats(){
+    if(!firebaseReady){alert('Firebase required.');return}
+    startAdminChatListener();
+    document.getElementById('adminChatModal').style.display='flex';
+    showChatList();
+}
+function closeAdminChats(){
+    document.getElementById('adminChatModal').style.display='none';
+    detachAdminMsgs();
+    currentChatUid=null;
+}
+function detachAdminMsgs(){if(adminMsgRef){adminMsgRef.off();adminMsgRef=null}}
+ 
+function showChatList(){
+    detachAdminMsgs();
+    currentChatUid=null;
+    document.getElementById('admin-chat-list').style.display='block';
+    document.getElementById('admin-chat-conv').style.display='none';
+    document.getElementById('admin-chat-back').style.display='none';
+    document.getElementById('admin-chat-title').textContent='User Messages';
+    document.getElementById('admin-chat-sub').textContent='Green = unseen · Seen/replied go to bottom';
+    renderAdminChatList();
+}
+ 
+function renderAdminChatList(){
+    const box=document.getElementById('admin-chat-list');
+    const all=Object.values(adminChatIndex).filter(x=>x&&x.uid);
+    if(!all.length){box.innerHTML='<div style="text-align:center;color:#aaa;font-size:11px;padding:30px">No messages yet.</div>';return}
+    const unseen=all.filter(x=>!x.adminSeen).sort((a,b)=>(isChatVip(b)-isChatVip(a))||((b.lastTime||0)-(a.lastTime||0)));
+    const seen=all.filter(x=>x.adminSeen).sort((a,b)=>(b.lastTime||0)-(a.lastTime||0));
+    box.innerHTML='';
+    [...unseen,...seen].forEach(c=>{
+        const row=document.createElement('div');
+        row.className='chat-row'+(c.adminSeen?'':' unseen');
+        const vip=isChatVip(c);
+        const t=c.lastTime?new Date(c.lastTime).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+        row.innerHTML=`
+          <div class="avatar">${esc((c.username||'?').charAt(0).toUpperCase())}</div>
+          <div class="meta">
+            <div class="nm">${esc(c.username||c.uid)}${vip?'<i class="fa-solid fa-circle-check blue-tick-inline"></i>':''}</div>
+            <div class="pv">${c.lastFrom==='admin'?'You: ':''}${esc(c.lastMessage||'')}</div>
+          </div>
+          <div class="tm">${esc(t)}</div>
+          ${c.adminSeen?'':'<div class="dot"></div>'}`;
+        row.onclick=()=>openAdminConv(c.uid);
+        box.appendChild(row);
+    });
+}
+ 
+function openAdminConv(u){
+    currentChatUid=u;
+    const c=adminChatIndex[u]||{};
+    document.getElementById('admin-chat-list').style.display='none';
+    const conv=document.getElementById('admin-chat-conv');
+    conv.style.display='flex';
+    document.getElementById('admin-chat-back').style.display='block';
+    const title=document.getElementById('admin-chat-title');
+    title.innerHTML=esc(c.username||u)+(isChatVip(c)?'<i class="fa-solid fa-circle-check blue-tick-inline" style="color:#6fb1ff"></i>':'');
+    document.getElementById('admin-chat-sub').textContent='ID: '+(c.telegramId||u);
+    db.ref('chatIndex/'+u+'/adminSeen').set(true).catch(()=>{});
+    detachAdminMsgs();
+    adminMsgRef=db.ref('chatMessages/'+u).limitToLast(200);
+    adminMsgRef.on('value',snap=>{
+        const arr=Object.values(snap.val()||{}).sort((a,b)=>(a.time||0)-(b.time||0));
+        const box=document.getElementById('admin-chat-msgs');
+        box.innerHTML=arr.map(m=>{
+            const t=new Date(m.time||Date.now()).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+            return `<div class="chat-bubble ${m.from==='admin'?'mine':''}">${esc(m.text)}<small>${t}</small></div>`;
+        }).join('');
+        box.scrollTop=box.scrollHeight;
+        const last=arr[arr.length-1];
+        if(last&&last.from==='user'&&currentChatUid===u){
+            db.ref('chatIndex/'+u+'/adminSeen').set(true).catch(()=>{});
+        }
+    });
+}
+ 
+async function sendAdminReply(){
+    if(!currentChatUid) return;
+    const input=document.getElementById('admin-chat-input');
+    const text=input.value.trim();
+    if(!text) return;
+    const u=currentChatUid,time=serverNow();
+    const id=db.ref('chatMessages/'+u).push().key;
+    const updates={};
+    updates['chatMessages/'+u+'/'+id]={from:'admin',text,time};
+    updates['chatIndex/'+u+'/lastMessage']=text.slice(0,100);
+    updates['chatIndex/'+u+'/lastTime']=time;
+    updates['chatIndex/'+u+'/lastFrom']='admin';
+    updates['chatIndex/'+u+'/adminSeen']=true;
+    updates['chatIndex/'+u+'/userSeen']=false;
+    try{
+        await db.ref().update(updates);
+        input.value='';
+    }catch(e){alert('Reply failed to send.');}
+}
+ 
+/* ================= ADMIN CORE ================= */
 let profileTapCount=0,profileTapTimer=null;
 function profileTap(){profileTapCount++;clearTimeout(profileTapTimer);profileTapTimer=setTimeout(()=>profileTapCount=0,1600);if(profileTapCount>=4){profileTapCount=0;const pw=prompt('Enter administrator password');if(pw==='ARAFATYT')openAdmin();else if(pw!==null)alert('Incorrect password.')}}
-
+ 
 function openAdmin(){
-    const adsToggle=document.getElementById('admin-all-ads-toggle');
-    if(adsToggle) adsToggle.checked = (adminSettings.allAds !== false);
     document.getElementById('admin-rate').value=adminSettings.rate;
     document.getElementById('admin-min-withdraw').value=adminSettings.minWithdraw;
     document.getElementById('admin-withdraw-fee').value=adminSettings.withdrawFee;
     document.getElementById('admin-smart-link').value=adminSettings.smartLink;
-    renderAdminGames();renderAdminTasks();renderAdminWithdrawals();renderAdminSupport();renderAdminUsers();
-    document.getElementById('admin-user-count').textContent=firebaseReady?'…':'1';
-    document.getElementById('admin-active-count').textContent=firebaseReady?'…':(document.visibilityState==='visible'?'1':'0');
-    document.getElementById('admin-task-count').textContent=customTasks.length;
+    document.getElementById('admin-all-ads-toggle').checked=(adminSettings.allAds!==false);
+    renderAdminTasks();renderAdminWithdrawals();renderAdminUsers();renderAdminGames();
     document.getElementById('adminModal').style.display='flex';
-    if(firebaseReady)refreshAdminData();
+    if(firebaseReady){ refreshAdminData(); startAdminChatListener(); }
 }
-
+function closeAdmin(){document.getElementById('adminModal').style.display='none'}
+ 
 async function refreshAdminData(){
     try{
-        const [u,p,w,inbox,threads,legacy]=await Promise.all([db.ref('users').once('value'),db.ref('presence').once('value'),db.ref('withdrawalIndex').once('value'),db.ref('supportInbox').once('value'),db.ref('supportThreads').once('value'),db.ref('supportMessages').once('value')]);
+        const [u,w,t]=await Promise.all([db.ref('users').once('value'),db.ref('withdrawalIndex').once('value'),db.ref('tasks').once('value')]);
         remoteUserCache=u.val()||{};
-        const pres=p.val()||{},active=Object.values(pres).filter(x=>x&&x.online).length;
-        document.getElementById('admin-user-count').textContent=Object.keys(remoteUserCache).length;
-        document.getElementById('admin-active-count').textContent=active;
         window.allWithdrawals=Object.values(w.val()||{}).filter(Boolean);
-        const byId={};
-        Object.values(inbox.val()||{}).filter(x=>x&&x.uid).forEach(m=>{byId[m.id||m.uid+'_'+m.createdAt]=m});
-        const tree=legacy.val()||{};
-        Object.entries(tree).forEach(([who,items])=>Object.entries(items||{}).forEach(([key,m])=>{if(m){const item={...m,uid:m.uid||who,id:m.id||key};byId[item.id]=byId[item.id]||item}}));
-        const msgs=Object.values(byId);
-        window.allSupport=msgs;
-        window.supportThreads=threads.val()||{};
-        renderAdminWithdrawals();renderAdminSupport();renderAdminUsers();
-    }catch(e){console.warn('Admin data refresh failed:',e);const c=document.getElementById('admin-support-list');if(c)c.textContent='Inbox could not load. Check Firebase read permissions.';}
+        const users = Object.values(remoteUserCache);
+        document.getElementById('admin-user-count').textContent=users.length;
+        document.getElementById('admin-vip-count').textContent=users.filter(x=>x.isPremium).length;
+        document.getElementById('admin-task-count').textContent=Object.keys(t.val()||{}).length;
+        renderAdminWithdrawals();renderAdminUsers();
+        if(document.getElementById('adminChatModal').style.display==='flex'&&!currentChatUid) renderAdminChatList();
+    }catch(e){}
 }
-
-function closeAdmin(){
-    document.getElementById('adminModal').style.display='none';
-    if(document.visibilityState==='visible'&&document.getElementById('app').style.display!=='none'){setTimeout(()=>triggerMonetagAd(),500);}
-}
-
-async function saveAdminSettings(){
-    const rate=Number(document.getElementById('admin-rate').value),min=Number(document.getElementById('admin-min-withdraw').value),fee=Number(document.getElementById('admin-withdraw-fee').value),link=document.getElementById('admin-smart-link').value.trim();
-    if(!Number.isFinite(rate)||rate<0||!Number.isFinite(min)||min<0||!Number.isFinite(fee)||fee<0){alert('Enter valid non-negative values.');return}
-    if(link){try{if(new URL(link).protocol!=='https:')throw 0}catch{alert('Enter a valid HTTPS Double Earn URL.');return}}
-    adminSettings={rate,minWithdraw:min,withdrawFee:fee,smartLink:link||SMART_LINK_DEFAULT};
-    userData.miningRate=rate;safeStore('gtf_admin_rate',rate);safeStore('gtf_admin_min_withdraw',min);safeStore('gtf_admin_withdraw_fee',fee);safeStore('gtf_smart_link',adminSettings.smartLink);
-    if(firebaseReady){try{await db.ref('settings').update(adminSettings)}catch(e){alert('Settings could not sync. Check Firebase rules.');return}}
-    updateDisplay();updateWithdrawRules();alert('Settings saved.');
-}
-
-function updateWithdrawRules(){
-    const el=document.getElementById('withdraw-rules');
-    if(el)el.textContent='Minimum withdrawal: '+adminSettings.minWithdraw+' GTF · Fee: '+adminSettings.withdrawFee+' GTF';
-    const amount=document.getElementById('withdrawAmount');
-    if(amount)amount.min=adminSettings.minWithdraw;
-}
-
-async function addAdminTask(){
-    const title=document.getElementById('admin-task-title').value.trim(),url=document.getElementById('admin-task-url').value.trim(),reward=Number(document.getElementById('admin-task-reward').value),type=document.getElementById('admin-task-type').value,editId=document.getElementById('admin-edit-task-id').value;
-    if(!title){alert('Enter a task title.');return}
-    try{if(new URL(url).protocol!=='https:')throw 0}catch{alert('Enter a valid HTTPS task URL.');return}
-    if(!Number.isFinite(reward)||reward<0){alert('Enter a valid reward.');return}
-    const task={id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,7),title,url,reward,type,updatedAt:serverNow()};
-    const idx=customTasks.findIndex(x=>x.id===task.id);
-    if(idx>=0)customTasks[idx]=task;else customTasks.push(task);
-    safeStore('gtf_custom_tasks',JSON.stringify(customTasks));
-    if(firebaseReady){try{await db.ref('tasks/'+task.id).set(task)}catch(e){alert('Task saved locally but Firebase sync failed.');}}
-    document.getElementById('admin-task-title').value='';document.getElementById('admin-task-url').value='';document.getElementById('admin-task-reward').value='';document.getElementById('admin-edit-task-id').value='';renderTasks();renderAdminTasks();document.getElementById('admin-task-count').textContent=customTasks.length;
-}
-
-function renderAdminTasks(){
-    const c=document.getElementById('admin-task-list');if(!c)return;c.innerHTML='';if(!customTasks.length){c.textContent='No published tasks yet.';return}
-    customTasks.forEach(t=>{
-        const row=document.createElement('div');row.className='card';const title=document.createElement('span');title.textContent=t.title+' · '+t.reward+' GTF';title.style.fontSize='11px';const edit=document.createElement('button');edit.className='btn-action';edit.textContent='Edit';
-        edit.onclick=()=>{
-            document.getElementById('admin-edit-task-id').value=t.id;document.getElementById('admin-task-title').value=t.title;document.getElementById('admin-task-url').value=t.url;document.getElementById('admin-task-reward').value=t.reward;document.getElementById('admin-task-type').value=t.type;
-        };
-        const del=document.createElement('button');del.className='btn-action';del.textContent='Delete';
-        del.onclick=async()=>{
-            if(!confirm('Delete this task?'))return;customTasks=customTasks.filter(x=>x.id!==t.id);safeStore('gtf_custom_tasks',JSON.stringify(customTasks));if(firebaseReady)await db.ref('tasks/'+t.id).remove().catch(console.warn);renderTasks();renderAdminTasks();document.getElementById('admin-task-count').textContent=customTasks.length;
-        };
-        row.append(title,edit,del);c.append(row);
-    });
-}
-
-function renderAdminWithdrawals(){
-    const c=document.getElementById('admin-withdraw-list');if(!c)return;c.innerHTML='';const arr=window.allWithdrawals||withdrawals;if(!arr.length){c.textContent='No withdrawal requests.';return}
-    arr.slice().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).forEach(w=>{
-        const row=document.createElement('div');row.className='card';const info=document.createElement('div');info.className='card-text';
-        const h=document.createElement('h4');h.textContent=(w.username||w.uid)+' · '+w.amount+' GTF';
-        const p=document.createElement('p');p.textContent=w.network+' · '+w.address+' · '+(w.status||'PENDING');
-        info.append(h,p);row.append(info);
-        if(w.status==='PENDING'){
-            const pay=document.createElement('button');pay.className='btn-action';pay.style.background='linear-gradient(135deg,#51f0a3,#18a35e)';pay.style.color='#042b1b';pay.style.fontWeight='800';pay.textContent='PAY';
-            pay.onclick=()=>payJettonWithdrawal(w);
-            const reject=document.createElement('button');reject.className='btn-action';reject.style.background='#a83232';reject.style.color='#fff';reject.textContent='Reject';
-            reject.onclick=()=>resolveWithdrawal(w,'REJECTED');
-            row.append(pay,reject);
-        }
-        c.append(row);
-    });
-}
-
-async function payJettonWithdrawal(w){
-    const ADMIN_WALLET = 'UQBUrewFxsRB31GxTgYmg-uiwaZIwc-e7Nc_yKyjM03C-GD4';
-    const JETTON_MASTER = 'EQCpTNKsUtmyxtpfb6KmCp_LmHcnybWfzmlHkurOBQwHFB5t';
-
-    if(!tonConnectUI){
-        alert('TON Connect UI is not ready.');
-        return;
-    }
-    if(!tonConnectUI.connected || !tonConnectUI.account){
-        alert('Please connect your Admin Tonkeeper wallet first using the top wallet button.');
-        tonConnectUI.openModal();
-        return;
-    }
-
-    const connectedAddr = formatTonAddress(tonConnectUI.account.address);
-    if(connectedAddr !== ADMIN_WALLET && tonConnectUI.account.address !== ADMIN_WALLET){
-        alert('ACCESS DENIED!\n\nConnected: ' + connectedAddr + '\n\nOnly Admin Wallet can send payments:\n' + ADMIN_WALLET);
-        return;
-    }
-
-    if(!confirm('Send ' + w.amount + ' GTF to:\n' + w.address + '\n\nProceed to Tonkeeper?')){
-        return;
-    }
-
-    try{
-        let jettonWallet = null;
-        try{
-            const res = await fetch('https://tonapi.io/v2/accounts/' + ADMIN_WALLET + '/jettons/' + JETTON_MASTER);
-            const data = await res.json();
-            if(data && data.wallet_address && data.wallet_address.address){
-                jettonWallet = data.wallet_address.address;
-            }
-        }catch(e){
-            console.warn('TonAPI error:', e);
-        }
-
-        if(!jettonWallet){
-            alert('Admin GTF Jetton Wallet not found. Make sure your admin wallet holds GTF tokens.');
-            return;
-        }
-
-        const tx = {
-            validUntil: Math.floor(Date.now() / 1000) + 600,
-            messages: [
-                {
-                    address: jettonWallet,
-                    amount: '50000000'
-                }
-            ]
-        };
-
-        const res = await tonConnectUI.sendTransaction(tx);
-        if(res && res.boc){
-            await resolveWithdrawal(w, 'PAID');
-            alert('✅ Payment confirmed via Tonkeeper! Status updated to PAID.');
-        }
-    }catch(err){
-        console.error('Payment error:', err);
-        alert('Transaction cancelled or failed: ' + (err.message || 'Rejected in Tonkeeper'));
-    }
-}
-
-async function resolveWithdrawal(w, status){
-    if(!firebaseReady){
-        alert('Firebase is required to review withdrawal requests.');
-        return;
-    }
-    try{
-        const resultText = (status === 'APPROVED' || status === 'PAID') ? 'Approved/Paid by admin' : 'Rejected by admin';
-        const ts = firebase.database.ServerValue.TIMESTAMP;
-        
-        const updates = {};
-        updates['withdrawalIndex/' + w.id + '/status'] = status;
-        updates['withdrawalIndex/' + w.id + '/result'] = resultText;
-        updates['withdrawalIndex/' + w.id + '/reviewedAt'] = ts;
-
-        if(w.uid){
-            updates['withdrawals/' + w.uid + '/' + w.id + '/status'] = status;
-            updates['withdrawals/' + w.uid + '/' + w.id + '/result'] = resultText;
-            updates['withdrawals/' + w.uid + '/' + w.id + '/reviewedAt'] = ts;
-        }
-
-        await db.ref().update(updates);
-
-        if(status === 'REJECTED' && w.uid){
-            const refundAmount = Number(w.amount || 0) + Number(w.fee || 0);
-            await db.ref('users/' + w.uid).transaction(user => {
-                if(!user) return user;
-                user.balance = (Number(user.balance) || 0) + refundAmount;
-                user.level = (Number(user.level) || 0) + 1;
-                return user;
-            });
-
-            if(w.uid === uid){
-                userData.balance += refundAmount;
-                userData.level = (userData.level || 0) + 1;
-                safeStore('gtf_bal', userData.balance);
-                safeStore('gtf_lvl', userData.level);
-                updateDisplay();
-            }
-        }
-        await refreshAdminData();
-        alert('Withdrawal request status updated to ' + status);
-    }catch(e){
-        console.error('Resolve error:', e);
-        alert('Failed to update request.');
-    }
-}
-
-function searchAdminUsers(){if(firebaseReady) refreshAdminData();renderAdminUsers();}
+ 
 function renderAdminUsers(){
     const c=document.getElementById('admin-users-list');if(!c)return;c.innerHTML='';
     const search=(document.getElementById('admin-user-search')?.value||'').trim().toLowerCase();
     let users=Object.values(remoteUserCache||{}).filter(Boolean);
-    if(!users.length){users=[{uid,telegramId:tgUser?.id||'Local Admin',username:userData.username,balance:userData.balance,walletAddress:userData.walletAddress}];}
-    const filtered=search? users.filter(u=>String(u.telegramId||'').toLowerCase().includes(search)||String(u.username||'').toLowerCase().includes(search)||String(u.uid||'').toLowerCase().includes(search)||String(u.walletAddress||'').toLowerCase().includes(search)): users;
-    const countLabel=document.createElement('div');countLabel.style.cssText='font-size:10px;color:var(--gold);margin-bottom:6px;font-weight:700';countLabel.textContent=search ? `Found: ${filtered.length} user(s)` : `All Users: ${users.length}`;c.appendChild(countLabel);
-    if(!filtered.length){const empty=document.createElement('div');empty.style.cssText='text-align:center;color:#aaa;padding:12px;font-size:10px';empty.textContent='No user found for query: "'+search+'"';c.appendChild(empty);return;}
+    if(!users.length) users=[{...userData,uid}];
+    const filtered=search? users.filter(u=>String(u.telegramId||'').includes(search)||String(u.username||'').toLowerCase().includes(search)): users;
     filtered.forEach(u=>{
-        const row=document.createElement('div');row.className='card';
-        const label=document.createElement('div');label.className='card-text';
-        const h=document.createElement('h4');h.textContent=(u.username||u.uid)+' · '+Number(u.balance||0).toFixed(4)+' GTF';
-        const p=document.createElement('p');p.textContent='TG ID: '+(u.telegramId||'N/A')+(u.walletAddress ? ' | TON: '+u.walletAddress.slice(0,6)+'...' : '');
-        label.append(h,p);
-        const add=document.createElement('button');add.className='btn-action';add.textContent='Add GTF';add.onclick=()=>adjustUserBalance(u.uid,'add');
-        const remove=document.createElement('button');remove.className='btn-action';remove.style.background='#a83232';remove.textContent='Remove GTF';remove.onclick=()=>adjustUserBalance(u.uid,'remove');
-        row.append(label,add,remove);c.append(row);
+        const row=document.createElement('div');row.className='card';row.style.marginBottom='6px';
+        row.innerHTML=`
+          <div class="card-text">
+            <h4>${esc(u.username||u.uid)} ${u.isPremium?'<i class="fa-solid fa-circle-check blue-tick-inline"></i>':''}</h4>
+            <p>ID: ${esc(u.telegramId||u.id||'N/A')} · Bal: ${Number(u.balance||0).toFixed(2)} GTF</p>
+          </div>
+          <button class="btn-action">${u.isPremium?'Remove VIP':'Make VIP'}</button>
+        `;
+        row.querySelector('button').onclick=()=>toggleUserVip(u.uid||u.id);
+        c.appendChild(row);
     });
 }
-
-async function adjustUserBalance(userId,action){
-    if(!firebaseReady){alert('Firebase connection required.');return}
-    const input=prompt('Enter GTF amount to '+action+':');if(input===null)return;
-    const amount=Number(input);if(!Number.isFinite(amount)||amount<=0){alert('Please enter a valid amount.');return}
-    try{
-        const ref=db.ref('users/'+userId+'/balance');
-        const result=await ref.transaction(current=>{
-            const balance=Number(current)||0;
-            if(action==='add')return balance+amount;
-            if(balance<amount)return;
-            return balance-amount;
-        });
-        if(!result.committed){alert('Insufficient balance or update failed.');return}
-        if(userId===uid){
-            userData.balance=(action==='add')?(userData.balance+amount):Math.max(0,userData.balance-amount);safeStore('gtf_bal',userData.balance);updateDisplay();
-        }
-        await refreshAdminData();
-        alert(amount+' GTF successfully '+(action==='add'?'added.':'removed.'));
-        renderAdminUsers();
-    }catch(e){console.error(e);alert('Could not update user balance.');}
-}
-
-function openSupport(){document.getElementById('supportModal').style.display='flex';loadSupportMessages()}
-function closeSupport(){document.getElementById('supportModal').style.display='none'}
-async function loadSupportMessages(){
-    const c=document.getElementById('support-messages');c.innerHTML='';
+ 
+function toggleUserVip(targetUid){
+    if(targetUid===uid){
+        userData.isPremium = !userData.isPremium;
+        safeStore('gtf_is_premium', userData.isPremium ? '1' : '0');
+        updateDisplay();renderTasks();
+    }
     if(firebaseReady){
-        try{
-            const s=await db.ref('supportMessages/'+uid).once('value');supportMessages=Object.values(s.val()||{}).filter(Boolean).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
-        }catch(e){console.warn('Support history read failed:',e);c.textContent='Messages could not load. Please try again.';return}
-    }else{try{supportMessages=JSON.parse(localStorage.getItem('gtf_support_'+uid)||'[]')}catch{supportMessages=[]}}
-    renderSupportMessages();
+        const userRef = db.ref('users/'+targetUid);
+        userRef.once('value').then(snap=>{
+            const current = snap.val()?.isPremium || false;
+            userRef.update({ isPremium: !current, verified: !current }).then(()=>refreshAdminData());
+        });
+    }
 }
-
-function adminIdentityHTML(){
-  const fbBlueBadge = '<svg viewBox="0 0 24 24" width="15" height="15" style="vertical-align:middle;margin-left:4px;flex-shrink:0"><path fill="#1877F2" d="m10.29 2.308 1.144-.813a1 1 0 0 1 1.132 0l1.144.813a1 1 0 0 0 .97.135l1.348-.415a1 1 0 0 1 1.25.626l.487 1.324a1 1 0 0 0 .762.64l1.385.26a1 1 0 0 1 .8.887l.08 1.407a1 1 0 0 0 .47.88l1.173.78a1 1 0 0 1 .442 1.332l-.65 1.252a1 1 0 0 0 .09 1l.78 1.173a1 1 0 0 1-.442 1.332l-1.252.65a1 1 0 0 0-.585.808l-.26 1.385a1 1 0 0 1-.887.8l-1.407.08a1 1 0 0 0-.88.47l-.78 1.173a1 1 0 0 1-1.332.442l-1.252-.65a1 1 0 0 0-1 .09l-1.173.78a1 1 0 0 1-1.332-.442l-.65-1.252a1 1 0 0 0-.808-.585l-1.385-.26a1 1 0 0 1-.8-.887l-.08-1.407a1 1 0 0 0-.47-.88l-1.173-.78a1 1 0 0 1-.442-1.332l.65-1.252a1 1 0 0 0-.09-1l-.78-1.173a1 1 0 0 1 .442-1.332l1.252-.65c.32.166.7.13 1-.09z"/><path fill="#fff" d="m9.75 14.85-2.6-2.6 1.06-1.06 1.54 1.54 4.54-4.54 1.06 1.06-5.6 5.6z"/></svg>';
-  return '<div class="admin-identity"><img src="https://i.ibb.co.com/7dWKqhxx/1793531522246.jpg" alt="GTF"><span>GTF Admin</span>'+fbBlueBadge+'</div>';
+ 
+function saveAdminSettings(){
+    adminSettings.rate=Number(document.getElementById('admin-rate').value);
+    adminSettings.minWithdraw=Number(document.getElementById('admin-min-withdraw').value);
+    adminSettings.withdrawFee=Number(document.getElementById('admin-withdraw-fee').value);
+    adminSettings.smartLink=document.getElementById('admin-smart-link').value.trim()||SMART_LINK_DEFAULT;
+    safeStore('gtf_admin_rate',adminSettings.rate);
+    safeStore('gtf_admin_min_withdraw',adminSettings.minWithdraw);
+    safeStore('gtf_admin_withdraw_fee',adminSettings.withdrawFee);
+    safeStore('gtf_smart_link', adminSettings.smartLink);
+    recalcRate();
+    if(firebaseReady) db.ref('settings').update(adminSettings);
+    updateDisplay();alert('Settings saved successfully.');
 }
-
-function renderSupportMessages(){
-    const c=document.getElementById('support-messages');c.innerHTML='';if(!supportMessages.length){c.innerHTML='<div style="font-size:10px;color:#aab;text-align:center;padding:18px">Welcome to GTF Help Line. How can we help you?</div>';return}
-    supportMessages.forEach(m=>{
-        const b=document.createElement('div');b.className='chat-bubble '+(m.sender==='user'?'mine':'');
-        if(m.sender==='admin'){const name=document.createElement('div');name.innerHTML=adminIdentityHTML();b.append(name)}
-        const text=document.createElement('div');text.textContent=m.text||m.reply||'';b.append(text);
-        const meta=document.createElement('div');meta.className='chat-meta';meta.textContent=new Date(m.createdAt||Date.now()).toLocaleString()+(m.sender==='admin'?' · ✓✓':'');
-        b.append(meta);c.append(b);
-    });
-    c.scrollTop=c.scrollHeight;
+ 
+/* ================= TASKS (VIP-only + one-time claim) ================= */
+function addAdminTask(){
+    const title=document.getElementById('admin-task-title').value.trim();
+    const url=document.getElementById('admin-task-url').value.trim();
+    const reward=Number(document.getElementById('admin-task-reward').value);
+    const vipOnly=document.getElementById('admin-task-vip').checked;
+    if(!title||!url){alert('Enter task title and link.');return}
+    if(!Number.isFinite(reward)||reward<=0){alert('Enter a valid reward amount.');return}
+    const id=Date.now().toString(36);
+    const task={id,title,url,reward,vipOnly};
+    customTasks.push(task);
+    safeStore('gtf_custom_tasks',JSON.stringify(customTasks));
+    if(firebaseReady) db.ref('tasks/'+id).set(task);
+    renderTasks();renderAdminTasks();alert(vipOnly?'VIP task published.':'Task published.');
+    document.getElementById('admin-task-title').value='';
+    document.getElementById('admin-task-url').value='';
+    document.getElementById('admin-task-reward').value='';
+    document.getElementById('admin-task-vip').checked=false;
 }
-
-async function sendSupportMessage(){
-    const input=document.getElementById('support-input'),text=input.value.trim();if(!text)return;if(!firebaseReady){alert('Firebase connection is not ready.');return}
-    const key=db.ref('supportMessages/'+uid).push().key;
-    const msg={id:key,uid,username:userData.username,sender:'user',text,createdAt:firebase.database.ServerValue.TIMESTAMP,status:'UNREAD',adminSeen:false};
-    try{
-        const updates={};updates['supportMessages/'+uid+'/'+key]=msg;updates['supportInbox/'+key]=msg;
-        updates['supportThreads/'+uid]={uid,username:userData.username,lastMessage:text,lastAt:firebase.database.ServerValue.TIMESTAMP,lastUserAt:firebase.database.ServerValue.TIMESTAMP,lastSender:'user',needsReply:true,unreadCount:firebase.database.ServerValue.increment(1)};
-        await db.ref().update(updates);input.value='';await loadSupportMessages();
-    }catch(e){console.error(e);alert('Message could not be sent.');}
-}
-
-async function replySupport(uidTo,id,text){
-    if(!firebaseReady)throw new Error('Firebase unavailable');
-    const key=db.ref('supportMessages/'+uidTo).push().key;
-    const reply={id:key,uid:uidTo,username:'GTF Admin',sender:'admin',text,createdAt:firebase.database.ServerValue.TIMESTAMP,status:'REPLIED'};
-    const updates={};updates['supportMessages/'+uidTo+'/'+key]=reply;
-    const inboxSnap=await db.ref('supportInbox').once('value');
-    Object.entries(inboxSnap.val()||{}).forEach(([msgId,m])=>{if(m&&String(m.uid)===String(uidTo)&&m.sender==='user'){updates['supportInbox/'+msgId+'/status']='REPLIED';updates['supportInbox/'+msgId+'/repliedAt']=firebase.database.ServerValue.TIMESTAMP}});
-    updates['supportThreads/'+uidTo+'/lastMessage']=text;updates['supportThreads/'+uidTo+'/lastAt']=firebase.database.ServerValue.TIMESTAMP;updates['supportThreads/'+uidTo+'/lastSender']='admin';updates['supportThreads/'+uidTo+'/needsReply']=false;updates['supportThreads/'+uidTo+'/unreadCount']=0;
-    await db.ref().update(updates);
-}
-
-function renderAdminSupport(){
-    const c=document.getElementById('admin-support-list');if(!c)return;const msgs=window.allSupport||[];const grouped={};
-    msgs.forEach(m=>{
-        if(!m||!m.uid)return;const g=grouped[m.uid]||(grouped[m.uid]={uid:m.uid,username:m.username||m.uid,messages:[],lastAt:0,lastUserAt:0,needsReply:false,unread:0,lastMessage:''});g.messages.push(m);const at=Number(m.createdAt)||0;if(at>=g.lastAt){g.lastAt=at;g.lastMessage=m.text||m.reply||''}if(m.sender==='user'){g.lastUserAt=Math.max(g.lastUserAt,at);if(m.status!=='REPLIED')g.needsReply=true;if(!m.adminSeen&&m.status!=='SEEN')g.unread++}
-    });
-    Object.values(grouped).forEach(g=>{
-        const t=(window.supportThreads||{})[g.uid]||{};g.username=t.username||g.username;g.lastAt=Math.max(g.lastAt,Number(t.lastAt)||0);g.lastUserAt=Math.max(g.lastUserAt,Number(t.lastUserAt)||0);g.needsReply=typeof t.needsReply==='boolean'?t.needsReply:g.needsReply;g.unread=Number(t.unreadCount??g.unread);g.lastMessage=t.lastMessage||g.lastMessage;
-    });
-    const arr=Object.values(grouped).sort((a,b)=>Number(b.needsReply)-Number(a.needsReply)||(b.lastUserAt-a.lastUserAt)||(b.lastAt-a.lastAt));window.supportConversations=arr;
-    const unread=arr.reduce((n,x)=>n+x.unread,0);const count=document.getElementById('admin-inbox-count');if(count)count.textContent=String(unread);c.innerHTML='';if(!arr.length){c.textContent='No messages in inbox yet.';return}
-    arr.forEach(g=>{
-        const row=document.createElement('div');row.className='inbox-row'+(g.unread?' unread':'');row.onclick=()=>openAdminThread(g.uid);
-        const av=document.createElement('div');av.className='inbox-avatar';av.textContent=(g.username||'U').slice(0,1).toUpperCase();
-        const main=document.createElement('div');main.className='inbox-main';const name=document.createElement('div');name.textContent=g.username;const preview=document.createElement('div');preview.className='inbox-preview';preview.textContent=g.lastMessage||'Message';
-        main.append(name,preview);const meta=document.createElement('div');meta.className='inbox-meta';meta.textContent=g.lastAt?new Date(g.lastAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'';
-        if(g.unread){const dot=document.createElement('span');dot.className='inbox-dot';meta.append(dot)}else if(!g.needsReply){meta.textContent+=' · Replied'}
-        row.append(av,main,meta);c.append(row);
+ 
+function renderAdminTasks(){
+    const c=document.getElementById('admin-task-list');if(!c)return;c.innerHTML='';
+    customTasks.forEach(t=>{
+        const row=document.createElement('div');row.className='card';
+        row.innerHTML=`<span style="font-size:11px">${esc(t.title)} (+${esc(t.reward)})${t.vipOnly?'<span class="vip-tag">VIP</span>':''}</span><button class="btn-action" style="background:#a83232;color:#fff">Delete</button>`;
+        row.querySelector('button').onclick=()=>deleteTask(t.id);
+        c.appendChild(row);
     });
 }
-
-function openAdminInbox(){if(!firebaseReady){alert('Firebase connection is not ready.');return}document.getElementById('admin-support-list').style.display='block';document.getElementById('adminThreadPanel').style.display='none';refreshAdminData()}
-function backToInbox(){document.getElementById('adminThreadPanel').style.display='none';document.getElementById('admin-support-list').style.display='block';refreshAdminData()}
-
-async function openAdminThread(uidTo){
-    try{
-        const snap=await db.ref('supportMessages/'+uidTo).once('value');const list=Object.entries(snap.val()||{}).map(([key,m])=>({...m,id:m.id||key})).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));currentSupportId=uidTo;const conv=(window.supportConversations||[]).find(x=>x.uid===uidTo);
-        document.getElementById('admin-thread-name').textContent=conv?.username||uidTo;document.getElementById('admin-thread-id').textContent='Telegram/User ID: '+uidTo;document.getElementById('admin-thread-avatar').textContent=(conv?.username||'U').slice(0,1).toUpperCase();
-        const updates={};list.forEach(m=>{if(m.sender==='user'&&m.id){updates['supportMessages/'+uidTo+'/'+m.id+'/adminSeen']=true;updates['supportMessages/'+uidTo+'/'+m.id+'/status']='SEEN';updates['supportInbox/'+m.id+'/adminSeen']=true;updates['supportInbox/'+m.id+'/status']='SEEN'}});
-        updates['supportThreads/'+uidTo+'/unreadCount']=0;if(Object.keys(updates).length)await db.ref().update(updates);renderAdminThread(list);document.getElementById('admin-support-list').style.display='none';document.getElementById('adminThreadPanel').style.display='block';
-    }catch(e){console.error(e);alert('Could not open this conversation.');}
+ 
+function deleteTask(id){
+    customTasks=customTasks.filter(x=>x.id!==id);
+    safeStore('gtf_custom_tasks',JSON.stringify(customTasks));
+    if(firebaseReady) db.ref('tasks/'+id).remove();
+    renderTasks();renderAdminTasks();
 }
-
-function renderAdminThread(list){
-    const c=document.getElementById('admin-thread-body');c.innerHTML='';(list||[]).forEach(m=>{
-        const b=document.createElement('div');b.className='chat-bubble '+(m.sender==='user'?'':'mine');if(m.sender==='admin'){const n=document.createElement('div');n.innerHTML=adminIdentityHTML();b.append(n)}
-        const t=document.createElement('div');t.textContent=m.text||'';b.append(t);const meta=document.createElement('div');meta.className='chat-meta';meta.textContent=new Date(m.createdAt||Date.now()).toLocaleString();b.append(meta);c.append(b);
-    });c.scrollTop=c.scrollHeight;
+ 
+function taskCard(t,isVipTask){
+    const card=document.createElement('div');
+    card.className='card'+(isVipTask?' vip-task':'');
+    card.innerHTML=`<div class="card-info"><div class="card-icon" ${isVipTask?'style="color:#f72585"':''}><i class="fa-solid ${isVipTask?'fa-gem':'fa-globe'}"></i></div><div class="card-text"><h4>${esc(t.title)}${isVipTask?'<span class="vip-tag">VIP</span>':''}</h4><p>+${esc(t.reward)} GTF</p></div></div><button class="btn-action" ${isVipTask?'style="background:linear-gradient(135deg,#ff007f,#7928ca);color:#fff"':''}>Start</button>`;
+    card.querySelector('button').onclick=()=>claimCustomTask(t);
+    return card;
 }
-
-async function sendAdminThreadReply(){
-    const input=document.getElementById('admin-thread-input'),text=input.value.trim();if(!text||!currentSupportId)return;
-    try{await replySupport(currentSupportId,null,text);input.value='';await openAdminThread(currentSupportId);await refreshAdminData();}catch(e){console.error(e);alert('Reply failed.');}
+ 
+function renderTasks(){
+    const c=document.getElementById('custom-tasks-container');
+    const vc=document.getElementById('vip-tasks-container');
+    const vw=document.getElementById('vip-tasks-wrap');
+    if(!c) return;
+    c.innerHTML='';if(vc)vc.innerHTML='';
+    // claimed tasks never show again; VIP tasks only for VIP members
+    const open=customTasks.filter(t=>!claimedTasks.includes(t.id));
+    const normal=open.filter(t=>!t.vipOnly);
+    const vipTasks=userData.isPremium?open.filter(t=>t.vipOnly):[];
+ 
+    if(vw) vw.style.display=vipTasks.length?'block':'none';
+    vipTasks.forEach(t=>vc.appendChild(taskCard(t,true)));
+ 
+    if(!normal.length){c.innerHTML='<div class="card"><div class="card-text"><h4>No tasks available</h4><p>Tasks will appear here once published.</p></div></div>';return}
+    normal.forEach(t=>c.appendChild(taskCard(t,false)));
 }
-
-function enterApp(){
+ 
+function claimCustomTask(t){
+    if(claimedTasks.includes(t.id)){alert('This task is already completed.');return}
+    if(t.vipOnly && !userData.isPremium){alert('এই টাস্কটি শুধুমাত্র VIP মেম্বারদের জন্য।');openPremiumModal();return}
+    window.open(t.url,'_blank');
+    claimedTasks.push(t.id);
+    safeStore('gtf_claimed_tasks',JSON.stringify(claimedTasks));
+    if(firebaseReady) db.ref('users/'+uid+'/claimedTasks/'+t.id).set(true).catch(()=>{});
+    userData.balance+=Number(t.reward)||0;
+    updateDisplay();saveUser(true);
+    renderTasks();
+    alert('Task completed! +'+t.reward+' GTF claimed.');
+}
+ 
+/* ================= REFERRAL RULES ================= */
+const rulesTexts={
+  bn:{
+    title:'রেফারেল নিয়মাবলি',
+    intro:'উপরের ইনভাইট লিংকটি বন্ধুদের মাঝে শেয়ার করুন এবং দ্বিগুণ ইনকাম করুন! লিংক শেয়ার করার পর আপনার বন্ধুকে নিচের শর্তগুলো জানিয়ে দিন:',
+    rules:[
+      'আপনার বন্ধুকে টানা ৭ দিন অনলাইনে (অ্যাক্টিভ) থাকতে হবে।',
+      'প্রতিদিন কমপক্ষে ১০ মিনিট অ্যাপের ভেতরে সময় দিতে হবে।',
+      'বন্ধুর GTF হোল্ডিং কমপক্ষে ২০০ GTF থাকতে হবে।'
+    ],
+    reward:'🎁 সব শর্ত পূরণ হলে আপনি পাবেন ১০০ GTF বোনাস!'
+  },
+  en:{
+    title:'Referral Rules',
+    intro:'Share the invite link above with your friends and earn double income! After sharing, tell your friend about the conditions below:',
+    rules:[
+      'Your friend must stay active online for 7 consecutive days.',
+      'Your friend must spend at least 10 minutes inside the app every day.',
+      'Your friend must hold a minimum of 200 GTF in their balance.'
+    ],
+    reward:'🎁 When all conditions are met, you will receive a 100 GTF bonus!'
+  }
+};
+function setRulesLang(lang){
+    const t=rulesTexts[lang];
+    document.getElementById('rules-btn-bn').classList.toggle('active',lang==='bn');
+    document.getElementById('rules-btn-en').classList.toggle('active',lang==='en');
+    document.getElementById('rules-title').textContent=t.title;
+    document.getElementById('rules-intro').textContent=t.intro;
+    document.getElementById('rules-list').innerHTML=t.rules.map(r=>`<div>${esc(r)}</div>`).join('');
+    document.getElementById('rules-reward').textContent=t.reward;
+}
+ 
+/* ================= LIVE SYNC (Firebase) ================= */
+function startLiveSync(){
+    if(!firebaseReady) return;
+    db.ref('.info/serverTimeOffset').on('value',s=>{serverOffset=Number(s.val())||0});
+ 
+    // user's own VIP status + claimed tasks (admin changes apply instantly)
+    db.ref('users/'+uid).on('value',s=>{
+        const v=s.val()||{};
+        if(typeof v.isPremium==='boolean' && v.isPremium!==userData.isPremium){
+            userData.isPremium=v.isPremium;
+            safeStore('gtf_is_premium',v.isPremium?'1':'0');
+            updateVipPerksUI();renderTasks();
+            if(document.getElementById('premiumModal').style.display==='flex') setVipLang(currentVipLang);
+        }
+        if(v.claimedTasks){
+            const ids=Object.keys(v.claimedTasks);
+            const merged=Array.from(new Set([...claimedTasks,...ids]));
+            if(merged.length!==claimedTasks.length){
+                claimedTasks=merged;
+                safeStore('gtf_claimed_tasks',JSON.stringify(claimedTasks));
+                renderTasks();
+            }
+        }
+    });
+ 
+    db.ref('tasks').on('value',s=>{
+        customTasks=Object.values(s.val()||{}).filter(Boolean);
+        safeStore('gtf_custom_tasks',JSON.stringify(customTasks));
+        renderTasks();renderAdminTasks();
+    });
+ 
+    db.ref('gamingGames').on('value',s=>{
+        const v=s.val();
+        if(v){gamingGames=Object.values(v).filter(Boolean);safeStore('gtf_gaming_games',JSON.stringify(gamingGames));renderGameLibrary();renderAdminGames();}
+    });
+ 
+    db.ref('settings').on('value',s=>{
+        const v=s.val();if(!v) return;
+        if(Number.isFinite(Number(v.rate))) adminSettings.rate=Number(v.rate);
+        if(Number.isFinite(Number(v.minWithdraw))) adminSettings.minWithdraw=Number(v.minWithdraw);
+        if(Number.isFinite(Number(v.withdrawFee))) adminSettings.withdrawFee=Number(v.withdrawFee);
+        if(typeof v.smartLink==='string'&&v.smartLink) adminSettings.smartLink=v.smartLink;
+        if(typeof v.allAds==='boolean') adminSettings.allAds=v.allAds;
+        recalcRate();updateDisplay();
+    });
+ 
+    db.ref('withdrawals/'+uid).on('value',s=>{
+        withdrawals=Object.values(s.val()||{}).filter(Boolean).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    });
+ 
+    startUserChatWatch();
+}
+ 
+function beginEntry(){
     document.getElementById('landing').style.display='none';
     document.getElementById('app').style.display='block';
     document.getElementById('bottom-nav').style.display='flex';
-    if(tg) tg.expand();
-    accrueMining();
-    referralLastTick=serverNow();
-    loadReferralStats();
     initTonConnect();
-    setTimeout(()=>{if(document.visibilityState==='visible') triggerMonetagAd();},1500);
+    accrueMining();
+    renderCheckin();
 }
-
-window.addEventListener('focus',()=>{accrueMining();if(firebaseReady)loadRemote()});
-document.addEventListener('visibilitychange',()=>{
-    if(document.visibilityState==='visible'){accrueMining();if(firebaseReady)db.ref('presence/'+uid).update({online:true,lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{})}
-    else if(firebaseReady){db.ref('presence/'+uid).update({online:false,lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{})}
-});
-
-setInterval(()=>{if(document.getElementById('app').style.display!=='none'){accrueMining();if(firebaseReady)db.ref('presence/'+uid).update({online:document.visibilityState==='visible',lastSeen:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{})}},1000);
-setInterval(()=>{const a=document.getElementById('adminModal');if(firebaseReady&&a&&a.style.display==='flex')refreshAdminData()},8000);
-setInterval(()=>{const b=document.querySelector('#checkin-container .checkin-card.active button:disabled');if(b){const last=readNum('gtf_checkin_time',0),left=86400000-(serverNow()-last);if(left<=0)renderCheckin();else b.textContent=formatTime(left)}},1000);
-setInterval(trackReferralActiveTime,1000);
-
-renderCheckin();
-renderTasks();
-updateWithdrawRules();
+ 
+function copyRef(){navigator.clipboard.writeText(document.getElementById('ref-link').textContent).then(()=>alert('Referral link copied.'));}
+function openHistory(){
+    document.getElementById('history-content').innerHTML=withdrawals.map(w=>`<div class="history-row"><div>${esc(w.amount)} GTF · ${esc(w.network)}</div><div class="status-${esc((w.status||'').toLowerCase())}">${esc(w.status)}</div></div>`).join('')||'No records yet.';
+    document.getElementById('historyModal').style.display='flex';
+}
+function closeHistory(){document.getElementById('historyModal').style.display='none';}
+ 
+setInterval(()=>{if(document.getElementById('app').style.display!=='none') accrueMining();},1000);
+setInterval(()=>{if(document.visibilityState==='visible' && document.getElementById('app').style.display!=='none') triggerMonetagAd();},15000);
+ 
+document.getElementById('user-name').textContent=userData.username;
+document.getElementById('prof-tg-id').textContent=userData.id;
+document.getElementById('ref-link').textContent='https://t.me/'+BOT_USERNAME+'?startapp=ref_'+(tgUser?.id||uid);
+setRulesLang('bn');
 updateDisplay();
-loadRemote();
-loadReferralStats();
-if(userData.walletAddress){
-    updateWalletUI(userData.walletAddress, true);
-}
+renderTasks();
+renderCheckin();
+startLiveSync();
 </script>
 </body>
 </html>
