@@ -204,6 +204,26 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}input,textarea,s
 .stat{background:#ffffff0a;padding:8px;border-radius:8px;text-align:center}.stat small{display:block;font-size:9px;color:#aaa}.stat strong{font-size:14px}
 .history-row{padding:10px;border-bottom:1px solid #ffffff12;font-size:10px;display:flex;justify-content:space-between;gap:8px}
 .status-pending{color:#ffd76a}.status-approved,.status-paid{color:var(--green)}.status-rejected{color:#ff7373}
+@keyframes modalPop{0%{opacity:0;transform:translateY(14px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.modal-content{box-shadow:0 22px 60px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.08);animation:modalPop .24s cubic-bezier(.22,1,.36,1)}
+.card{position:relative;backdrop-filter:blur(10px);transition:border-color .2s,transform .15s}
+.card:hover{border-color:#ffd76a44}
+.main-balance{letter-spacing:-.5px;text-shadow:0 4px 28px rgba(255,215,106,.22)}
+.tonkeeper-pill{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0088cc26,#00558018);border:1px solid #38bdf866;color:#7dd3fc;border-radius:11px;padding:9px 12px;font-size:11px;font-weight:800;margin:8px 0 4px}
+.promo-modal-box{background:radial-gradient(circle at 50% 0%,#2b200c 0%,#141722 52%,#0c0e15 100%);border:1.5px solid rgba(255,215,106,.45);border-radius:22px;padding:20px 18px}
+.promo-badge-icon{width:54px;height:54px;margin:0 auto 10px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#fff2a8,#d8920c);color:#231600;font-size:24px;box-shadow:0 10px 24px rgba(255,215,106,.32)}
+.promo-feedback{min-height:18px;font-size:11px;font-weight:700;margin:6px 0 10px;line-height:1.5}
+.promo-feedback.err{color:#ff7b8a}.promo-feedback.ok{color:var(--green)}.promo-feedback.info{color:#ffd76a}
+.promo-divider{display:flex;align-items:center;gap:10px;margin:14px 0 10px;font-size:9px;letter-spacing:1.4px;color:#8e93a6;font-weight:700}
+.promo-divider:before,.promo-divider:after{content:"";flex:1;height:1px;background:rgba(255,255,255,.12)}
+.promo-rules-box{background:rgba(255,215,106,.07);border:1px solid rgba(255,215,106,.28);border-radius:14px;padding:13px;font-size:11.5px;line-height:1.75;color:#f5ebd0;text-align:left;margin:10px 0 14px}
+.promo-step-pills{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0 12px}
+.promo-step-pill{padding:8px 4px;border-radius:10px;background:#ffffff0a;border:1px solid #ffffff1a;font-size:10px;font-weight:800;color:#8d92a6;transition:all .2s}
+.promo-step-pill.done{background:linear-gradient(135deg,#22c97a33,#12874f33);border-color:#51f0a3;color:#51f0a3;box-shadow:0 0 12px rgba(81,240,163,.22)}
+.promo-step-pill.active{border-color:#ffd76a;color:#ffd76a;background:#ffd76a18}
+.promo-timer-box{background:#090b11;border:1px dashed rgba(255,215,106,.38);border-radius:12px;padding:10px 12px;margin:8px 0 12px;font-size:11px;color:#d6dae6;line-height:1.55}
+.promo-voucher-card{background:linear-gradient(145deg,#241c09,#111822);border:1.5px dashed #ffd76a;border-radius:16px;padding:16px 14px;margin:12px 0;box-shadow:0 12px 30px rgba(255,215,106,.18)}
+.promo-code-display{font-family:monospace,sans-serif;font-size:22px;font-weight:900;letter-spacing:3px;color:#ffd76a;background:#08090d;border:1px solid rgba(255,215,106,.35);border-radius:12px;padding:12px;margin:10px 0;user-select:all}
 </style>
 </head>
 <body>
@@ -310,7 +330,8 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}input,textarea,s
 <div class="card"><div class="card-info"><div class="card-icon" style="color:#0088cc"><i class="fa-solid fa-link"></i></div><div class="card-text"><h4>TON Connect</h4><p id="prof-ton-address" style="color:var(--gold);word-break:break-all">Not Connected</p></div></div><button class="btn-action btn-3d-gold" id="prof-ton-btn" onclick="handleWalletAction()">Connect</button></div>
 <div class="card" onclick="openPremiumModal()" style="border-color:#b5179e;cursor:pointer"><div class="card-info"><div class="card-icon" style="color:#f72585"><i class="fa-solid fa-crown"></i></div><div class="card-text"><h4 style="color:#f72585">VIP Membership</h4><p id="prof-vip-status">Non-VIP Access · Tap to Unlock</p></div></div><button class="btn-action btn-3d-vip">VIEW</button></div>
 <h3 style="margin:16px 0 9px;font-size:12px;color:var(--gold)">CONTROLS</h3>
-<div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-money-bill-transfer"></i></div><div class="card-text"><h4>Withdraw Funds</h4><p>Payout in TON, Tonkeeper or BSC</p></div></div><button class="btn-action btn-3d-gold" onclick="openWithdrawModal()">Withdraw</button></div>
+<div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-money-bill-transfer"></i></div><div class="card-text"><h4>Withdraw Funds</h4><p>Payout via Tonkeeper (TON) only</p></div></div><button class="btn-action btn-3d-gold" onclick="openWithdrawModal()">Withdraw</button></div>
+<div class="card" onclick="openPromoModal()" style="cursor:pointer;border-color:#51f0a344"><div class="card-info"><div class="card-icon" style="color:#51f0a3"><i class="fa-solid fa-ticket"></i></div><div class="card-text"><h4 style="color:#ffd76a">PROMO CODE</h4><p>আপনার প্রোমো কোডটি দিন বা প্রোমো কোড নিন</p></div></div><button class="btn-action btn-3d-emerald" onclick="event.stopPropagation();openPromoModal()">PROMO CODE</button></div>
 <div class="card"><div class="card-info"><div class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div><div class="card-text"><h4>Transactions</h4><p>Check withdrawal status</p></div></div><button class="btn-action btn-3d-dark" onclick="openHistory()">History</button></div>
 <div class="card"><div class="card-info"><div class="card-icon" style="color:var(--green)"><i class="fa-solid fa-shield-halved"></i></div><div class="card-text"><h4>Secure App</h4><p>অ্যাপটি সম্পূর্ণ নিরাপদ। সতর্কভাবে কাজ করুন এবং আপনার ওয়ালেট এড্রেস কারও সাথে শেয়ার করবেন না। এখান থেকে যেকোনো সময় Withdraw করতে পারবেন।</p></div></div></div>
 </section>
@@ -343,15 +364,51 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}input,textarea,s
 </div>
 </div>
 <div id="withdrawModal" class="modal">
-<div class="modal-content">
-<h3 style="margin-bottom:9px">Withdraw GTF</h3>
+<div class="modal-content no-global-ad">
+<h3 style="margin-bottom:6px">Withdraw GTF</h3>
 <p id="withdraw-rules" style="font-size:10px;color:#aaa">Minimum withdrawal: 170 GTF · Fee: 70 GTF</p>
-<button type="button" id="btn-use-ton-wallet" class="btn-action btn-3d-dark" style="width:100%;margin:8px 0;border-color:#1877f2;color:#9bc6ff;display:none" onclick="fillConnectedWallet()"><i class="fa-solid fa-circle-check"></i> Use Connected TON Wallet</button>
-<select id="withdrawNetwork" class="field"><option value="TON Wallet">TON Wallet</option><option value="Tonkeeper (TON)">Tonkeeper (TON)</option><option value="Binance BEP20 (BSC)">Binance BEP20 (BSC)</option><option value="Binance TRC20">Binance TRC20</option></select>
-<input type="text" id="tonWallet" class="field" placeholder="Enter recipient wallet address" autocomplete="off">
+<div class="tonkeeper-pill"><i class="fa-solid fa-gem"></i> Tonkeeper (TON) Network Only</div>
+<button type="button" id="btn-use-ton-wallet" class="btn-action btn-3d-dark" style="width:100%;margin:8px 0;border-color:#1877f2;color:#9bc6ff;display:none" onclick="fillConnectedWallet()"><i class="fa-solid fa-circle-check"></i> Use Connected Tonkeeper Wallet</button>
+<select id="withdrawNetwork" class="field"><option value="Tonkeeper (TON)">Tonkeeper (TON)</option></select>
+<input type="text" id="tonWallet" class="field" placeholder="Enter Tonkeeper (TON) wallet address" autocomplete="off">
 <input type="number" id="withdrawAmount" class="field" placeholder="Enter GTF Amount" min="0">
 <button class="btn-action btn-3d-gold" style="width:100%;margin-top:6px" onclick="processWithdraw()">Submit Request</button>
-<button class="btn-action btn-3d-dark" style="width:100%;margin-top:9px" onclick="closeWithdrawModal()">Cancel</button>
+<button type="button" class="btn-action btn-3d-emerald" style="width:100%;margin-top:8px" onclick="closeWithdrawModal();openPromoModal()"><i class="fa-solid fa-ticket"></i> PROMO CODE</button>
+<button class="btn-action btn-3d-dark" style="width:100%;margin-top:8px" onclick="closeWithdrawModal()">Cancel</button>
+</div>
+</div>
+<div id="promoModal" class="modal">
+<div class="modal-content promo-modal-box no-global-ad">
+<div class="promo-badge-icon"><i class="fa-solid fa-ticket"></i></div>
+<h3 style="font-size:18px;font-weight:900;color:#ffd76a;letter-spacing:.6px">PROMO CODE</h3>
+<div id="promo-view-claim">
+<p style="font-size:12px;color:#e8e3d2;margin-top:6px;font-weight:600">আপনার প্রোমো কোডটি দিন</p>
+<input type="text" id="promo-code-input" class="field" placeholder="এখানে প্রোমো কোড পেস্ট করুন..." autocomplete="off" style="text-align:center;font-weight:800;letter-spacing:1.5px;margin-top:10px">
+<div id="promo-claim-msg" class="promo-feedback"></div>
+<button type="button" class="btn-action btn-3d-gold" style="width:100%;padding:12px;font-size:13px" onclick="claimPromoCode()"><i class="fa-solid fa-gift"></i> ক্লেম করুন (CLAIM)</button>
+<div class="promo-divider">প্রোমো কোড না থাকলে</div>
+<button type="button" id="btn-get-promo-code" class="btn-action btn-3d-emerald" style="width:100%;padding:12px;font-size:12px" onclick="startGetPromoFlow()"><i class="fa-solid fa-bolt"></i> PROMO CODE</button>
+<p style="font-size:9.5px;color:#9a9daa;margin-top:6px">ফ্রি প্রোমো কোড নিতে উপরের PROMO CODE বাটনে ক্লিক করুন</p>
+<button type="button" class="btn-action btn-3d-dark" style="width:100%;margin-top:12px" onclick="closePromoModal(true)">CLOSE</button>
+</div>
+<div id="promo-view-rules" style="display:none">
+<div class="promo-rules-box">
+<b style="color:#ffd76a;display:block;margin-bottom:6px"><i class="fa-solid fa-circle-info"></i> জরুরি নির্দেশনা:</b>
+অবশ্যই প্রোমো কোডটি নিতে হলে আপনাকে ৫টি অ্যাড সম্পূর্ণ দেখতে হবে। এবং যেখানেই নিয়ে যাক না কেন একটি অ্যাকাউন্ট খুলতে হবে। তারপর ব্যাক এসে প্রোমো কোডটা নিতে হবে। প্রোমো কোডটা নেওয়ার সাথে সাথে আপনি সাথে সাথে উইথড্র দিতে পারবেন।
+</div>
+<button type="button" id="btn-promo-ack" class="btn-action btn-3d-gold" style="width:100%;padding:12px;font-size:13px" onclick="acknowledgePromoRules()">ওকে আমি জানি</button>
+<button type="button" class="btn-action btn-3d-dark" style="width:100%;margin-top:9px" onclick="showPromoSubView('claim')">ফিরে যান</button>
+</div>
+<div id="promo-view-ads" style="display:none">
+<p style="font-size:12px;font-weight:800;color:#51f0a3;margin-top:4px">প্রোমো কোড নিন (<span id="promo-ads-progress">0/5</span>)</p>
+<div class="promo-step-pills" id="promo-step-pills"></div>
+<div class="promo-timer-box" id="promo-ad-status">প্রতিটি অ্যাডে ঢুকে কমপক্ষে <b>১০ সেকেন্ড</b> অপেক্ষা করে বের হবেন। ১০ সেকেন্ডের আগে ফিরে আসলে বেনিফিট হবে না!</div>
+<button type="button" id="btn-watch-promo-ad" class="btn-action btn-3d-gold" style="width:100%;padding:12px;font-size:12px" onclick="watchNextPromoAd()">প্রোমো কোড নিন (অ্যাড 1/5)</button>
+<button type="button" class="btn-action btn-3d-dark" style="width:100%;margin-top:9px" onclick="cancelPromoAdWatch()">বাতিল করুন</button>
+</div>
+<div id="promo-view-reveal" style="display:none">
+<div id="promo-voucher-slot"></div>
+</div>
 </div>
 </div>
 <div id="historyModal" class="modal"><div class="modal-content" style="text-align:left"><h3 id="history-title" style="color:var(--gold);margin-bottom:10px">History</h3><div id="history-content"></div><button class="btn-action btn-3d-dark" style="width:100%;margin-top:12px" onclick="closeHistory()">Close</button></div></div>
@@ -387,6 +444,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}input,textarea,s
 <div class="admin-card"><div class="admin-card-title"><i class="fa-solid fa-money-bill-transfer"></i> WITHDRAWAL REQUESTS</div><div id="admin-withdraw-list">Loading requests...</div></div>
 <div class="admin-card"><div class="admin-card-title"><i class="fa-solid fa-users-gear"></i> USER & VIP MANAGEMENT</div><input class="field" id="admin-user-search" type="text" placeholder="Search by Telegram ID or Username..." oninput="renderAdminUsers()"><div id="admin-users-list" style="max-height:260px;overflow-y:auto"></div></div>
 <div class="admin-card"><div class="admin-card-title"><i class="fa-solid fa-sliders"></i> MINING & WITHDRAWAL SETTINGS</div><label style="font-size:10px;color:#aaa">Mining rate per second</label><input class="field" id="admin-rate" type="number" min="0" step="0.0001"><label style="font-size:10px;color:#aaa">Minimum withdrawal (GTF)</label><input class="field" id="admin-min-withdraw" type="number" min="0" step="1"><label style="font-size:10px;color:#aaa">Withdrawal fee (GTF)</label><input class="field" id="admin-withdraw-fee" type="number" min="0" step="1"><button class="btn-action btn-3d-gold" style="width:100%" onclick="saveAdminSettings()">Save All Settings</button></div>
+<div class="admin-card"><div class="admin-card-title"><i class="fa-solid fa-ticket"></i> PROMO CODE MANAGER</div><input class="field" id="admin-promo-code" placeholder="Promo Code লিখুন (e.g. GTF500)"><input class="field" id="admin-promo-amount" type="number" min="0.01" step="0.01" placeholder="Reward in GTF (যত লিখবেন তত পাবে)"><button class="btn-action btn-3d-gold" style="width:100%" onclick="saveAdminPromo()">Save / Publish Promo Code</button><div id="admin-promo-active" style="margin-top:10px"></div></div>
 <div class="admin-card"><div class="admin-card-title"><i class="fa-solid fa-list-check"></i> TASK PUBLISHER</div><input class="field" id="admin-task-title" placeholder="Task Title"><input class="field" id="admin-task-url" type="url" placeholder="https:// task link"><input class="field" id="admin-task-reward" type="number" min="0" step="0.01" placeholder="Reward in GTF (যত লিখবেন তত পাবে)"><label style="display:flex;align-items:center;gap:8px;font-size:11px;color:#e9d9ff;margin:4px 0 10px;background:#b5179e1c;border:1px solid #b5179e66;border-radius:10px;padding:9px"><input type="checkbox" id="admin-task-vip" style="width:16px;height:16px"><span><i class="fa-solid fa-crown" style="color:#f72585"></i> শুধু VIP মেম্বারদের জন্য (VIP Only Task)</span></label><button class="btn-action btn-3d-gold" style="width:100%" onclick="addAdminTask()">Publish Task</button><div id="admin-task-list" style="margin-top:10px"></div></div>
 <div class="admin-card"><div class="admin-card-title"><i class="fa-solid fa-gamepad"></i> GAMING LIBRARY MANAGER</div><input class="field" id="admin-game-title" placeholder="Game Title"><input class="field" id="admin-game-desc" placeholder="Game Description"><input class="field" id="admin-game-logo" type="url" placeholder="Game Logo URL (https://...)"><input class="field" id="admin-game-url" type="url" placeholder="Game HTTPS Link"><button class="btn-action btn-3d-gold" style="width:100%" onclick="saveAdminGame()">Save / Add Game</button><div id="admin-game-list" style="margin-top:10px"></div></div>
 <button class="btn-action btn-3d-dark" style="width:100%;margin-top:10px" onclick="closeAdmin()">Close Admin Panel</button>
@@ -534,7 +592,7 @@ function updateWalletUI(address,isConnected){
   else{if(profAddr)profAddr.textContent='Not Connected';if(profBtn){profBtn.textContent='Connect';profBtn.className='btn-action btn-3d-gold';}if(withdrawBtn)withdrawBtn.style.display='none';}
 }
 async function handleWalletAction(){if(!tonConnectUI){alert('TON Connect UI is loading.');return;}if(tonConnectUI.connected){if(confirm('Do you want to disconnect your TON wallet?'))await tonConnectUI.disconnect();}else await tonConnectUI.openModal();}
-function fillConnectedWallet(){if(!userData.walletAddress){alert('Please connect your TON wallet first.');return;}$id('tonWallet').value=userData.walletAddress;$id('withdrawNetwork').value='TON Wallet';}
+function fillConnectedWallet(){if(!userData.walletAddress){alert('Please connect your Tonkeeper / TON wallet first.');return;}$id('tonWallet').value=userData.walletAddress;$id('withdrawNetwork').value='Tonkeeper (TON)';}
 function openGameLibrary(){switchNav('games',null);renderGameLibrary()}
 function closeGameLibrary(){switchNav('mine',document.querySelector('.nav-item[data-tab="mine"]'))}
 function renderGameLibrary(){
@@ -662,8 +720,8 @@ function upgradeSpeed(cost,add){
 function openWithdrawModal(){$id('withdrawModal').style.display='flex';$id('btn-use-ton-wallet').style.display=userData.walletAddress?'block':'none';}
 function closeWithdrawModal(){$id('withdrawModal').style.display='none'}
 async function processWithdraw(){
-  const wallet=$id('tonWallet').value.trim(),network=$id('withdrawNetwork').value,amount=Number($id('withdrawAmount').value);
-  if(!wallet){alert('Please enter a wallet address.');return;}
+  const wallet=$id('tonWallet').value.trim(),network='Tonkeeper (TON)',amount=Number($id('withdrawAmount').value);
+  if(!wallet){alert('Please enter your Tonkeeper (TON) wallet address.');return;}
   if(!Number.isFinite(amount)||amount<adminSettings.minWithdraw){alert('Minimum withdrawal is '+adminSettings.minWithdraw+' GTF.');return;}
   accrueMining();const totalDeduct=amount+adminSettings.withdrawFee;
   if(userData.balance<totalDeduct){alert('Insufficient GTF balance (Total required: '+totalDeduct+' GTF with fee).');return;}
@@ -781,7 +839,7 @@ function profileTap(){profileTapCount++;clearTimeout(profileTapTimer);profileTap
 function openAdmin(){
   $id('admin-rate').value=adminSettings.rate;$id('admin-min-withdraw').value=adminSettings.minWithdraw;$id('admin-withdraw-fee').value=adminSettings.withdrawFee;$id('admin-monetag-zone').value=adminSettings.monetagZoneId||'';$id('admin-smart-link').value=adminSettings.smartLink;
   $id('admin-all-ads-toggle').checked=(adminSettings.allAds!==false);$id('admin-adsterra-toggle').checked=(adminSettings.adsterraEnabled!==false);$id('admin-monetag-toggle').checked=(adminSettings.monetagEnabled===true);
-  renderAdminTasks();renderAdminWithdrawals();renderAdminUsers();renderAdminGames();
+  renderAdminTasks();renderAdminWithdrawals();renderAdminUsers();renderAdminGames();renderAdminPromo();
   $id('adminModal').style.display='flex';refreshAdVisibility();
   if(firebaseReady){refreshAdminData();startAdminChatListener();}
 }
@@ -863,32 +921,199 @@ function setRulesLang(lang){
   const t=rulesTexts[lang];$id('rules-btn-bn').classList.toggle('active',lang==='bn');$id('rules-btn-en').classList.toggle('active',lang==='en');
   $id('rules-title').textContent=t.title;$id('rules-intro').textContent=t.intro;$id('rules-list').innerHTML=t.rules.map(r=>`<div>${esc(r)}</div>`).join('');$id('rules-reward').textContent=t.reward;
 }
+let promoConfig=null;try{promoConfig=JSON.parse(localStorage.getItem('gtf_promo_config')||'null');}catch(e){promoConfig=null;}
+let claimedPromos=[];try{claimedPromos=JSON.parse(localStorage.getItem('gtf_claimed_promos')||'[]');if(!Array.isArray(claimedPromos))claimedPromos=[];}catch(e){claimedPromos=[];}
+let takenPromos=[];try{takenPromos=JSON.parse(localStorage.getItem('gtf_taken_promos')||'[]');if(!Array.isArray(takenPromos))takenPromos=[];}catch(e){takenPromos=[];}
+let promoAdsWatched=0,promoAdStartedAt=0,promoAdPending=false,promoLeftPage=false,promoAdTimerId=null,promoRevealedActive=false;
+function copyTextSafe(text){
+  const fb=()=>{try{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}catch(e){}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).catch(fb);}else{fb();}
+}
+function setPromoFeedback(msg,type){const el=$id('promo-claim-msg');if(!el)return;el.className='promo-feedback '+(type||'');el.textContent=msg||'';}
+function showPromoSubView(view){
+  ['claim','rules','ads','reveal'].forEach(v=>{const el=$id('promo-view-'+v);if(el)el.style.display=v===view?'block':'none';});
+  if(view!=='reveal'){const slot=$id('promo-voucher-slot');if(slot)slot.innerHTML='';}
+}
+function openPromoModal(fromEntry){
+  clearPromoAdTimer();promoAdPending=false;promoAdsWatched=0;promoRevealedActive=false;
+  setPromoFeedback('','');showPromoSubView('claim');
+  $id('promoModal').style.display='flex';
+  if(!fromEntry){setTimeout(()=>{try{$id('promo-code-input')?.focus();}catch(e){}},80);}
+}
+function closePromoModal(markDismissed){
+  clearPromoAdTimer();promoAdPending=false;
+  if(markDismissed)safeStore('gtf_promo_prompt_dismissed','1');
+  $id('promoModal').style.display='none';
+}
+function clearPromoAdTimer(){if(promoAdTimerId){clearInterval(promoAdTimerId);promoAdTimerId=null;}}
+function renderPromoStepPills(){
+  const host=$id('promo-step-pills'),prog=$id('promo-ads-progress'),btn=$id('btn-watch-promo-ad');
+  if(prog)prog.textContent=promoAdsWatched+'/5';
+  if(host){
+    host.innerHTML='';
+    for(let i=1;i<=5;i++){
+      const pill=document.createElement('div');
+      pill.className='promo-step-pill'+(i<=promoAdsWatched?' done':(i===promoAdsWatched+1?' active':''));
+      pill.textContent=i<=promoAdsWatched?'✓ '+i:'AD '+i;
+      host.appendChild(pill);
+    }
+  }
+  if(btn&&!promoAdPending){btn.disabled=false;btn.textContent='প্রোমো কোড নিন (অ্যাড '+Math.min(5,promoAdsWatched+1)+'/5)';}
+}
+function startGetPromoFlow(){
+  if(!promoConfig||!promoConfig.code||!(Number(promoConfig.amount)>0)){
+    setPromoFeedback('⚠️ এই মুহূর্তে কোনো সক্রিয় প্রোমো কোড নেই। অনুগ্রহ করে পরে চেষ্টা করুন।','err');
+    return;
+  }
+  const norm=String(promoConfig.code).trim().toUpperCase();
+  if(takenPromos.includes(promoConfig.id)||claimedPromos.includes(promoConfig.id)||claimedPromos.includes(norm)){
+    setPromoFeedback('⚠️ আপনি ইতিমধ্যে বর্তমান প্রোমো কোডটি সংগ্রহ/ব্যবহার করেছেন। এটি বারবার নেওয়া যাবে না।','err');
+    return;
+  }
+  lastSmartLinkAt=Date.now();
+  openExternalAdLink(adminSettings.smartLink||ADSTERRA_SMART_LINK_DEFAULT);
+  showPromoSubView('rules');
+}
+function acknowledgePromoRules(){
+  lastSmartLinkAt=Date.now();
+  openExternalAdLink(adminSettings.smartLink||ADSTERRA_SMART_LINK_DEFAULT);
+  promoAdsWatched=0;promoAdPending=false;clearPromoAdTimer();
+  showPromoSubView('ads');
+  const st=$id('promo-ad-status');
+  if(st)st.innerHTML='প্রতিটি অ্যাডে ঢুকে কমপক্ষে <b>১০ সেকেন্ড</b> অপেক্ষা করে বের হবেন। ১০ সেকেন্ডের আগে ফিরে আসলে বেনিফিট হবে না!';
+  renderPromoStepPills();
+}
+function watchNextPromoAd(){
+  if(promoAdPending)return;
+  if(!promoConfig||!promoConfig.code){showPromoSubView('claim');setPromoFeedback('প্রোমো কোডটি আর সক্রিয় নেই।','err');return;}
+  lastSmartLinkAt=Date.now();
+  openExternalAdLink(adminSettings.smartLink||ADSTERRA_SMART_LINK_DEFAULT);
+  promoAdStartedAt=Date.now();promoAdPending=true;promoLeftPage=false;
+  const btn=$id('btn-watch-promo-ad'),st=$id('promo-ad-status');
+  if(btn)btn.disabled=true;
+  clearPromoAdTimer();
+  promoAdTimerId=setInterval(()=>{
+    if(!promoAdPending){clearPromoAdTimer();return;}
+    const elapsed=Date.now()-promoAdStartedAt,rem=Math.max(0,Math.ceil((10000-elapsed)/1000));
+    if(rem>0){
+      if(btn)btn.textContent='⏳ অ্যাডে অপেক্ষা করুন ('+rem+'s)...';
+      if(st)st.innerHTML='অ্যাড চলছে... অনুগ্রহ করে আরও <b style="color:#ffd76a">'+rem+' সেকেন্ড</b> অপেক্ষা করুন।';
+    }else if(document.visibilityState==='visible'){
+      completeCurrentPromoAd();
+    }
+  },250);
+}
+function handlePromoReturnCheck(){
+  if(!promoAdPending)return;
+  const elapsed=Date.now()-promoAdStartedAt;
+  if(promoLeftPage&&elapsed<10000){
+    promoAdPending=false;promoLeftPage=false;clearPromoAdTimer();
+    const st=$id('promo-ad-status');
+    if(st)st.innerHTML='<span style="color:#ff7b8a;font-weight:800">❌ ১০ সেকেন্ডের আগে বের হয়ে আসার কারণে এই অ্যাডটি গণনা হয়নি! অনুগ্রহ করে আবার অ্যাডটি দেখুন এবং কমপক্ষে ১০ সেকেন্ড অপেক্ষা করুন।</span>';
+    renderPromoStepPills();
+  }else if(elapsed>=10000){
+    completeCurrentPromoAd();
+  }
+}
+document.addEventListener('visibilitychange',()=>{
+  if(!promoAdPending)return;
+  if(document.visibilityState==='hidden'){promoLeftPage=true;}
+  else if(document.visibilityState==='visible'){handlePromoReturnCheck();}
+});
+window.addEventListener('blur',()=>{if(promoAdPending)promoLeftPage=true;});
+window.addEventListener('focus',()=>{if(promoAdPending)handlePromoReturnCheck();});
+function completeCurrentPromoAd(){
+  if(!promoAdPending)return;
+  if(Date.now()-promoAdStartedAt<10000)return;
+  promoAdPending=false;promoLeftPage=false;clearPromoAdTimer();
+  promoAdsWatched=Math.min(5,promoAdsWatched+1);
+  renderPromoStepPills();
+  const st=$id('promo-ad-status');
+  if(promoAdsWatched>=5){
+    revealPromoCodeVoucher();
+  }else if(st){
+    st.innerHTML='<span style="color:#51f0a3;font-weight:800">✅ অ্যাড '+promoAdsWatched+'/5 সফলভাবে সম্পন্ন হয়েছে! পরবর্তী অ্যাডে ক্লিক করুন।</span>';
+  }
+}
+function cancelPromoAdWatch(){
+  clearPromoAdTimer();promoAdPending=false;promoLeftPage=false;
+  showPromoSubView('claim');
+}
+function revealPromoCodeVoucher(){
+  if(!promoConfig||!promoConfig.code){showPromoSubView('claim');setPromoFeedback('প্রোমো কোড পাওয়া যায়নি।','err');return;}
+  promoRevealedActive=true;
+  showPromoSubView('reveal');
+  const slot=$id('promo-voucher-slot');
+  if(slot){
+    slot.innerHTML=`<div class="promo-voucher-card"><div style="font-size:11px;font-weight:800;color:#51f0a3;letter-spacing:1px">🎉 আপনার প্রোমো কোড প্রস্তুত!</div><div style="font-size:11px;color:#d6dae6;margin-top:4px">বোনাস: <b style="color:#ffd76a">+${esc(promoConfig.amount)} GTF</b></div><div class="promo-code-display">${esc(promoConfig.code)}</div><p style="font-size:10px;color:#ffb4c0;margin-bottom:10px">⚠️ COPY বাটনে ক্লিক করার সাথে সাথে এই কোডটি স্ক্রিন থেকে মুছে যাবে। একবারই ব্যবহার করা যাবে।</p><button type="button" id="btn-copy-revealed-promo" class="btn-action btn-3d-gold" style="width:100%;padding:12px;font-size:13px" onclick="copyRevealedPromo()"><i class="fa-solid fa-copy"></i> COPY</button></div>`;
+  }
+}
+function copyRevealedPromo(){
+  if(!promoRevealedActive||!promoConfig||!promoConfig.code)return;
+  const codeText=String(promoConfig.code).trim();
+  copyTextSafe(codeText);
+  if(promoConfig.id&&!takenPromos.includes(promoConfig.id)){
+    takenPromos.push(promoConfig.id);
+    safeStore('gtf_taken_promos',JSON.stringify(takenPromos));
+    if(firebaseReady)db.ref('users/'+uid+'/takenPromos/'+promoConfig.id).set(true).catch(()=>{});
+  }
+  promoRevealedActive=false;
+  const slot=$id('promo-voucher-slot');if(slot)slot.innerHTML='';
+  showPromoSubView('claim');
+  const inp=$id('promo-code-input');if(inp)inp.value=codeText;
+  setPromoFeedback('✅ কোড কপি হয়েছে এবং স্ক্রিন থেকে মুছে ফেলা হয়েছে! এবার ক্লেম বাটনে ক্লিক করুন।','ok');
+}
+function claimPromoCode(){
+  const inp=$id('promo-code-input'),entered=(inp?.value||'').trim();
+  if(!entered){setPromoFeedback('অনুগ্রহ করে আপনার প্রোমো কোডটি লিখুন।','err');return;}
+  if(!promoConfig||!promoConfig.code||!(Number(promoConfig.amount)>0)){
+    setPromoFeedback('❌ বর্তমানে কোনো সক্রিয় প্রোমো কোড নেই।','err');return;
+  }
+  const normEntered=entered.toUpperCase(),normTarget=String(promoConfig.code).trim().toUpperCase();
+  if(normEntered!==normTarget){
+    setPromoFeedback('❌ প্রোমো কোডটি সঠিক নয়। অনুগ্রহ করে আবার যাচাই করুন।','err');return;
+  }
+  if(claimedPromos.includes(promoConfig.id)||claimedPromos.includes(normTarget)){
+    setPromoFeedback('⚠️ আপনি এই প্রোমো কোডটি ইতিমধ্যে ক্লেম করেছেন।','err');return;
+  }
+  const reward=Number(promoConfig.amount)||0;
+  claimedPromos.push(promoConfig.id,normTarget);
+  safeStore('gtf_claimed_promos',JSON.stringify(claimedPromos));
+  safeStore('gtf_promo_prompt_dismissed','1');
+  userData.balance+=reward;
+  updateDisplay();saveUser(true);
+  if(firebaseReady){
+    const u={};
+    if(promoConfig.id)u['users/'+uid+'/claimedPromos/'+promoConfig.id]=true;
+    u['users/'+uid+'/claimedPromos/'+normTarget]=true;
+    db.ref().update(u).catch(()=>{});
+  }
+  if(inp)inp.value='';
+  setPromoFeedback('🎉 অভিনন্দন! +'+reward+' GTF আপনার ব্যালেন্সে যোগ হয়েছে! এখনই উইথড্র দিতে পারবেন।','ok');
+}
+function saveAdminPromo(){
+  const code=($id('admin-promo-code')?.value||'').trim(),amount=Number($id('admin-promo-amount')?.value);
+  if(!code){alert('প্রোমো কোড লিখুন।');return;}
+  if(!Number.isFinite(amount)||amount<=0){alert('সঠিক GTF পরিমাণ লিখুন।');return;}
+  promoConfig={id:'p'+Date.now().toString(36),code,amount,updatedAt:Date.now()};
+  safeStore('gtf_promo_config',JSON.stringify(promoConfig));
+  if(firebaseReady)db.ref('settings/promoConfig').set(promoConfig).catch(console.warn);
+  $id('admin-promo-code').value='';$id('admin-promo-amount').value='';renderAdminPromo();
+  alert('Promo Code published: '+code+' (+'+amount+' GTF)');
+}
+function deleteAdminPromo(){promoConfig=null;safeStore('gtf_promo_config','null');if(firebaseReady)db.ref('settings/promoConfig').remove().catch(console.warn);renderAdminPromo();}
+function renderAdminPromo(){
+  const box=$id('admin-promo-active');if(!box)return;
+  if(!promoConfig||!promoConfig.code){box.innerHTML='<p style="font-size:10px;color:#8e93a6">কোনো সক্রিয় প্রোমো কোড সেট করা নেই।</p>';return;}
+  box.innerHTML=`<div class="card" style="margin:0"><div class="card-text"><h4>🎟️ ${esc(promoConfig.code)}</h4><p>Reward: +${esc(promoConfig.amount)} GTF</p></div><button class="btn-action btn-3d-red" onclick="deleteAdminPromo()">Delete</button></div>`;
+}
 function startLiveSync(){
   if(!firebaseReady)return;
   db.ref('.info/serverTimeOffset').on('value',s=>{serverOffset=Number(s.val())||0});
-  db.ref('users/'+uid).on('value',s=>{
-    const v=s.val()||{};
-    if(typeof v.isPremium==='boolean'&&v.isPremium!==userData.isPremium){
-      userData.isPremium=v.isPremium;safeStore('gtf_is_premium',v.isPremium?'1':'0');updateVipPerksUI();renderTasks();
-      if($id('premiumModal').style.display==='flex')setVipLang(currentVipLang);
-    }
-    if(v.claimedTasks){const merged=Array.from(new Set([...claimedTasks,...Object.keys(v.claimedTasks)]));if(merged.length!==claimedTasks.length){claimedTasks=merged;safeStore('gtf_claimed_tasks',JSON.stringify(claimedTasks));renderTasks();}}
-  });
+  db.ref('users/'+uid).on('value',s=>{const v=s.val()||{};if(typeof v.isPremium==='boolean'&&v.isPremium!==userData.isPremium){userData.isPremium=v.isPremium;safeStore('gtf_is_premium',v.isPremium?'1':'0');updateVipPerksUI();renderTasks();refreshAdVisibility();if($id('premiumModal').style.display==='flex')setVipLang(currentVipLang);}if(v.claimedTasks){const m=Array.from(new Set([...claimedTasks,...Object.keys(v.claimedTasks)]));if(m.length!==claimedTasks.length){claimedTasks=m;safeStore('gtf_claimed_tasks',JSON.stringify(claimedTasks));renderTasks();}}if(v.claimedPromos){claimedPromos=Array.from(new Set([...claimedPromos,...Object.keys(v.claimedPromos)]));safeStore('gtf_claimed_promos',JSON.stringify(claimedPromos));}if(v.takenPromos){takenPromos=Array.from(new Set([...takenPromos,...Object.keys(v.takenPromos)]));safeStore('gtf_taken_promos',JSON.stringify(takenPromos));}});
   db.ref('tasks').on('value',s=>{customTasks=Object.values(s.val()||{}).filter(Boolean);safeStore('gtf_custom_tasks',JSON.stringify(customTasks));renderTasks();renderAdminTasks();});
   db.ref('gamingGames').on('value',s=>{const v=s.val();if(v){gamingGames=Object.values(v).filter(Boolean);safeStore('gtf_gaming_games',JSON.stringify(gamingGames));renderGameLibrary();renderAdminGames();}});
-  db.ref('settings').on('value',s=>{
-    const v=s.val();if(!v)return;
-    if(Number.isFinite(Number(v.rate)))adminSettings.rate=Number(v.rate);
-    if(Number.isFinite(Number(v.minWithdraw)))adminSettings.minWithdraw=Number(v.minWithdraw);
-    if(Number.isFinite(Number(v.withdrawFee)))adminSettings.withdrawFee=Number(v.withdrawFee);
-    if(typeof v.adsterraSmartLink==='string'&&v.adsterraSmartLink){adminSettings.smartLink=v.adsterraSmartLink;preconnectUrl(v.adsterraSmartLink);}
-    else if(typeof v.smartLink==='string'&&v.smartLink&&!v.smartLink.includes('uplcm.com')){adminSettings.smartLink=v.smartLink;preconnectUrl(v.smartLink);}
-    if(typeof v.monetagZoneId==='string'){adminSettings.monetagZoneId=v.monetagZoneId;if(adminSettings.monetagEnabled)getActiveZoneIds().forEach(ensureZoneSdk);}
-    if(typeof v.allAds==='boolean')adminSettings.allAds=v.allAds;
-    if(typeof v.adsterraEnabled==='boolean')adminSettings.adsterraEnabled=v.adsterraEnabled;
-    if(typeof v.monetagEnabled==='boolean'){adminSettings.monetagEnabled=v.monetagEnabled;if(v.monetagEnabled)getActiveZoneIds().forEach(ensureZoneSdk);}
-    recalcRate();updateDisplay();if(canShowAdsterraAds()&&$id('app')?.style.display!=='none')initAdsterraAds();
-  });
+  db.ref('settings').on('value',s=>{const v=s.val();if(!v)return;if(Number.isFinite(Number(v.rate)))adminSettings.rate=Number(v.rate);if(Number.isFinite(Number(v.minWithdraw)))adminSettings.minWithdraw=Number(v.minWithdraw);if(Number.isFinite(Number(v.withdrawFee)))adminSettings.withdrawFee=Number(v.withdrawFee);if(typeof v.adsterraSmartLink==='string'&&v.adsterraSmartLink){adminSettings.smartLink=v.adsterraSmartLink;preconnectUrl(v.adsterraSmartLink);}else if(typeof v.smartLink==='string'&&v.smartLink&&!v.smartLink.includes('uplcm.com')){adminSettings.smartLink=v.smartLink;preconnectUrl(v.smartLink);}if(typeof v.monetagZoneId==='string'){adminSettings.monetagZoneId=v.monetagZoneId;if(adminSettings.monetagEnabled)getActiveZoneIds().forEach(ensureZoneSdk);}if(typeof v.allAds==='boolean')adminSettings.allAds=v.allAds;if(typeof v.adsterraEnabled==='boolean')adminSettings.adsterraEnabled=v.adsterraEnabled;if(typeof v.monetagEnabled==='boolean'){adminSettings.monetagEnabled=v.monetagEnabled;if(v.monetagEnabled)getActiveZoneIds().forEach(ensureZoneSdk);}if(v.promoConfig&&v.promoConfig.code){promoConfig=v.promoConfig;safeStore('gtf_promo_config',JSON.stringify(promoConfig));}else if(v.promoConfig===null){promoConfig=null;safeStore('gtf_promo_config','null');}recalcRate();updateDisplay();renderAdminPromo();if(canShowAdsterraAds()&&$id('app')?.style.display!=='none')initAdsterraAds();});
   db.ref('withdrawals/'+uid).on('value',s=>{withdrawals=Object.values(s.val()||{}).filter(Boolean).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));});
   startUserChatWatch();
 }
@@ -897,6 +1122,8 @@ function beginEntry(){
   initTonConnect();accrueMining();renderCheckin();initAdsterraAds();
   if(canShowAdsterraAds())triggerAdsterraSmartLink(true);
   if(!userData.isPremium&&adminSettings.allAds&&adminSettings.monetagEnabled){if(!triggerMonetagAd(true))setTimeout(()=>triggerMonetagAd(true),800);}
+  const dismissed=safeGet('gtf_promo_prompt_dismissed')==='1',claimed=promoConfig&&promoConfig.id&&claimedPromos.includes(promoConfig.id);
+  if(!dismissed&&!claimed){setTimeout(()=>openPromoModal(true),220);}
 }
 function copyRef(){navigator.clipboard.writeText($id('ref-link').textContent).then(()=>alert('Referral link copied.'));}
 function openHistory(){$id('history-content').innerHTML=withdrawals.map(w=>`<div class="history-row"><div>${esc(w.amount)} GTF · ${esc(w.network)}</div><div class="status-${esc((w.status||'').toLowerCase())}">${esc(w.status)}</div></div>`).join('')||'No records yet.';$id('historyModal').style.display='flex';}
