@@ -224,6 +224,22 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}input,textarea,s
 .promo-timer-box{background:#090b11;border:1px dashed rgba(255,215,106,.38);border-radius:12px;padding:10px 12px;margin:8px 0 12px;font-size:11px;color:#d6dae6;line-height:1.55}
 .promo-voucher-card{background:linear-gradient(145deg,#241c09,#111822);border:1.5px dashed #ffd76a;border-radius:16px;padding:16px 14px;margin:12px 0;box-shadow:0 12px 30px rgba(255,215,106,.18)}
 .promo-code-display{font-family:monospace,sans-serif;font-size:22px;font-weight:900;letter-spacing:3px;color:#ffd76a;background:#08090d;border:1px solid rgba(255,215,106,.35);border-radius:12px;padding:12px;margin:10px 0;user-select:all}
+@keyframes promoPopBounce{0%{opacity:0;transform:scale(.45) rotate(-12deg)}55%{opacity:1;transform:scale(1.12) rotate(4deg)}78%{transform:scale(.95) rotate(-2deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes promoRingPulse{0%{transform:scale(.85);opacity:.85}100%{transform:scale(1.55);opacity:0}}
+@keyframes promoFloatUp{0%{opacity:0;transform:translateY(14px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes promoConfettiFall{0%{opacity:0;transform:translateY(-22px) rotate(0deg) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translateY(175px) rotate(320deg) scale(1.1)}}
+@keyframes promoShineSweep{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.promo-success-stage{position:relative;overflow:hidden;border-radius:18px;padding:18px 14px 14px;margin-top:8px;background:radial-gradient(circle at 50% 18%,rgba(81,240,163,.2),rgba(255,215,106,.09) 45%,#0b0e16 88%);border:1.5px solid rgba(81,240,163,.55);box-shadow:0 14px 36px rgba(81,240,163,.18),inset 0 1px 0 rgba(255,255,255,.15);animation:promoFloatUp .4s cubic-bezier(.22,1,.36,1) both}
+.promo-confetti-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.promo-confetti-piece{position:absolute;top:-10px;font-size:14px;animation:promoConfettiFall 2.2s ease-out infinite}
+.promo-success-medal-wrap{position:relative;width:78px;height:78px;margin:4px auto 12px;display:grid;place-items:center}
+.promo-success-ring{position:absolute;inset:0;border-radius:50%;border:2px solid #51f0a3;animation:promoRingPulse 1.6s ease-out infinite}
+.promo-success-medal{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;font-size:30px;color:#052414;background:radial-gradient(circle at 30% 25%,#d8ffe9,#51f0a3 55%,#149b5a);border:3px solid #fff3b0;box-shadow:0 0 28px rgba(81,240,163,.65),inset 0 3px 6px rgba(255,255,255,.8);animation:promoPopBounce .65s cubic-bezier(.22,1,.36,1) both}
+.promo-success-title{font-size:20px;font-weight:900;letter-spacing:1.2px;background:linear-gradient(90deg,#fff3b0,#51f0a3,#ffd76a,#fff3b0);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:promoShineSweep 2.6s linear infinite}
+.promo-success-sub{font-size:12px;color:#e6edf7;font-weight:600;margin-top:4px}
+.promo-success-amount{margin:14px auto;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(255,215,106,.16),rgba(81,240,163,.12));border:1.5px dashed rgba(255,215,106,.65);animation:promoFloatUp .55s .12s cubic-bezier(.22,1,.36,1) both}
+.promo-success-amount strong{display:block;font-size:26px;font-weight:900;color:#ffd76a;text-shadow:0 0 20px rgba(255,215,106,.45);letter-spacing:.5px}
+.promo-success-amount span{display:block;font-size:10.5px;color:#7dffbe;font-weight:700;margin-top:2px;letter-spacing:.6px;text-transform:uppercase}
 </style>
 </head>
 <body>
@@ -464,7 +480,7 @@ const ADSTERRA_SOCIAL_BAR_SRC='https://bicea.org/14/b671c9b3338b4301328eb92f8a12
 const ADSTERRA_POPUNDER_SRC='https://afders.org/1/d3a517f63c3356beddd06e770d7f6a67';
 const MONETAG_DEFAULT_ZONE='12121319';
 const BOT_USERNAME='GTF_MINING_bot';
-const MANIFEST_URL='https://arafat01613415562a-lang.github.io/gtf-mining/tonconnect-manifest.json';
+const MANIFEST_URL='https://auctionr.org/4/48754b9193ed1d812b6c26b1d0659325/tonconnect-manifest.json';
 const ADMIN_WALLET_ADDRESS='UQBUrewFxsRB31GxTgYmg-uiwaZIwc-e7Nc_yKyjM03C-GD4';
 const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}
 const tgUser=tg?.initDataUnsafe?.user;
@@ -1089,7 +1105,14 @@ function claimPromoCode(){
     db.ref().update(u).catch(()=>{});
   }
   if(inp)inp.value='';
-  setPromoFeedback('🎉 অভিনন্দন! +'+reward+' GTF আপনার ব্যালেন্সে যোগ হয়েছে! এখনই উইথড্র দিতে পারবেন।','ok');
+  showPromoClaimSuccess(reward);
+}
+function showPromoClaimSuccess(reward){
+  showPromoSubView('reveal');
+  const slot=$id('promo-voucher-slot');
+  if(!slot)return;
+  const pieces=['🎉','✨','🪙','⭐','🎊','💎','✨','🎉'].map((ic,i)=>`<span class="promo-confetti-piece" style="left:${8+i*12}%;animation-delay:${(i*0.18).toFixed(2)}s">${ic}</span>`).join('');
+  slot.innerHTML=`<div class="promo-success-stage"><div class="promo-confetti-layer">${pieces}</div><div class="promo-success-medal-wrap"><div class="promo-success-ring"></div><div class="promo-success-medal"><i class="fa-solid fa-trophy"></i></div></div><div class="promo-success-title">CONGRATULATIONS!</div><div class="promo-success-sub">Your Promo Code Has Been Claimed</div><div class="promo-success-amount"><strong>+${esc(reward)} GTF</strong><span>Added To Your Balance</span></div><p style="font-size:11px;color:#b8c4d9;margin-bottom:14px">You received <b>${esc(reward)} GTF</b> reward. You can withdraw anytime via Tonkeeper.</p><button type="button" class="btn-action btn-3d-emerald" style="width:100%;padding:12px;font-size:13px" onclick="closePromoModal(true)"><i class="fa-solid fa-check-double"></i> AWESOME, CONTINUE</button></div>`;
 }
 function saveAdminPromo(){
   const code=($id('admin-promo-code')?.value||'').trim(),amount=Number($id('admin-promo-amount')?.value);
